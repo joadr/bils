@@ -9,6 +9,8 @@ Cities = new orion.collection('cities', {
   tabular: {
     columns: [
       { data: 'name', title: 'Nombre' },
+      orion.attributeColumn('hasOne', 'zoneId', 'Zona'),
+      orion.attributeColumn('hasOne', 'countryId', 'País')
     ]
   }
 });
