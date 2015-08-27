@@ -2,7 +2,7 @@ SuplementsFrecuencies = new orion.collection('suplements_frecuencies', {
   pluralName: 'Frecuencias de Suplementos',
   singularName: 'Frecuencia de Suplementos',
   title: 'Frecuencias de Suplementos',
-  name: {
+  link: {
     title: 'Frecuencias de Suplementos',
     parent: 'mediums-admin'
   },

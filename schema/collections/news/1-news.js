@@ -1,3 +1,21 @@
+News = new orion.collection('news', {
+  pluralName: 'Noticias',
+  singularName: 'Artículo',
+  title: 'Noticias',
+  link: {
+    title: 'Noticias',
+    parent: 'news',
+    index: 2
+  },
+  tabular: {
+    columns: [
+      { data: 'title', title: 'Título' },
+      { data: 'date', title: 'Fecha', render: function(val) { return moment(val).format('LL'); } },
+    ]
+  }
+});
+
+
 News.attachSchema({
   createdBy: orion.attribute('createdBy'),
   mediumId: orion.attribute('hasOne', {
@@ -6,6 +24,22 @@ News.attachSchema({
     collection: Mediums,
     titleField: 'name',
     publicationName: 'news_mediumId_schema',
+  }),
+  suplementId: orion.attribute('hasOne', {
+    label: 'Suplemento'
+  }, {
+    collection: Suplements,
+    titleField: 'name',
+    additionalFields: ['mediumId'],
+    publicationName: 'news_suplementId_schema',
+    filter: function(userId) {
+      if (Meteor.isServer) {
+        return {};
+      } else {
+        var mediumId = AutoForm.getFieldValue('mediumId');
+        return mediumId ? { mediumId: mediumId } : {};
+      }
+    }
   }),
   page: {
     type: String,
