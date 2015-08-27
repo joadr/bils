@@ -12,7 +12,10 @@ orionjs:core
 orionjs:bootstrap
 orionjs:lang-es
 orionjs:image-attribute
+orionjs:relationships
 vsivsi:orion-file-collection
 nicolaslopezj:orion-exporter
 iron:router
 zimme:active-route
+tsega:bootstrap3-datetimepicker@=3.1.3_3
+aldeed:autoform-bs-datetimepicker
