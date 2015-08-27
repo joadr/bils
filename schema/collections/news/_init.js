@@ -1,1 +1,1 @@
-News = new Mongo.Collection('news');
+News = new orion.collection('news');
