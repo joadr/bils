@@ -12,6 +12,7 @@ orionjs:core
 orionjs:bootstrap
 orionjs:lang-es
 orionjs:image-attribute
+vsivsi:orion-file-collection
 nicolaslopezj:orion-exporter
 iron:router
 zimme:active-route

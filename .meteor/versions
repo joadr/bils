@@ -22,7 +22,6 @@ email@1.0.6
 fastclick@1.0.3
 fortawesome:fontawesome@4.4.0
 fourseven:scss@3.2.0
-froala:editor@1.2.8
 geojson-utils@1.0.3
 html-tools@1.0.4
 htmljs@1.0.4
@@ -39,7 +38,6 @@ iron:url@1.0.9
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
-lepozepo:s3@5.1.1
 less@1.0.14
 livedata@1.0.13
 localstorage@1.0.3
@@ -71,11 +69,9 @@ orionjs:config@1.4.0
 orionjs:core@1.4.0
 orionjs:dictionary@1.4.0
 orionjs:filesystem@1.4.0
-orionjs:froala@1.4.0
 orionjs:image-attribute@1.4.2
 orionjs:lang-en@1.4.0
 orionjs:lang-es@1.4.0
-orionjs:s3@1.4.0
 random@1.0.3
 reactive-dict@1.1.0
 reactive-var@1.0.5
@@ -97,6 +93,8 @@ underscore@1.0.3
 url@1.0.4
 useraccounts:bootstrap@1.11.1
 useraccounts:core@1.12.3
+vsivsi:file-collection@1.1.5
+vsivsi:orion-file-collection@0.1.0
 webapp@1.2.0
 webapp-hashing@1.0.3
 zimme:active-route@2.3.1
