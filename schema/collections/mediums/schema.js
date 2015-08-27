@@ -134,7 +134,6 @@ Mediums.attachSchema({
     label: 'Valor caluga pequeña',
     optional: true
   },
-
   valueHorizontalBanner: {
     type: String,
     label: 'Valor banner horizontal',
@@ -146,5 +145,4 @@ Mediums.attachSchema({
     label: 'Valor banner vertical',
     optional: true
   }
-
 });
