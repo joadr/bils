@@ -16,5 +16,6 @@ Groups = new orion.collection('groups', {
 Groups.attachSchema({
   name: {
     type: String
-  }
+  },
+  createdAt: orion.attribute('createdAt')
 });

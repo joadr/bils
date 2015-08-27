@@ -9,6 +9,7 @@ Brands = new orion.collection('brands', {
   tabular: {
     columns: [
       { data: 'name', title: 'Nombre' },
+      orion.attributeColumn('hasOne', 'groupId', 'Grupo')
     ]
   }
 });
