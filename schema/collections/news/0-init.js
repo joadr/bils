@@ -9,7 +9,8 @@ if (Meteor.isClient) {
     identifier: 'news-create',
     title: 'Cargar',
     parent: 'news',
-    index: 1
+    index: 1,
+    routeName: 'news.import'
   });
 
   orion.links.add({
