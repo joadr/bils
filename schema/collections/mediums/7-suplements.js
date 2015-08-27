@@ -91,11 +91,13 @@ Suplements.attachSchema({
     decimal: true,
     label: "Factor lectoría fin de semana"
   },
-  frecuency: {
-    type: String,
-    label: "Frecuencia",
-    optional: true
-  },
+  // frecuencyId: orion.attribute('hasOne', {
+  //   label: 'Frecuencia'
+  // }, {
+  //   collection: Frecuencies,
+  //   titleField: 'name',
+  //   publicationName: 'mediumsfrecuencies',
+  // }),
   targetMarket: {
     type: String,
     label: 'Publico objetivo',
@@ -110,6 +112,46 @@ Suplements.attachSchema({
     type: String,
     label: 'Valor',
     optional: true
+  },
+  valueMondayThursdayColor: {
+    type: String,
+    label: 'Valor Lunes-Jueves color',
+    optional: true,
+  },
+  valueFridayColor: {
+    type: String,
+    label: 'Valor Viernes color',
+    optional: true,
+  },
+  valueSaturdayColor: {
+    type: String,
+    label: 'Valor Sábado color',
+    optional: true,
+  },
+  valueSundayColor: {
+    type: String,
+    label: 'Valor Domingo color',
+    optional: true,
+  },
+  valueMondayThursday: {
+    type: String,
+    label: 'Valor Lunes-Jueves',
+    optional: true,
+  },
+  valueFriday: {
+    type: String,
+    label: 'Valor Viernes',
+    optional: true,
+  },
+  valueSaturday: {
+    type: String,
+    label: 'Valor Sábado',
+    optional: true,
+  },
+  valueSunday: {
+    type: String,
+    label: 'Valor Domingo',
+    optional: true,
   },
   valueFullPage: {
     type: String,
