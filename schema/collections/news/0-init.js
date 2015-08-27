@@ -11,4 +11,11 @@ if (Meteor.isClient) {
     parent: 'news',
     index: 1
   });
+
+  orion.links.add({
+    identifier: 'news-export',
+    title: 'Exportar',
+    parent: 'news',
+    index: 2
+  });
 }
