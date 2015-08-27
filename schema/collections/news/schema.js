@@ -101,19 +101,39 @@ News.attachSchema({
     label: 'La marca aparece en la foto',
     optional: true
   },
-  codeMessageExists: {
-    type: Boolean,
-    label: 'Existe mensaje clave',
-    optional: true
-  },
   spokesmans: {
     type: [String],
     label: 'Voceros',
     optional: true
   },
-  codeMessage: {
-    type: [String],
-    label: 'Mesajes secretos',
+  secretMessage0Exists: {
+    type: Boolean,
+    label: 'Existe mensaje secreto 0',
     optional: true
-  }
+  },
+  secretMessage1Exists: {
+    type: Boolean,
+    label: 'Existe mensaje secreto 1',
+    optional: true
+  },
+  secretMessage2Exists: {
+    type: Boolean,
+    label: 'Existe mensaje secreto 2',
+    optional: true
+  },
+  secretMessage3Exists: {
+    type: Boolean,
+    label: 'Existe mensaje secreto 3',
+    optional: true
+  },
+  secretMessage4Exists: {
+    type: Boolean,
+    label: 'Existe mensaje secreto 4',
+    optional: true
+  },
+  secretMessage5Exists: {
+    type: Boolean,
+    label: 'Existe mensaje secreto 5',
+    optional: true
+  },
 });
