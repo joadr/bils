@@ -116,6 +116,4 @@ News.attachSchema({
     label: 'Mesajes secretos',
     optional: true
   }
-
-
 });
