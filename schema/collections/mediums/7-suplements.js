@@ -26,7 +26,7 @@ Suplements.attachSchema({
     titleField: 'name',
     publicationName: 'suplements_mediumId_schema',
   }),
-  // categoryId: orion.attribute('hasOne', {
+  // typeId: orion.attribute('hasOne', {
   //   label: 'Categoría'
   // }, {
   //   collection: Categories,
@@ -34,7 +34,7 @@ Suplements.attachSchema({
   //   publicationName: 'mediumsCategory',
   // }),
   //
-  // subCategoryId: orion.attribute('hasOne', {
+  // subTypeId: orion.attribute('hasOne', {
   //   label: 'Subtipo'
   // }, {
   //   collection: SubCategories,
