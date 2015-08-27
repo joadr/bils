@@ -39,7 +39,5 @@ Mediums.attachSchema({
     label: "Tiraje",
     optional: true
   },
-  reads: {
-  }
 
 });
