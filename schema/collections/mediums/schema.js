@@ -39,6 +39,12 @@ Mediums.attachSchema({
   //   publicationName: 'mediumsCity',
   // }),
 
+  name: {
+    type: String,
+    label: 'Nombre',
+    optional: true
+  },
+
   relevance: {
     type: Number,
     label: 'Relevancia',
