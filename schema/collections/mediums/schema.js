@@ -40,7 +40,6 @@ Mediums.attachSchema({
     optional: true
   },
   reads: {
-    type:
   }
 
 });
