@@ -4,4 +4,11 @@ if (Meteor.isClient) {
     title: 'Medios',
     index: 12
   });
+
+  orion.links.add({
+    identifier: 'mediums-admin',
+    title: 'Admin',
+    parent: 'mediums',
+    index: 1
+  });
 }

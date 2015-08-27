@@ -1,4 +1,31 @@
-Mediums.attachSchema({
+Suplements = new orion.collection('suplements', {
+  pluralName: 'Suplementos',
+  singularName: 'Suplemento',
+  title: 'Suplementos',
+  link: {
+    title: 'Suplemento',
+    parent: 'mediums'
+  },
+  tabular: {
+    columns: [
+      { data: 'name', title: 'Nombre' },
+      // orion.attributeColumn('hasOne', 'categoryId', 'Tipo'),
+      // orion.attributeColumn('hasOne', 'zoneId', 'Zona'),
+      // orion.attributeColumn('hasOne', 'styleId', 'Estilo'),
+      // orion.attributeColumn('hasOne', 'color', 'Color'),
+    ]
+  }
+});
+
+
+Suplements.attachSchema({
+  mediumId: orion.attribute('hasOne', {
+    label: 'Medio'
+  }, {
+    collection: Mediums,
+    titleField: 'name',
+    publicationName: 'suplements_mediumId_schema',
+  }),
   // categoryId: orion.attribute('hasOne', {
   //   label: 'Categoría'
   // }, {
