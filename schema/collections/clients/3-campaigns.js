@@ -25,14 +25,14 @@ Campaigns.attachSchema({
   //   titleField: 'name',
   //   publicationName: 'campaigns_industryId_schema',
   // }),
-  // categoryId: orion.attribute('hasOne', {
-  //   label: 'categoría',
-  //   optional: true
-  // }, {
-  //   collection: Categories,
-  //   titleField: 'name',
-  //   publicationName: 'campaigns_categoryId_schema',
-  // }),
+  categoryId: orion.attribute('hasOne', {
+    label: 'categoría',
+    optional: true
+  }, {
+    collection: Categories,
+    titleField: 'name',
+    publicationName: 'campaigns_categoryId_schema',
+  }),
   groupId: orion.attribute('hasOne', {
     label: 'Grupo',
     optional: true
@@ -47,7 +47,7 @@ Campaigns.attachSchema({
   }, {
     collection: Brands,
     titleField: 'name',
-    publicationName: 'campaigns_groupId_schema',
+    publicationName: 'campaigns_brandId_schema',
   }),
   products: {
     type: [String],
