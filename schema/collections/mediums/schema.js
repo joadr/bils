@@ -38,6 +38,7 @@ Mediums.attachSchema({
   //   titleField: 'name',
   //   publicationName: 'mediumsCity',
   // }),
+
   name: {
     type: String,
     label: 'Nombre',
