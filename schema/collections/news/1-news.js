@@ -41,6 +41,29 @@ News.attachSchema({
       }
     }
   }),
+  groupId: orion.attribute('hasOne', {
+    label: 'Grupo'
+  }, {
+    collection: Groups,
+    titleField: 'name',
+    publicationName: 'news_groupId_schema',
+  }),
+  brandId: orion.attribute('hasOne', {
+    label: 'Marca'
+  }, {
+    collection: Brands,
+    titleField: 'name',
+    additionalFields: ['groupId'],
+    publicationName: 'news_brandId_schema',
+    filter: function(userId) {
+      if (Meteor.isServer) {
+        return {};
+      } else {
+        var groupId = AutoForm.getFieldValue('groupId');
+        return groupId ? { groupId: groupId } : {};
+      }
+    }
+  }),
   page: {
     type: String,
     label: 'Página',

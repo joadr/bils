@@ -16,6 +16,7 @@ if (Meteor.isClient) {
     identifier: 'news-export',
     title: 'Exportar',
     parent: 'news',
-    index: 2
+    index: 2,
+    routeName: 'news.export'
   });
 }
