@@ -11,6 +11,13 @@ News = new orion.collection('news', {
     columns: [
       { data: 'title', title: 'Título' },
       { data: 'date', title: 'Fecha', render: function(val) { return moment(val).format('LL'); } },
+      {
+        data: 'isReady',
+        title: 'Categorizado',
+        render: function(val) {
+          return val ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+        }
+      }
     ]
   }
 });
@@ -126,7 +133,8 @@ News.attachSchema({
   },
   url: {
     type: String,
-    regEx: SimpleSchema.RegEx.Url
+    regEx: SimpleSchema.RegEx.Url,
+    optional: true
   },
   space: {
     type: String,
@@ -236,4 +244,9 @@ News.attachSchema({
     label: 'Existe mensaje secreto 5',
     optional: true
   },
+  isReady: {
+    type: Boolean,
+    label: 'Esta categorizado',
+    optional: true
+  }
 });

@@ -5,28 +5,26 @@ var iconv = Npm.require('iconv-lite');
 FileWatch = {};
 
 FileWatch.listen = function(directory, encoding, callback) {
-  var timer = Meteor.setInterval(function() {
-
-  }, 1000);
-
-
-
-  try {
+  var findNextFiles = function() {
     var files = fs.readdirSync(directory);
     _.each(files, function(name) {
-      if (name.slice(-'.xml'.length) !== '.xml') return;
-
-      console.log(name);
-
       var filePath = directory + '/' + name;
-      contents = iconv.decode(fs.readFileSync(filePath), encoding);
 
-      if (callback(contents)) {
+      try {
+        if (name.slice(-'.xml'.length) !== '.xml') return;
+        contents = iconv.decode(fs.readFileSync(filePath), encoding);
+
+        if (callback(contents)) {
+          fs.unlink(filePath);
+        }
+      } catch (e) {
+        console.log(e);
         fs.unlink(filePath);
       }
     });
-  } catch (e) {
-    console.log(e);
+
+    Meteor.setTimeout(findNextFiles, 1000);
   }
 
+  findNextFiles();
 }
