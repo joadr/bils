@@ -1,3 +1,5 @@
+ExportNews = new Mongo.Collection("exportNews");
+
 ExportNewsSchema = new SimpleSchema({
   groupId: orion.attribute('hasOne', {
     label: 'Grupo'
@@ -47,5 +49,19 @@ ExportNewsSchema = new SimpleSchema({
         pptx: 'Power Point'
       }
     }
+  }
+});
+
+ExportNews.attachSchema(ExportNewsSchema);
+
+ExportNews.allow({
+  insert: function (userId, doc) {
+    return true;
+  },
+  update: function (userId, doc, fields, modifier) {
+    return true;
+  },
+  remove: function (userId, doc) {
+    return true;
   }
 });

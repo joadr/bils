@@ -4,7 +4,7 @@
       Exportar Noticias
     {{/ Layout }}
     {{# Layout template="orionBootstrapContentContainer" }}
-      {{> quickForm schema="ExportNewsSchema" id="newsExportForm" type="insert" buttonContent=false }}
+      {{> quickForm schema="ExportNewsSchema" collection="ExportNews" id="newsExportForm" type="insert" buttonContent=false }}
       <br>
       <div class="buttons text-right">
         <a class="btn btn-default" href="{{ collection.indexPath }}">{{ i18n 'global.cancel' }}</a>
