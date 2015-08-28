@@ -1,14 +1,14 @@
 ExportNews = new Mongo.Collection("exportNews");
 
 ExportNewsSchema = new SimpleSchema({
-  groupId: orion.attribute('hasOne', {
+  groupId: orion.attribute('hasMany', {
     label: 'Grupo'
   }, {
     collection: Groups,
     titleField: 'name',
     publicationName: 'export_news_groupId_schema',
   }),
-  brandId: orion.attribute('hasOne', {
+  brandId: orion.attribute('hasMany', {
     label: 'Marca'
   }, {
     collection: Brands,
@@ -19,8 +19,8 @@ ExportNewsSchema = new SimpleSchema({
       if (Meteor.isServer) {
         return {};
       } else {
-        var groupId = AutoForm.getFieldValue('groupId');
-        return groupId ? { groupId: groupId } : {};
+        var groupsIds = AutoForm.getFieldValue('groupId');
+        return groupsIds ? { groupId: { $in: groupsIds } } : {};
       }
     }
   }),
