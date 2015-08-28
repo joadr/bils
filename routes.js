@@ -1,8 +1,8 @@
-// Router.route('/admin/export/news/:filename', function () {
-//   var doc = ExportNewsSchema.findOne(this.params.filename);
-//   return doc.fileType;
-//   //this.response.end(this.params.filename+'\n');
-// }, {where: 'server'});
+Router.route('/admin/export/news/:filename', function () {
+  var doc = ExportNews.findOne(this.params.filename);
+  return doc.fileType;
+  //this.response.end(this.params.filename+'\n');
+}, {name: 'news.export.file', where: 'server'});
 
 Router.route('/admin/export/news',  {
   layoutTemplate: 'orionBootstrapLayout',

@@ -53,3 +53,15 @@ ExportNewsSchema = new SimpleSchema({
 });
 
 ExportNews.attachSchema(ExportNewsSchema);
+
+ExportNews.allow({
+  insert: function (userId, doc) {
+    return true;
+  },
+  update: function (userId, doc, fields, modifier) {
+    return true;
+  },
+  remove: function (userId, doc) {
+    return true;
+  }
+});

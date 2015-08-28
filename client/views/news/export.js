@@ -4,10 +4,9 @@ Template.newsExport.events({
   }
 });
 
-AutoForm.addHooks('newsExport', {
-  onSuccess: function() {
-    console.log(this.collection);
-    //Router.go('');
+AutoForm.addHooks('newsExportForm', {
+  onSuccess: function(formType, result) {
+    Router.go('news.export.file', {filename: result});
     //RouterLayer.go(this.collection.indexPath());
   }
 });
