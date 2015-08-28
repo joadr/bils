@@ -1,3 +1,5 @@
+ExportNews = new Mongo.Collection("exportNews");
+
 ExportNewsSchema = new SimpleSchema({
   groupId: orion.attribute('hasOne', {
     label: 'Grupo'
@@ -49,3 +51,5 @@ ExportNewsSchema = new SimpleSchema({
     }
   }
 });
+
+ExportNews.attachSchema(ExportNewsSchema);

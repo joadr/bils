@@ -6,6 +6,8 @@ Template.newsExport.events({
 
 AutoForm.addHooks('newsExport', {
   onSuccess: function() {
-    RouterLayer.go(this.collection.indexPath());
+    console.log(this.collection);
+    //Router.go('');
+    //RouterLayer.go(this.collection.indexPath());
   }
 });
