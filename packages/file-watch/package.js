@@ -4,6 +4,7 @@ Package.describe({
 });
 
 Npm.depends({
+  'iconv-lite': '0.4.11'
 });
 
 Package.onUse(function(api) {

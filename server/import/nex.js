@@ -1,4 +1,4 @@
-FileWatch.listen('/Users/nicolaslopezj/xmls', function(contents) {
+FileWatch.listen('/Users/nicolaslopezj/xmls/nex', 'utf8', function(contents) {
   var data = xml2js.parseStringSync(contents);
   var news = data.NexNews.Noticia.map(function(item) {
     var article = {};
@@ -6,6 +6,7 @@ FileWatch.listen('/Users/nicolaslopezj/xmls', function(contents) {
     article.idx = item.titulo && item.idx[0];
     article.title = item.titulo && item.titulo[0];
     article.journalist = item.autor && item.autor[0];
+    article.title = item.titulo && item.titulo[0];
     article.subtitle = item.bajada && item.bajada[0];
     article.body = item.cuerpo && item.cuerpo[0];
 

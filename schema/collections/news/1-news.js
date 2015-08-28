@@ -20,7 +20,18 @@ News.attachSchema({
   idx: {
     type: String,
     label: 'idx',
-    optional: true
+    optional: true,
+    autoform: {
+      omit: true
+    }
+  },
+  agureId: {
+    type: String,
+    label: 'agureId',
+    optional: true,
+    autoform: {
+      omit: true
+    }
   },
   createdBy: orion.attribute('createdBy'),
   mediumId: orion.attribute('hasOne', {
@@ -96,7 +107,10 @@ News.attachSchema({
   body: {
     type: String,
     label: 'Cuerpo',
-    optional: true
+    optional: true,
+    autoform: {
+      type: 'textarea'
+    }
   },
   media: orion.attribute('images', {
     label: 'Media',
@@ -109,6 +123,10 @@ News.attachSchema({
       type: 'bootstrap-datetimepicker'
     },
     optional: true
+  },
+  url: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Url
   },
   space: {
     type: String,
