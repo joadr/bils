@@ -17,16 +17,23 @@ News = new orion.collection('news', {
 
 
 News.attachSchema({
+  idx: {
+    type: String,
+    label: 'idx',
+    optional: true
+  },
   createdBy: orion.attribute('createdBy'),
   mediumId: orion.attribute('hasOne', {
-    label: 'Medio'
+    label: 'Medio',
+    optional: true
   }, {
     collection: Mediums,
     titleField: 'name',
     publicationName: 'news_mediumId_schema',
   }),
   suplementId: orion.attribute('hasOne', {
-    label: 'Suplemento'
+    label: 'Suplemento',
+    optional: true
   }, {
     collection: Suplements,
     titleField: 'name',
@@ -42,14 +49,16 @@ News.attachSchema({
     }
   }),
   groupId: orion.attribute('hasOne', {
-    label: 'Grupo'
+    label: 'Grupo',
+    optional: true
   }, {
     collection: Groups,
     titleField: 'name',
     publicationName: 'news_groupId_schema',
   }),
   brandId: orion.attribute('hasOne', {
-    label: 'Marca'
+    label: 'Marca',
+    optional: true
   }, {
     collection: Brands,
     titleField: 'name',
@@ -76,15 +85,18 @@ News.attachSchema({
   },
   title: {
     type: String,
-    label: 'Título'
+    label: 'Título',
+    optional: true
   },
   subtitle: {
     type: String,
-    label: 'Bajada'
+    label: 'Bajada',
+    optional: true
   },
   body: {
     type: String,
-    label: 'Cuerpo'
+    label: 'Cuerpo',
+    optional: true
   },
   media: orion.attribute('images', {
     label: 'Media',
@@ -95,7 +107,8 @@ News.attachSchema({
     label: 'Fecha',
     autoform: {
       type: 'bootstrap-datetimepicker'
-    }
+    },
+    optional: true
   },
   space: {
     type: String,
