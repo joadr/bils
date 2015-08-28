@@ -49,20 +49,27 @@ Campaigns.attachSchema({
     }
   }),
   groupId: orion.attribute('hasOne', {
-    label: 'Grupo',
-    optional: true
+    label: 'Grupo'
   }, {
     collection: Groups,
     titleField: 'name',
     publicationName: 'campaigns_groupId_schema',
   }),
   brandId: orion.attribute('hasOne', {
-    label: 'Marca',
-    optional: true
+    label: 'Marca'
   }, {
     collection: Brands,
     titleField: 'name',
+    additionalFields: ['groupId'],
     publicationName: 'campaigns_brandId_schema',
+    filter: function(userId) {
+      if (Meteor.isServer) {
+        return {};
+      } else {
+        var groupId = AutoForm.getFieldValue('groupId');
+        return groupId ? { groupId: groupId } : {};
+      }
+    }
   }),
   products: {
     type: [String],
