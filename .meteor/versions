@@ -76,6 +76,7 @@ orionjs:image-attribute@1.4.2
 orionjs:lang-en@1.4.0
 orionjs:lang-es@1.4.0
 orionjs:relationships@1.4.2
+pascoual:pdfkit@1.0.5
 random@1.0.3
 reactive-dict@1.1.0
 reactive-var@1.0.5
