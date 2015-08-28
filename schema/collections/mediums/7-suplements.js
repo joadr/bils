@@ -8,11 +8,14 @@ Suplements = new orion.collection('suplements', {
   },
   tabular: {
     columns: [
+      orion.attributeColumn('hasOne', 'mediumId', 'Medio'),
       { data: 'name', title: 'Nombre' },
-      // orion.attributeColumn('hasOne', 'categoryId', 'Tipo'),
-      // orion.attributeColumn('hasOne', 'zoneId', 'Zona'),
-      // orion.attributeColumn('hasOne', 'styleId', 'Estilo'),
-      // orion.attributeColumn('hasOne', 'color', 'Color'),
+      orion.attributeColumn('hasOne', 'typeId', 'Tipo'),
+      orion.attributeColumn('hasOne', 'styleId', 'Estilo'),
+      orion.attributeColumn('hasOne', 'countryId', 'País'),
+      orion.attributeColumn('hasOne', 'zoneId', 'Zona'),
+      orion.attributeColumn('hasOne', 'cityId', 'Ciudad'),
+      {data: 'relevance', title: 'Relevancia'}
     ]
   }
 });
@@ -26,30 +29,20 @@ Suplements.attachSchema({
     titleField: 'name',
     publicationName: 'suplements_mediumId_schema',
   }),
-  // typeId: orion.attribute('hasOne', {
-  //   label: 'Tipo'
-  // }, {
-  //   collection: Categories,
-  //   titleField: 'name',
-  //   publicationName: 'mediumsCategory',
-  // }),
-  //
-  // subTypeId: orion.attribute('hasOne', {
-  //   label: 'Subtipo'
-  // }, {
-  //   collection: SubCategories,
-  //   titleField: 'name',
-  //   publicationName: 'mediumsSubCategory',
-  // }),
-  //
-  // styleId: orion.attribute('hasOne', {
-  //   label: 'Estilo'
-  // }, {
-  //   collection: Styles,
-  //   titleField: 'name',
-  //   publicationName: 'mediumsStyle',
-  // }),
-  //
+  typeId: orion.attribute('hasOne', {
+    label: 'Tipo'
+  }, {
+    collection: SuplementsTypes,
+    titleField: 'name',
+    publicationName: 'suplementsType',
+  }),
+  styleId: orion.attribute('hasOne', {
+    label: 'Estilo'
+  }, {
+    collection: SuplementsStyles,
+    titleField: 'name',
+    publicationName: 'supplementsStyle',
+  }),
   countryId: orion.attribute('hasOne', {
     label: 'País'
   }, {
@@ -115,13 +108,13 @@ Suplements.attachSchema({
     decimal: true,
     label: "Factor lectoría fin de semana"
   },
-  // frecuencyId: orion.attribute('hasOne', {
-  //   label: 'Frecuencia'
-  // }, {
-  //   collection: Frecuencies,
-  //   titleField: 'name',
-  //   publicationName: 'mediumsfrecuencies',
-  // }),
+  frecuencyId: orion.attribute('hasOne', {
+    label: 'Frecuencia'
+  }, {
+    collection: SuplementsFrecuencies,
+    titleField: 'name',
+    publicationName: 'suplementsFrecuencies',
+  }),
   targetMarket: {
     type: String,
     label: 'Publico objetivo',
