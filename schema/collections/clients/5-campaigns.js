@@ -17,14 +17,14 @@ Campaigns.attachSchema({
   name: {
     type: String
   },
-  // industryId: orion.attribute('hasOne', {
-  //   label: 'Industria',
-  //   optional: true
-  // }, {
-  //   collection: Industries,
-  //   titleField: 'name',
-  //   publicationName: 'campaigns_industryId_schema',
-  // }),
+  industryId: orion.attribute('hasOne', {
+    label: 'Industria',
+    optional: true
+  }, {
+    collection: Industries,
+    titleField: 'name',
+    publicationName: 'campaigns_industryId_schema',
+  }),
   categoryId: orion.attribute('hasOne', {
     label: 'categoría',
     optional: true
@@ -32,6 +32,15 @@ Campaigns.attachSchema({
     collection: Categories,
     titleField: 'name',
     publicationName: 'campaigns_categoryId_schema',
+    additionalFields: ['industryId'],
+    filter: function(userId) {
+      if (Meteor.isServer) {
+        return {};
+      } else {
+        var industryId = AutoForm.getFieldValue('industryId');
+        return industryId ? { industryId: industryId } : {};
+      }
+    }
   }),
   groupId: orion.attribute('hasOne', {
     label: 'Grupo',

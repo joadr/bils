@@ -16,5 +16,13 @@ Categories = new orion.collection('categories', {
 Categories.attachSchema({
   name: {
     type: String
-  }
+  },
+  industryId: orion.attribute('hasOne', {
+    label: 'Industria',
+    optional: true
+  }, {
+    collection: Industries,
+    titleField: 'name',
+    publicationName: 'categories_industryId_schema',
+  }),
 });
