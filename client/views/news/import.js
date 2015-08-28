@@ -3,11 +3,29 @@ var parseNexNews = function(data) {
     console.log(item);
     var article = {};
     article.title = item.titulo['#text'];
-    article.journalist = item.autor['#text'];
-    article.subtitle = item.bajada['#text'];
-    article.body = item.cuerpo['#text'];
+    article.journalist = item.autor && item.autor['#text'];
+    article.subtitle = item.bajada && item.bajada['#text'];
+    article.body = item.cuerpo && item.cuerpo['#text'];
 
-    var mediumName = item.medio['#text'];
+    if (item.medio) {
+      var suplementName = item.medio['#text'];
+      var suplement = Suplements.findOne({ name: suplementName });
+      if (suplement) {
+        article.suplementId = suplement._id;
+        article.mediumId = suplement.mediumId;
+      }
+    }
+
+    if (item.multimedia) {
+      var items = item.multimedia['#text'].split('|').map(function(item) {
+        return {
+          url: item
+        };
+      });
+      article.media = items;
+    }
+
+    article.date = item.nefecha && moment(item.nefecha['#text']).toDate();
 
     return article;
   });
@@ -15,6 +33,7 @@ var parseNexNews = function(data) {
 
 Template.newsImport.onCreated(function() {
   this.subscribe('demographics');
+  this.subscribe('mediums');
 });
 
 Template.newsImport.events({

@@ -86,6 +86,10 @@ News.attachSchema({
     type: String,
     label: 'Cuerpo'
   },
+  media: orion.attribute('images', {
+    label: 'Media',
+    optional: true
+  }),
   date: {
     type: Date,
     label: 'Fecha',
