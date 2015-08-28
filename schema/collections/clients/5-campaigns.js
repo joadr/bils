@@ -9,13 +9,19 @@ Campaigns = new orion.collection('campaigns', {
   tabular: {
     columns: [
       { data: 'name', title: 'Nombre' },
+      orion.attributeColumn('hasOne', 'industryId', 'Industria'),
+      orion.attributeColumn('hasOne', 'categoryId', 'Categoría'),
+      orion.attributeColumn('hasOne', 'groupId', 'Grupo'),
+      orion.attributeColumn('hasOne', 'brandId', 'Marca'),
+      {data: 'products', title: 'productos'}
     ]
   }
 });
 
 Campaigns.attachSchema({
   name: {
-    type: String
+    type: String,
+    label: 'Nombre'
   },
   industryId: orion.attribute('hasOne', {
     label: 'Industria',
@@ -26,7 +32,7 @@ Campaigns.attachSchema({
     publicationName: 'campaigns_industryId_schema',
   }),
   categoryId: orion.attribute('hasOne', {
-    label: 'categoría',
+    label: 'Categoría',
     optional: true
   }, {
     collection: Categories,
