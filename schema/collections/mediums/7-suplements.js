@@ -27,7 +27,7 @@ Suplements.attachSchema({
     publicationName: 'suplements_mediumId_schema',
   }),
   // typeId: orion.attribute('hasOne', {
-  //   label: 'Categoría'
+  //   label: 'Tipo'
   // }, {
   //   collection: Categories,
   //   titleField: 'name',
@@ -50,21 +50,45 @@ Suplements.attachSchema({
   //   publicationName: 'mediumsStyle',
   // }),
   //
-  // zoneId: orion.attribute('hasOne', {
-  //   label: 'Zona'
-  // }, {
-  //   collection: Zones,
-  //   titleField: 'name',
-  //   publicationName: 'mediumsZones',
-  // }),
-  //
-  // cityId: orion.attribute('hasOne', {
-  //   label: 'Ciudad'
-  // }, {
-  //   collection: Cities,
-  //   titleField: 'name',
-  //   publicationName: 'mediumsCity',
-  // }),
+  countryId: orion.attribute('hasOne', {
+    label: 'País'
+  }, {
+    collection: Countries,
+    titleField: 'name',
+    publicationName: 'suplements_countryId_schema',
+  }),
+  zoneId: orion.attribute('hasOne', {
+    label: 'Zona'
+  }, {
+    collection: Zones,
+    titleField: 'name',
+    publicationName: 'suplements_zoneId_schema',
+    additionalFields: ['countryId'],
+    filter: function(userId) {
+      if (Meteor.isServer) {
+        return {};
+      } else {
+        var countryId = AutoForm.getFieldValue('countryId');
+        return countryId ? { countryId: countryId } : {};
+      }
+    }
+  }),
+  cityId: orion.attribute('hasOne', {
+    label: 'Ciudad'
+  }, {
+    collection: Cities,
+    titleField: 'name',
+    publicationName: 'mediumsCity',
+    additionalFields: ['zoneId'],
+    filter: function(userId) {
+      if (Meteor.isServer) {
+        return {};
+      } else {
+        var zoneId = AutoForm.getFieldValue('zoneId');
+        return zoneId ? { zoneId: zoneId } : {};
+      }
+    }
+  }),
   name: {
     type: String,
     label: 'Nombre',
