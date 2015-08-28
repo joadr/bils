@@ -78,6 +78,14 @@ News.attachSchema({
     type: String,
     label: 'Título'
   },
+  subtitle: {
+    type: String,
+    label: 'Bajada'
+  },
+  body: {
+    type: String,
+    label: 'Cuerpo'
+  },
   date: {
     type: Date,
     label: 'Fecha',
