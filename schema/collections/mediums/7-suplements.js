@@ -3,7 +3,7 @@ Suplements = new orion.collection('suplements', {
   singularName: 'Suplemento',
   title: 'Suplementos',
   link: {
-    title: 'Suplemento',
+    title: 'Suplementos',
     parent: 'mediums'
   },
   tabular: {
