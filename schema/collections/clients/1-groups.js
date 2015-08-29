@@ -23,6 +23,6 @@ Groups.attachSchema({
     collection: Agencies,
     titleField: 'name',
     publicationName: 'groups_agencyId_schema',
-  })
+  }),
   createdAt: orion.attribute('createdAt')
 });
