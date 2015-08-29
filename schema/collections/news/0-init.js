@@ -2,7 +2,8 @@ if (Meteor.isClient) {
   orion.links.add({
     identifier: 'news',
     title: 'Noticias',
-    index: 14
+    index: 14,
+    permission: 'collections.news.index'
   });
 
   orion.links.add({
@@ -10,6 +11,7 @@ if (Meteor.isClient) {
     title: 'Exportar',
     parent: 'news',
     index: 2,
-    routeName: 'news.export'
+    routeName: 'news.export',
+    permission: 'collections.news.index'
   });
 }

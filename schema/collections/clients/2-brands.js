@@ -24,5 +24,10 @@ Brands.attachSchema({
     collection: Groups,
     titleField: 'name',
     publicationName: 'brands_groupId_schema',
+  }),
+  usersIds: orion.attribute('users', {
+    label: 'Usuarios'
+  }, {
+    publicationName: 'brands_usersIds_schema'
   })
 });
