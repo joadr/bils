@@ -24,12 +24,14 @@ Agencies.attachSchema({
     optional: true
   }),
   adminsIds: orion.attribute('users', {
-    label: 'Administradores'
+    label: 'Administradores',
+    optional: true
   }, {
     publicationName: 'agencies_adminsIds_schema'
   }),
   executivesIds: orion.attribute('users', {
-    label: 'Ejecutivos'
+    label: 'Ejecutivos',
+    optional: true
   }, {
     publicationName: 'agencies_executivesIds_schema'
   }),
