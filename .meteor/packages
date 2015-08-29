@@ -13,6 +13,7 @@ orionjs:bootstrap
 orionjs:lang-es
 orionjs:image-attribute
 orionjs:relationships
+orionjs:s3
 vsivsi:orion-file-collection
 nicolaslopezj:orion-exporter
 iron:router
