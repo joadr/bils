@@ -21,11 +21,13 @@ ExportNewsSchema = new SimpleSchema({
     additionalFields: ['groupId'],
     publicationName: 'export_news_brandsIds_schema',
     filter: function(userId) {
+      var selectors = Roles.helper(userId, 'clients.myBrands') || null;
+      var myBrandsFilter = { $or: selectors };
       if (Meteor.isServer) {
-        return {};
+        return myBrandsFilter;
       } else {
         var groupsIds = AutoForm.getFieldValue('groupsIds');
-        return groupsIds ? { groupId: { $in: groupsIds } } : {};
+        return groupsIds ? { $and: [{ groupId: { $in: groupsIds } }, myBrandsFilter] } : myBrandsFilter;
       }
     }
   }),

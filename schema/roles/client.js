@@ -1,25 +1,42 @@
 ClientRole = new Roles.Role('cliente');
 
 /**
- * Allow the actions of the collection
+ * Groups
  */
-ClientRole.allow('collections.news.index', true); // Allows the role to see the link in the sidebar
-ClientRole.allow('collections.news.insert', true); // Allows the role to insert documents
-ClientRole.allow('collections.news.update', true); // Allows the role to update documents
-ClientRole.allow('collections.news.remove', false); // Allows the role to remove documents
-ClientRole.allow('collections.news.showCreate', true); // Makes the "create" button visible
-ClientRole.allow('collections.news.showUpdate', true); // Allows the user to go to the update view
-ClientRole.allow('collections.news.showRemove', false); // Shows the delete button on the update view
+ ClientRole.allow('collections.groups.index', true); // Allows the role to see the link in the sidebar
+ ClientRole.helper('collections.groups.indexFilter', function() {
+   var groupsIds = _.pluck(Brands.find({ clientsIds: this.userId }).fetch(), 'groupId');
+   return { _id: { $in: groupsIds } };
+ });
+ ClientRole.helper('clients.myGroups', function() {
+   var groupsIds = _.pluck(Brands.find({ clientsIds: this.userId }).fetch(), 'groupId');
+   return { _id: { $in: groupsIds } };
+ });
+
+ /**
+  * Brands
+  */
+ ClientRole.allow('collections.brands.index', true); // Allows the role to see the link in the sidebar
+ ClientRole.helper('clients.myBrands', function() {
+   return { clientsIds: this.userId };
+ });
+ ClientRole.helper('collections.brands.indexFilter', function() {
+   return { clientsIds: this.userId };
+ });
 
 /**
- * Set the index filter.
- * This part is very important and sometimes is forgotten.
- * Here you must specify which documents the role will be able to see in the index route
+ * News
  */
+ClientRole.allow('collections.news.index', true); // Allows the role to see the link in the sidebar
+ClientRole.allow('collections.news.insert', false); // Allows the role to insert documents
+ClientRole.allow('collections.news.update', false); // Allows the role to update documents
+ClientRole.allow('collections.news.remove', false); // Allows the role to remove documents
+ClientRole.allow('collections.news.showCreate', false); // Makes the "create" button visible
+ClientRole.allow('collections.news.showUpdate', false); // Allows the user to go to the update view
+ClientRole.allow('collections.news.showRemove', false); // Shows the delete button on the update view
 ClientRole.helper('collections.news.indexFilter', function() {
   return {};
 });
-
 ClientRole.helper('collections.news.hiddenFields', function() {
   return [];
 });

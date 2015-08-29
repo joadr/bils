@@ -59,6 +59,7 @@ AgencyRole.allow('collections.brands.remove', false); // Allows the role to remo
 AgencyRole.allow('collections.brands.showCreate', false); // Makes the "create" button visible
 AgencyRole.allow('collections.brands.showUpdate', true); // Allows the user to go to the update view
 AgencyRole.allow('collections.brands.showRemove', false); // Shows the delete button on the update view
+AgencyRole.helper('clients.myBrands', {});
 AgencyRole.helper('collections.brands.indexFilter', function() {
   var myAgenciesIds = _.pluck(Agencies.find({ adminsIds: this.userId }).fetch(), '_id');
   var groupsIds = _.pluck(Groups.find({ agencyId: { $in: myAgenciesIds } }).fetch(), '_id');
