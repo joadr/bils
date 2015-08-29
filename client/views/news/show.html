@@ -1,0 +1,111 @@
+<template name="collectionsNewsShow">
+  {{# Layout template="orionBootstrapMediumContentOffset" }}
+    {{# Layout template="orionBootstrapTitle" }}
+      Noticia
+    {{/ Layout }}
+    {{# Layout template="orionBootstrapContentContainer" }}
+      {{#if Template.subscriptionsReady}}
+        {{# with article }}
+          {{# with medium }}
+            <p>
+              <i>Por:</i>
+              <b>
+                {{ name }}
+                {{# with sumplement }}
+                  {{ name }}
+                {{/ with }}
+              </b>
+            </p>
+          {{/ with }}
+          <p>
+            <small>
+              {{ dateFormat date 'LL' }}
+            </small>
+          </p>
+          <h3>
+            {{ title }}
+          </h3>
+          <p>
+            {{ subtitle }}
+          </p>
+
+          {{# each media }}
+            <p>
+              <a href="{{ url }}" target="_blank">
+                <img src="{{ url }}" alt="" style="width: 100%" />
+              </a>
+            </p>
+          {{/ each }}
+
+          <br>
+          <div class="body">
+            {{ nl2br body }}
+          </div>
+          <br>
+
+          {{# with url }}
+            <p>
+              <a href="{{ this }}" target="_blank">{{ this }}</a>
+            </p>
+          {{/ with }}
+
+          {{# with space }}
+            <p>
+              Espacio: <b>{{ this }}</b>
+            </p>
+          {{/ with }}
+
+          {{# with size }}
+            <p>
+              Centrimetage: <b>{{ this }}</b>
+            </p>
+          {{/ with }}
+
+          {{# with journalist }}
+            <p>
+              Periodista: <b>{{ this }}</b>
+            </p>
+          {{/ with }}
+
+          {{# with sentiment }}
+            <p>
+              Sentimiento: <b>{{ this }}</b>
+            </p>
+          {{/ with }}
+
+          {{# with typeOfNote }}
+            <p>
+              Tipo de nota: <b>{{ this }}</b>
+            </p>
+          {{/ with }}
+
+          {{# with opinion }}
+            <p>
+              Opinión: <b>{{ this }}</b>
+            </p>
+          {{/ with }}
+
+          {{# with topic }}
+            <p>
+              Tema: <b>{{ this }}</b>
+            </p>
+          {{/ with }}
+
+          {{# with relevance }}
+            <p>
+              Relevancia: <b>{{ this }}</b>
+            </p>
+          {{/ with }}
+        {{ else }}
+          <p>
+            No se encontró el artículo
+          </p>
+        {{/ with }}
+      {{else}}
+        <p>
+          Cargando...
+        </p>
+      {{/if}}
+    {{/ Layout }}
+  {{/ Layout }}
+</template>

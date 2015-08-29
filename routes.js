@@ -32,7 +32,11 @@ Router.route('/admin/export/news',  {
   name: 'news.export'
 });
 
-Router.route('/admin/import/news',  {
+orion.accounts.addProtectedRoute('news.export');
+
+Router.route('/admin/news-show/:_id',  {
   layoutTemplate: 'orionBootstrapLayout',
-  name: 'news.import'
+  name: 'collections.news.show'
 });
+
+orion.accounts.addProtectedRoute('collections.news.show');

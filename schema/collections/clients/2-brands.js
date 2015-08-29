@@ -24,5 +24,15 @@ Brands.attachSchema({
     collection: Groups,
     titleField: 'name',
     publicationName: 'brands_groupId_schema',
+    additionalFields: ['agencyId'],
+    filter: function(userId) {
+      var selectors = Roles.helper(userId, 'clients.myGroups') || null;
+      return { $or: selectors };
+    }
+  }),
+  clientsIds: orion.attribute('users', {
+    label: 'Clientes'
+  }, {
+    publicationName: 'brands_clientsIds_schema'
   })
 });

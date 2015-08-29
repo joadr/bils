@@ -17,6 +17,13 @@ News = new orion.collection('news', {
         render: function(val) {
           return val ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
         }
+      },
+      {
+        data: '_id',
+        title: 'Ver',
+        render: function(val) {
+          return '<a href="' + Router.path('collections.news.show', { _id: val }) + '" class="btn btn-xs btn-default">Ver</a>';
+        }
       }
     ]
   }
@@ -73,6 +80,11 @@ News.attachSchema({
     collection: Groups,
     titleField: 'name',
     publicationName: 'news_groupId_schema',
+    additionalFields: ['agencyId'],
+    filter: function(userId) {
+      var selectors = Roles.helper(userId, 'clients.myGroups') || null;
+      return { $or: selectors };
+    }
   }),
   brandId: orion.attribute('hasOne', {
     label: 'Marca',
