@@ -73,6 +73,11 @@ News.attachSchema({
     collection: Groups,
     titleField: 'name',
     publicationName: 'news_groupId_schema',
+    additionalFields: ['agencyId'],
+    filter: function(userId) {
+      var selectors = Roles.helper(userId, 'clients.myGroups') || null;
+      return { $or: selectors };
+    }
   }),
   brandId: orion.attribute('hasOne', {
     label: 'Marca',

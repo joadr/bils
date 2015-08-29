@@ -7,6 +7,11 @@ ExportNewsSchema = new SimpleSchema({
     collection: Groups,
     titleField: 'name',
     publicationName: 'export_news_groupsIds_schema',
+    additionalFields: ['agencyId'],
+    filter: function(userId) {
+      var selectors = Roles.helper(userId, 'clients.myGroups') || null;
+      return { $or: selectors };
+    }
   }),
   brandsIds: orion.attribute('hasMany', {
     label: 'Marca'

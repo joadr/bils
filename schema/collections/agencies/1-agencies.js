@@ -9,7 +9,8 @@ Agencies = new orion.collection('agencies', {
   tabular: {
     columns: [
       { data: 'name', title: 'Nombre' },
-      orion.attributeColumn('image', 'logo', 'Logo')
+      orion.attributeColumn('image', 'logo', 'Logo'),
+      orion.attributeColumn('hasMany', 'executivesIds', 'Ejecutivos')
     ]
   }
 });
@@ -26,6 +27,11 @@ Agencies.attachSchema({
     label: 'Administradores'
   }, {
     publicationName: 'agencies_adminsIds_schema'
+  }),
+  executivesIds: orion.attribute('users', {
+    label: 'Ejecutivos'
+  }, {
+    publicationName: 'agencies_executivesIds_schema'
   }),
   createdAt: orion.attribute('createdAt')
 });
