@@ -35,7 +35,8 @@ ClientRole.allow('collections.news.showCreate', false); // Makes the "create" bu
 ClientRole.allow('collections.news.showUpdate', false); // Allows the user to go to the update view
 ClientRole.allow('collections.news.showRemove', false); // Shows the delete button on the update view
 ClientRole.helper('collections.news.indexFilter', function() {
-  return {};
+  var brandsIds = _.pluck(Brands.find({ clientsIds: this.userId }).fetch(), '_id');
+  return { brandId: { $in: brandsIds }, isReady: true };
 });
 ClientRole.helper('collections.news.hiddenFields', function() {
   return [];

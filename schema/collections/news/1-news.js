@@ -17,6 +17,13 @@ News = new orion.collection('news', {
         render: function(val) {
           return val ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
         }
+      },
+      {
+        data: '_id',
+        title: 'Ver',
+        render: function(val) {
+          return val;
+        }
       }
     ]
   }

@@ -13,3 +13,8 @@ Router.route('/admin/import/news',  {
   layoutTemplate: 'orionBootstrapLayout',
   name: 'news.import'
 });
+
+Router.route('/admin/news-show/:_id',  {
+  layoutTemplate: 'orionBootstrapLayout',
+  name: 'collections.news.show'
+});
