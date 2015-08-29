@@ -5,20 +5,13 @@ Router.route('/admin/export/news/:filename', function () {
   var doc = new PDFDocument({size: 'A4', margin: 50});
   doc.fontSize(12);
   doc.text('Hola mundo', 10, 30, {align: 'center', width: 200});
-  http.get('http://whizzy.azurewebsites.net/files/whizzy-logo-text.png').on('response', function(res){
-      res.setEncoding('binary');
-      res.on('data', function(chunk){
-         buffer += chunk;
-      });
-      res.on('end', function(){
-        doc.image(buffer, 0, 15, { width: 300 }).text('Proprotional to width', 0, 0);
-       //After file is download and was write into the HD will use it
-
-     }).end(); //EO Downloading the file
+  var result = request.getSync('http://whizzy.azurewebsites.net/files/whizzy-logo-text.png', {
+      encoding: null
   });
+  var buffer = result.body;
+  
+  doc.image(buffer, 0, 15, { width: 150 });
 
-
-  // doc.image('http://whizzy.azurewebsites.net/files/whizzy-logo-text.png', 0, 15, { width: 300 }).text('Proprotional to width', 0, 0);
 
   this.response.writeHead(200, {
     'Content-type': 'application/pdf',

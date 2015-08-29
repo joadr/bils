@@ -24,3 +24,4 @@ file-watch
 npm-dependencies
 peerlibrary:xml2js
 pascoual:pdfkit
+froatsnook:request
