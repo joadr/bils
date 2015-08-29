@@ -1,4 +1,4 @@
 Meteor.startup(function() {
-  //ReactiveTemplates.set('layout', 'orionBootstrapLayout');
+  ReactiveTemplates.set('adminSidebar', 'sidebar');
   ReactiveTemplates.set('outAdminLayout', 'outAdminLayout');
 });
