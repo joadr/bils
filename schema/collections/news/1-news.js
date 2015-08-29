@@ -11,22 +11,47 @@ News = new orion.collection('news', {
     columns: [
       { data: 'title', title: 'Título' },
       { data: 'date', title: 'Fecha', render: function(val) { return moment(val).format('LL'); } },
+      {
+        data: 'isReady',
+        title: 'Categorizado',
+        render: function(val) {
+          return val ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+        }
+      }
     ]
   }
 });
 
 
 News.attachSchema({
+  idx: {
+    type: String,
+    label: 'idx',
+    optional: true,
+    autoform: {
+      omit: true
+    }
+  },
+  agureId: {
+    type: String,
+    label: 'agureId',
+    optional: true,
+    autoform: {
+      omit: true
+    }
+  },
   createdBy: orion.attribute('createdBy'),
   mediumId: orion.attribute('hasOne', {
-    label: 'Medio'
+    label: 'Medio',
+    optional: true
   }, {
     collection: Mediums,
     titleField: 'name',
     publicationName: 'news_mediumId_schema',
   }),
   suplementId: orion.attribute('hasOne', {
-    label: 'Suplemento'
+    label: 'Suplemento',
+    optional: true
   }, {
     collection: Suplements,
     titleField: 'name',
@@ -42,14 +67,16 @@ News.attachSchema({
     }
   }),
   groupId: orion.attribute('hasOne', {
-    label: 'Grupo'
+    label: 'Grupo',
+    optional: true
   }, {
     collection: Groups,
     titleField: 'name',
     publicationName: 'news_groupId_schema',
   }),
   brandId: orion.attribute('hasOne', {
-    label: 'Marca'
+    label: 'Marca',
+    optional: true
   }, {
     collection: Brands,
     titleField: 'name',
@@ -76,15 +103,21 @@ News.attachSchema({
   },
   title: {
     type: String,
-    label: 'Título'
+    label: 'Título',
+    optional: true
   },
   subtitle: {
     type: String,
-    label: 'Bajada'
+    label: 'Bajada',
+    optional: true
   },
   body: {
     type: String,
-    label: 'Cuerpo'
+    label: 'Cuerpo',
+    optional: true,
+    autoform: {
+      type: 'textarea'
+    }
   },
   media: orion.attribute('images', {
     label: 'Media',
@@ -95,7 +128,13 @@ News.attachSchema({
     label: 'Fecha',
     autoform: {
       type: 'bootstrap-datetimepicker'
-    }
+    },
+    optional: true
+  },
+  url: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Url,
+    optional: true
   },
   space: {
     type: String,
@@ -205,4 +244,9 @@ News.attachSchema({
     label: 'Existe mensaje secreto 5',
     optional: true
   },
+  isReady: {
+    type: Boolean,
+    label: 'Esta categorizado',
+    optional: true
+  }
 });

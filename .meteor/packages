@@ -21,4 +21,6 @@ tsega:bootstrap3-datetimepicker@=3.1.3_3
 aldeed:autoform-bs-datetimepicker
 momentjs:moment
 file-watch
+npm-dependencies
+peerlibrary:xml2js
 pascoual:pdfkit
