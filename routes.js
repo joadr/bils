@@ -9,12 +9,11 @@ Router.route('/admin/export/news',  {
   name: 'news.export'
 });
 
-Router.route('/admin/import/news',  {
-  layoutTemplate: 'orionBootstrapLayout',
-  name: 'news.import'
-});
+orion.accounts.addProtectedRoute('news.export');
 
 Router.route('/admin/news-show/:_id',  {
   layoutTemplate: 'orionBootstrapLayout',
   name: 'collections.news.show'
 });
+
+orion.accounts.addProtectedRoute('collections.news.show');
