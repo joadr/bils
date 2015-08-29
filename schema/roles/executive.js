@@ -1,6 +1,29 @@
 ExecutiveRole = new Roles.Role('ejecutivo');
 
 /**
+ * Groups
+ */
+ExecutiveRole.allow('collections.groups.index', true); // Allows the role to see the link in the sidebar
+ExecutiveRole.helper('collections.groups.indexFilter', function() {
+  var myAgenciesIds = _.pluck(Agencies.find({ executivesIds: this.userId }).fetch(), '_id');
+  return { agencyId: { $in: myAgenciesIds } };
+});
+ExecutiveRole.helper('clients.myGroups', function() {
+  var myAgenciesIds = _.pluck(Agencies.find({ executivesIds: this.userId }).fetch(), '_id');
+  return { agencyId: { $in: myAgenciesIds } };
+});
+
+/**
+ * Brands
+ */
+ExecutiveRole.allow('collections.brands.index', true); // Allows the role to see the link in the sidebar
+ExecutiveRole.helper('collections.brands.indexFilter', function() {
+  var myAgenciesIds = _.pluck(Agencies.find({ executivesIds: this.userId }).fetch(), '_id');
+  var groupsIds = _.pluck(Groups.find({ agencyId: { $in: myAgenciesIds } }).fetch(), '_id');
+  return { groupId: { $in: groupsIds } };
+});
+
+/**
  * Allow the actions of the collection
  */
 ExecutiveRole.allow('collections.news.index', true); // Allows the role to see the link in the sidebar

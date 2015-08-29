@@ -11,6 +11,7 @@ if (Meteor.isClient) {
     title: 'Exportar',
     parent: 'news',
     index: 2,
+    activeRouteRegex: 'news.export',
     routeName: 'news.export',
     permission: 'collections.news.index'
   });
