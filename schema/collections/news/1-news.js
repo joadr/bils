@@ -22,7 +22,7 @@ News = new orion.collection('news', {
         data: '_id',
         title: 'Ver',
         render: function(val) {
-          return val;
+          return '<a href="' + Router.path('collections.news.show', { _id: val }) + '" class="btn btn-xs btn-default">Ver</a>';
         }
       }
     ]
