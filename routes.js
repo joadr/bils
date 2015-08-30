@@ -1,23 +1,24 @@
-Router.route('/admin/export/news/:filename', function () {
-  var row = ExportNews.findOne(this.params.filename);
-  ExportNews.remove(this.params.filename);
+Router.route('/admin/export/news/:exportable', function () {
+  var row = ExportNews.findOne(this.params.exportable);
+  var exportable = row;
+  ExportNews.remove(this.params.exportable);
   // this.response.end(doc.fileType+'\n');
-  var doc = new PDFDocument({size: 'A4', margin: 50});
-  doc.fontSize(12);
-  doc.text('Hola mundo', 10, 30, {align: 'center', width: 200});
-  var result = request.getSync('http://whizzy.azurewebsites.net/files/whizzy-logo-text.png', {
-      encoding: null
-  });
-  var buffer = result.body;
-  
-  doc.image(buffer, 0, 15, { width: 150 });
+  if(exportable.fileType == 'pdf'){
+    var result = Meteor.call("exportPDF", exportable);
+
+    this.response.writeHead(200, {
+      'Content-type': 'application/pdf',
+      'Content-Disposition': "attachment; filename=test.pdf"
+    });
+    this.response.end(result);
+  } else if(exportable.fileType == 'xls'){
+    // para excel
+  } else if(exportable.fileType == 'ppt'){
+    // para powerpoint
+  }
 
 
-  this.response.writeHead(200, {
-    'Content-type': 'application/pdf',
-    'Content-Disposition': "attachment; filename=test.pdf"
-  });
-  this.response.end( doc.outputSync() );
+
 }, {name: 'news.export.file', where: 'server'});
 
 Router.route('/admin/export/news',  {
