@@ -42,7 +42,54 @@ Router.route('/admin/export/news/:exportable', function () {
       'Content-Disposition': "attachment; filename=test.pdf"
     });
     this.response.end( doc.outputSync() );
+
   } else if (exportable.fileType == 'excel') {
+    var fields = [
+      { key: '_id', title: 'ID' },
+      { key: 'createdBy', title: 'Usuario' },
+      { key: 'mediumId', title: 'Medio' },
+      { key: 'suplementId', title: 'Suplemento' },
+      { key: 'section', title: 'Sección' },
+      // { key: 'size', title: 'Tamaño' },
+      { key: 'colorType', title: 'Color' },
+      { key: 'groupId', title: 'Grupo' },
+      //{ key: 'size', title: 'Producto' },
+      // { key: 'size', title: 'Campaña' },
+      { key: 'sentiment', title: 'Sentimiento' },
+      { key: 'relevance', title: 'Relevancia' },
+      { key: 'typeOfNote', title: 'Tipo de nota' },
+      { key: 'opinion', title: 'Opinion' },
+      { key: 'topic', title: 'Tema' },
+      { key: 'size', title: 'Centimetraje' },
+      { key: 'page', title: 'Páginas' },
+      { key: 'title', title: 'Título' },
+      { key: 'body', title: 'Cuerpo' },
+      { key: 'date', title: 'Fecha' },
+      { key: 'duration', title: 'Duración' },
+      { key: 'journalist', title: 'Periodista' },
+      // { key: 'agency', title: 'Agencia' },
+      { key: 'mentionsTheBrandInTheTitle', title: 'Mención Título' },
+      { key: 'mentionsTheBrandInTheBody', title: 'Mención Cuerpo' },
+      // { key: 'size', title: 'Foto' },
+      { key: 'secretMessage0Exists', title: 'Clave' },
+      { key: 'secretMessage1Exists', title: 'Clave 1' },
+      { key: 'secretMessage2Exists', title: 'Clave 2' },
+      { key: 'secretMessage3Exists', title: 'Clave 3' },
+      { key: 'secretMessage4Exists', title: 'Clave 4' },
+      { key: 'secretMessage5Exists', title: 'Clave 5' },
+      { key: 'spokesmans[0]', title: 'Vocero' },
+      { key: 'url', title: 'Link' }
+    ];
+
+    var title = "exportableExcel";
+    file = exportToExcel(title, fields, news);
+    var headers = {
+      'Content-type': 'application/vnd.openxmlformats',
+      'Content-Disposition': 'attachment; filename=' + title + '.xlsx'
+    };
+
+    this.response.writeHead(200, headers);
+    this.response.end(file, 'binary');
 
   }
 }, {name: 'news.export.file', where: 'server'});

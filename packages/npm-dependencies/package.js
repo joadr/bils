@@ -4,7 +4,7 @@ Package.describe({
 });
 
 Npm.depends({
-
+  'excel-export': '0.4.1'
 });
 
 Package.onUse(function(api) {
@@ -13,5 +13,6 @@ Package.onUse(function(api) {
 
   api.addFiles('export.js', 'server');
 
+  api.export('Excel', 'server');
   //api.export();
 });
