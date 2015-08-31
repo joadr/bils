@@ -6,12 +6,12 @@ if (Meteor.isClient) {
     permission: 'collections.agencies.index'
   });
 
-  orion.links.add({
-    identifier: 'agencies-create-user',
+  /*orion.links.add({
+    identifier: 'agencies-users',
     parent: 'agencies',
-    title: 'Crear Usuario',
+    title: 'Usuarios',
     index: 1,
-    permission: 'accounts.showCreate',
-    routeName: 'accounts.create'
-  });
+    permission: 'accounts.index',
+    routeName: 'accounts.index'
+  });*/
 }

@@ -3,11 +3,30 @@ AgencyRole = new Roles.Role('agencia');
 /**
  * Users
  */
+AgencyRole.allow('accounts.index', true);
 AgencyRole.allow('accounts.showCreate', true);
 AgencyRole.allow('accounts.create', true);
 AgencyRole.helper('accounts.allowedRoles', function() {
   return ['cliente', 'ejecutivo'];
 });
+
+// Index filter
+AgencyRole.helper('accounts.indexFilter', function() {
+  var agencies = Agencies.find({ adminsIds: this.userId }).fetch();
+  var agencyAdmins = _.flatten(_.pluck(agencies, 'adminsIds'));
+
+  var agencyGroups = _.flatten(_.pluck(agencies, 'groupsIds'));
+  var groups = Groups.find({ _id: { $in: agencyGroups } }).fetch();
+
+  var groupsIds = _.pluck(groups, '_id');
+  var brands = Brands.find({ groupId: { $in: groupsIds } }).fetch();
+
+  var clientsIds = _.flatten(_.pluck(brands, 'clientsIds'));
+
+  var userIds = _.union(clientsIds, agencyAdmins);
+  return { _id: { $in: userIds } };
+});
+
 
 /**
  * Agencies
