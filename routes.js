@@ -1,3 +1,8 @@
+function getName(collection, id){
+  return this[collection].findOne(id).name;
+}
+
+
 Router.route('/admin/export/news/:exportable', function () {
   var row = ExportNews.findOne(this.params.exportable);
   exportable = row;
@@ -8,7 +13,7 @@ Router.route('/admin/export/news/:exportable', function () {
     doc.fontSize(12);
 
     news.forEach(function(element, index, array){
-      // we add a page per new
+      // we add a page per news
       if(index != 0){
         doc.addPage();
       }
@@ -21,7 +26,7 @@ Router.route('/admin/export/news/:exportable', function () {
 
       doc.image(buffer, 400, 10, { width: 100 });
 
-      // we put the new photo
+      // we put the news photo
       var result = request.getSync(element.media[0].url, {
         encoding: null
       });
@@ -29,30 +34,56 @@ Router.route('/admin/export/news/:exportable', function () {
 
       doc.image(buffer, 10, 60, { width: 580, height: 580 });
 
-      // the new data
-      doc.text("TITULO: "+element.title, 10, 650);
-      doc.text("SUPLEMENTO: "+element.suplementId);
-      doc.text("FECHA: "+moment(element.date).format('LL'));
-      doc.text("CENTIMETRAJE: "+element.size);
-      doc.text("VALOR APROX: "+element.title);
+
+      // the news data
+      doc.text("TITULO: " + element.title, 10, 650);
+      doc.text("SUPLEMENTO: " + getName('Suplements', element.suplementId));
+      //doc.text("SUPLEMENTO: " + element.suplementId);
+      doc.text("FECHA: " + moment(element.date).format('LL'));
+      doc.text("CENTIMETRAJE: " + element.size);
+      doc.text("VALOR APROX: " + element.title);
     });
 
     this.response.writeHead(200, {
       'Content-type': 'application/pdf',
-      'Content-Disposition': "attachment; filename=test.pdf"
+      'Content-Disposition': "attachment; filename=exportable.pdf"
     });
     this.response.end( doc.outputSync() );
 
   } else if (exportable.fileType == 'excel') {
     var fields = [
       { key: '_id', title: 'ID' },
-      { key: 'createdBy', title: 'Usuario' },
-      { key: 'mediumId', title: 'Medio' },
-      { key: 'suplementId', title: 'Suplemento' },
+      {
+        key: 'createdBy',
+        title: 'Usuario',
+        transform: function(createdBy) {
+          return Meteor.users.findOne(createdBy).profile.name;
+        }
+      },
+      {
+        key: 'mediumId',
+        title: 'Medio',
+        transform: function(id) {
+          return Mediums.findOne(id).name;
+        }
+      },
+      {
+        key: 'suplementId',
+        title: 'Suplemento',
+        transform: function(id) {
+          return Suplements.findOne(id).name;
+        }
+      },
       { key: 'section', title: 'Sección' },
       // { key: 'size', title: 'Tamaño' },
       { key: 'colorType', title: 'Color' },
-      { key: 'groupId', title: 'Grupo' },
+      {
+        key: 'groupId',
+        title: 'Grupo',
+        transform: function(id) {
+          return Groups.findOne(id).name;
+        }
+      },
       //{ key: 'size', title: 'Producto' },
       // { key: 'size', title: 'Campaña' },
       { key: 'sentiment', title: 'Sentimiento' },
@@ -77,7 +108,14 @@ Router.route('/admin/export/news/:exportable', function () {
       { key: 'secretMessage3Exists', title: 'Clave 3' },
       { key: 'secretMessage4Exists', title: 'Clave 4' },
       { key: 'secretMessage5Exists', title: 'Clave 5' },
-      { key: 'spokesmans[0]', title: 'Vocero' },
+      // { key: 'spokesmans[0]', title: 'Vocero' },
+      {
+        key: 'suplementId',
+        title: 'Suplemento',
+        transform: function(id) {
+          return Suplements.findOne(id).name;
+        }
+      },
       { key: 'url', title: 'Link' }
     ];
 
