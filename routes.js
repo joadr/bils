@@ -1,5 +1,6 @@
 function getName(collection, id){
-  return this[collection].findOne(id).name;
+  var doc = this[collection].findOne(id);
+  return doc && doc.name;
 }
 
 
@@ -57,21 +58,24 @@ Router.route('/admin/export/news/:exportable', function () {
         key: 'createdBy',
         title: 'Usuario',
         transform: function(createdBy) {
-          return Meteor.users.findOne(createdBy).profile.name;
+          var user = Meteor.users.findOne(createdBy);
+          return user && user.profile.name;
         }
       },
       {
         key: 'mediumId',
         title: 'Medio',
         transform: function(id) {
-          return Mediums.findOne(id).name;
+          var medium = Mediums.findOne(id);
+          return medium && medium.name;
         }
       },
       {
         key: 'suplementId',
         title: 'Suplemento',
         transform: function(id) {
-          return Suplements.findOne(id).name;
+          var suplement = Suplements.findOne(id);
+          return suplement && suplement.name;
         }
       },
       { key: 'section', title: 'Sección' },
@@ -81,7 +85,8 @@ Router.route('/admin/export/news/:exportable', function () {
         key: 'groupId',
         title: 'Grupo',
         transform: function(id) {
-          return Groups.findOne(id).name;
+          var group = Groups.findOne(id);
+          return group && group.name;
         }
       },
       //{ key: 'size', title: 'Producto' },
@@ -113,7 +118,8 @@ Router.route('/admin/export/news/:exportable', function () {
         key: 'suplementId',
         title: 'Suplemento',
         transform: function(id) {
-          return Suplements.findOne(id).name;
+          var suplement = Suplements.findOne(id);
+          return suplement && suplement.name;
         }
       },
       { key: 'url', title: 'Link' }
