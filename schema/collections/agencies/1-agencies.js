@@ -23,17 +23,19 @@ Agencies.attachSchema({
     label: 'Logo',
     optional: true
   }),
-  adminsIds: orion.attribute('users', {
+  adminsIds: orion.attribute('users-roles', {
     label: 'Administradores',
     optional: true
   }, {
-    publicationName: 'agencies_adminsIds_schema'
+    publicationName: 'agencies_adminsIds_schema',
+    roles: ['agencia']
   }),
-  executivesIds: orion.attribute('users', {
+  executivesIds: orion.attribute('users-roles', {
     label: 'Ejecutivos',
     optional: true
   }, {
-    publicationName: 'agencies_executivesIds_schema'
+    publicationName: 'agencies_executivesIds_schema',
+    roles: ['ejecutivo']
   }),
   createdAt: orion.attribute('createdAt')
 });
