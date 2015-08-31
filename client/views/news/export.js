@@ -6,7 +6,7 @@ Template.newsExport.events({
 
 AutoForm.addHooks('newsExportForm', {
   onSuccess: function(formType, result) {
-    Router.go('news.export.file', {filename: result});
+    Router.go('news.export.file', {exportable: result});
     //RouterLayer.go(this.collection.indexPath());
   }
 });
