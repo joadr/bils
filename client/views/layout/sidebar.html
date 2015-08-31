@@ -1,7 +1,7 @@
 <template name="sidebar">
   <ul class="sidebar-nav orion-links">
     <li class="sidebar-brand">
-      {{# if currentUser.hasRole 'cliente' }}
+      {{# if showAgencyLogo }}
         {{# if agency.logo }}
           <img src="{{ agency.logo.url }}" alt="{{ agency.name }}" style="height: 45px" />
         {{ else }}
