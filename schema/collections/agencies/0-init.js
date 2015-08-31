@@ -1,4 +1,5 @@
 if (Meteor.isClient) {
+  /*
   orion.links.add({
     identifier: 'agencies',
     title: 'Agencias',
@@ -6,12 +7,13 @@ if (Meteor.isClient) {
     permission: 'collections.agencies.index'
   });
 
-  /*orion.links.add({
+  orion.links.add({
     identifier: 'agencies-users',
     parent: 'agencies',
     title: 'Usuarios',
     index: 1,
     permission: 'accounts.index',
     routeName: 'accounts.index'
-  });*/
+  });
+  */
 }
