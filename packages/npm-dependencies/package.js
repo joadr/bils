@@ -4,7 +4,8 @@ Package.describe({
 });
 
 Npm.depends({
-  'excel-export': '0.4.1'
+  'excel-export': '0.4.1',
+  'officegen': '0.2.9'
 });
 
 Package.onUse(function(api) {
@@ -14,5 +15,6 @@ Package.onUse(function(api) {
   api.addFiles('export.js', 'server');
 
   api.export('Excel', 'server');
+  api.export('Officegen', 'server');
   //api.export();
 });
