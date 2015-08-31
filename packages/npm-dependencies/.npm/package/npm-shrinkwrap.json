@@ -25,6 +25,54 @@
           }
         }
       }
+    },
+    "officegen": {
+      "version": "0.2.9",
+      "dependencies": {
+        "setimmediate": {
+          "version": "1.0.2"
+        },
+        "readable-stream": {
+          "version": "1.0.33",
+          "dependencies": {
+            "core-util-is": {
+              "version": "1.0.1"
+            },
+            "isarray": {
+              "version": "0.0.1"
+            },
+            "string_decoder": {
+              "version": "0.10.31"
+            },
+            "inherits": {
+              "version": "2.0.1"
+            }
+          }
+        },
+        "archiver": {
+          "version": "0.4.10",
+          "dependencies": {
+            "iconv-lite": {
+              "version": "0.2.11"
+            }
+          }
+        },
+        "fast-image-size": {
+          "version": "0.1.2"
+        },
+        "underscore": {
+          "version": "1.4.4"
+        },
+        "stream-buffers": {
+          "version": "2.2.0"
+        },
+        "async": {
+          "version": "0.2.10"
+        },
+        "startpoint": {
+          "version": "0.3.2"
+        }
+      }
     }
   }
 }
