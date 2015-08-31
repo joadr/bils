@@ -30,9 +30,10 @@ Brands.attachSchema({
       return { $or: selectors };
     }
   }),
-  clientsIds: orion.attribute('users', {
+  clientsIds: orion.attribute('users-roles', {
     label: 'Clientes'
   }, {
-    publicationName: 'brands_clientsIds_schema'
+    publicationName: 'brands_clientsIds_schema',
+    roles: ['cliente']
   })
 });
