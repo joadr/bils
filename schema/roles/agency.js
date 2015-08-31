@@ -14,6 +14,7 @@ AgencyRole.helper('accounts.allowedRoles', function() {
 AgencyRole.helper('accounts.indexFilter', function() {
   var agencies = Agencies.find({ adminsIds: this.userId }).fetch();
   var agencyAdmins = _.flatten(_.pluck(agencies, 'adminsIds'));
+  var agencyExecutives = _.flatten(_.pluck(agencies, 'executivesIds'));
 
   var agencyGroups = _.flatten(_.pluck(agencies, 'groupsIds'));
   var groups = Groups.find({ _id: { $in: agencyGroups } }).fetch();
@@ -23,7 +24,7 @@ AgencyRole.helper('accounts.indexFilter', function() {
 
   var clientsIds = _.flatten(_.pluck(brands, 'clientsIds'));
 
-  var userIds = _.union(clientsIds, agencyAdmins);
+  var userIds = _.union(clientsIds, agencyAdmins, agencyExecutives);
   return { _id: { $in: userIds } };
 });
 
