@@ -105,6 +105,7 @@ underscore@1.0.3
 url@1.0.4
 useraccounts:bootstrap@1.11.1
 useraccounts:core@1.12.3
+useraccounts:iron-routing@1.12.3
 vsivsi:file-collection@1.1.5
 vsivsi:orion-file-collection@0.1.0
 webapp@1.2.0

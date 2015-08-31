@@ -26,7 +26,7 @@ Brands.attachSchema({
     publicationName: 'brands_groupId_schema',
     additionalFields: ['agencyId'],
     filter: function(userId) {
-      var selectors = Roles.helper(userId, 'clients.myGroups') || null;
+      var selectors = Roles.helper(userId, 'clients.myGroups') || [];
       return { $or: selectors };
     }
   }),

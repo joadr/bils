@@ -132,6 +132,10 @@ Router.route('/admin/export/news/:exportable', function () {
   }
 }, {name: 'news.export.file', where: 'server'});
 
+Router.route('/', function() {
+  this.router.go(Options.get('adminHomeRoute'), {}, { replaceState: true });
+});
+
 Router.route('/admin/export/news',  {
   layoutTemplate: 'orionBootstrapLayout',
   name: 'news.export'
