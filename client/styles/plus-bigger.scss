@@ -1,10 +1,19 @@
 .title {
   .btn.btn-default {
-    border-radius: 50%;
+    margin-top: 20px;
     float: right;
+    background-color: #d9534f;
+    border: 0;
+    padding: 6px 6px 4px 6px;
     .fa-plus {
-      font-size: 30px;
-      padding: 4px 2px 3px 2px;
+      font-size: 16px;
+      color: #ffffff;
+
+      &:before {
+        content: 'Crear';
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 600;
+      }
     }
   }
 }
