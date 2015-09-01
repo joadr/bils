@@ -9,7 +9,8 @@ Brands = new orion.collection('brands', {
   tabular: {
     columns: [
       { data: 'name', title: 'Nombre' },
-      orion.attributeColumn('hasOne', 'groupId', 'Grupo')
+      orion.attributeColumn('hasOne', 'groupId', 'Grupo'),
+      orion.attributeColumn('tags', 'keywords', 'Keywords')
     ]
   }
 });
@@ -31,9 +32,14 @@ Brands.attachSchema({
     }
   }),
   clientsIds: orion.attribute('users-roles', {
-    label: 'Clientes'
+    label: 'Clientes',
+    optional: true
   }, {
     publicationName: 'brands_clientsIds_schema',
     roles: ['cliente']
+  }),
+  keywords: orion.attribute('tags', {
+    label: 'Keywords',
+    optional: true
   })
 });
