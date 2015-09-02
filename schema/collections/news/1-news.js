@@ -20,9 +20,10 @@ News = new orion.collection('news', {
       },
       {
         data: '_id',
-        title: 'Ver',
+        title: 'Acciones',
         render: function(val) {
-          return '<a href="' + Router.path('collections.news.show', { _id: val }) + '" class="btn btn-xs btn-default">Ver</a>';
+          return '<a href="' + Router.path('collections.news.show', { _id: val }) + '" class="btn btn-xs btn-default">Ver</a> ' +
+          '<a href="' + Router.path('collections.news.data', { _id: val }) + '" class="btn btn-xs btn-default">Categorizar</a>';
         }
       }
     ]
@@ -48,71 +49,6 @@ News.attachSchema({
     }
   },
   createdBy: orion.attribute('createdBy'),
-  mediumId: orion.attribute('hasOne', {
-    label: 'Medio',
-    optional: true
-  }, {
-    collection: Mediums,
-    titleField: 'name',
-    publicationName: 'news_mediumId_schema',
-  }),
-  suplementId: orion.attribute('hasOne', {
-    label: 'Suplemento',
-    optional: true
-  }, {
-    collection: Suplements,
-    titleField: 'name',
-    additionalFields: ['mediumId'],
-    publicationName: 'news_suplementId_schema',
-    filter: function(userId) {
-      if (Meteor.isServer) {
-        return {};
-      } else {
-        var mediumId = AutoForm.getFieldValue('mediumId');
-        return mediumId ? { mediumId: mediumId } : {};
-      }
-    }
-  }),
-  groupId: orion.attribute('hasOne', {
-    label: 'Grupo',
-    optional: true
-  }, {
-    collection: Groups,
-    titleField: 'name',
-    publicationName: 'news_groupId_schema',
-    additionalFields: ['agencyId'],
-    filter: function(userId) {
-      var selectors = Roles.helper(userId, 'clients.myGroups') || null;
-      return { $or: selectors };
-    }
-  }),
-  brandId: orion.attribute('hasOne', {
-    label: 'Marca',
-    optional: true
-  }, {
-    collection: Brands,
-    titleField: 'name',
-    additionalFields: ['groupId'],
-    publicationName: 'news_brandId_schema',
-    filter: function(userId) {
-      if (Meteor.isServer) {
-        return {};
-      } else {
-        var groupId = AutoForm.getFieldValue('groupId');
-        return groupId ? { groupId: groupId } : {};
-      }
-    }
-  }),
-  page: {
-    type: String,
-    label: 'Página',
-    optional: true
-  },
-  section: {
-    type: String,
-    label: 'Sección',
-    optional: true
-  },
   title: {
     type: String,
     label: 'Título',
@@ -146,119 +82,6 @@ News.attachSchema({
   url: {
     type: String,
     regEx: SimpleSchema.RegEx.Url,
-    optional: true
-  },
-  space: {
-    type: String,
-    label: 'Espacio',
-    optional: true
-  },
-  size: {
-    type: String,
-    label: 'Centrimetage',
-    optional: true
-  },
-  duration: {
-    type: String,
-    label: 'Duración',
-    optional: true
-  },
-  journalist: {
-    type: String,
-    label: 'Periodista',
-    optional: true
-  },
-  colorType: {
-    type: String,
-    allowedValues: ['yes', 'no', 'not-the-case'],
-    label: 'Es a color',
-    autoform: {
-      options: {
-        'not-the-case': 'No aplica',
-        yes: 'Si',
-        no: 'No'
-      }
-    },
-    optional: true
-  },
-  sentiment: {
-    type: String,
-    label: 'Sentimiento',
-    optional: true
-  },
-  typeOfNote: {
-    type: String,
-    label: 'Tipo de nota',
-    optional: true
-  },
-  opinion: {
-    type: String,
-    label: 'Opinión',
-    optional: true
-  },
-  topic: {
-    type: String,
-    label: 'Tema',
-    optional: true
-  },
-  relevance: {
-    type: String,
-    label: 'Relevancia',
-    optional: true
-  },
-  mentionsTheBrandInTheTitle: {
-    type: Boolean,
-    label: 'Menciona a la marca en el título',
-    optional: true
-  },
-  mentionsTheBrandInTheBody: {
-    type: Boolean,
-    label: 'Menciona a la marca en el cuerpo',
-    optional: true
-  },
-  bransAppearsVisually: {
-    type: Boolean,
-    label: 'La marca aparece en la foto',
-    optional: true
-  },
-  spokesmans: {
-    type: [String],
-    label: 'Voceros',
-    optional: true
-  },
-  secretMessage0Exists: {
-    type: Boolean,
-    label: 'Existe mensaje secreto 0',
-    optional: true
-  },
-  secretMessage1Exists: {
-    type: Boolean,
-    label: 'Existe mensaje secreto 1',
-    optional: true
-  },
-  secretMessage2Exists: {
-    type: Boolean,
-    label: 'Existe mensaje secreto 2',
-    optional: true
-  },
-  secretMessage3Exists: {
-    type: Boolean,
-    label: 'Existe mensaje secreto 3',
-    optional: true
-  },
-  secretMessage4Exists: {
-    type: Boolean,
-    label: 'Existe mensaje secreto 4',
-    optional: true
-  },
-  secretMessage5Exists: {
-    type: Boolean,
-    label: 'Existe mensaje secreto 5',
-    optional: true
-  },
-  isReady: {
-    type: Boolean,
-    label: 'Esta categorizado',
     optional: true
   }
 });

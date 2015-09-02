@@ -13,8 +13,39 @@ SuplementsTypes = new orion.collection('suplements_types', {
   }
 });
 
+SchemaDeclarationSchema = new SimpleSchema({
+  key: {
+    type: String,
+    label: 'Identificador',
+    regEx: /^[a-zA-Z]+$/
+  },
+  title: {
+    type: String,
+    label: 'Título'
+  },
+  type: {
+    type: String,
+    label: 'Tipo',
+    allowedValues: ['string', 'number', 'date', 'file', 'boolean'],
+    autoform: {
+      noselect: true,
+      options: {
+        string: 'Texto',
+        number: 'Numero',
+        date: 'Fecha',
+        file: 'Archivo',
+        boolean: 'Verdadero/Falso'
+      }
+    }
+  }
+});
+
 SuplementsTypes.attachSchema({
   name: {
     type: String
+  },
+  attributes: {
+    type: [SchemaDeclarationSchema],
+    label: 'Atributos'
   }
 });

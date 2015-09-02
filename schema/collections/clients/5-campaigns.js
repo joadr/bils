@@ -71,11 +71,8 @@ Campaigns.attachSchema({
       }
     }
   }),
-  products: {
-    type: [String],
+  products: orion.attribute('tags', {
     label: 'Productos',
     optional: true
-  }
-
-
+  })
 });

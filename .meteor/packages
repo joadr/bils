@@ -12,6 +12,7 @@ orionjs:core
 orionjs:bootstrap
 orionjs:lang-es
 orionjs:image-attribute
+orionjs:file-attribute
 orionjs:relationships
 vsivsi:orion-file-collection
 nicolaslopezj:orion-exporter

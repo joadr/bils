@@ -25,14 +25,36 @@ Agencies.attachSchema({
   }),
   adminsIds: orion.attribute('users-roles', {
     label: 'Administradores',
-    optional: true
+    optional: true,
+    custom: function() {
+      if (!_.isArray(this.value)) return;
+      var count = Agencies.find({
+        _id: { $ne: this.docId },
+        $or: [
+          { adminsIds: { $in: this.value } },
+          { executivesIds: { $in: this.value } }
+        ]
+      }).count();
+      return count == 0 ? true : 'userInOtherAgency';
+    }
   }, {
     publicationName: 'agencies_adminsIds_schema',
     roles: ['agencia']
   }),
   executivesIds: orion.attribute('users-roles', {
     label: 'Ejecutivos',
-    optional: true
+    optional: true,
+    custom: function() {
+      if (!_.isArray(this.value)) return;
+      var count = Agencies.find({
+        _id: { $ne: this.docId },
+        $or: [
+          { adminsIds: { $in: this.value } },
+          { executivesIds: { $in: this.value } }
+        ]
+      }).count();
+      return count == 0 ? true : 'userInOtherAgency';
+    }
   }, {
     publicationName: 'agencies_executivesIds_schema',
     roles: ['ejecutivo']

@@ -213,3 +213,10 @@ Router.route('/admin/news-show/:_id',  {
 });
 
 orion.accounts.addProtectedRoute('collections.news.show');
+
+Router.route('/admin/news-data/:_id',  {
+  layoutTemplate: 'orionBootstrapLayout',
+  name: 'collections.news.data'
+});
+
+orion.accounts.addProtectedRoute('collections.news.data');
