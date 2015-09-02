@@ -79,7 +79,6 @@ orionjs:image-attribute@1.4.3
 orionjs:lang-en@1.4.0
 orionjs:lang-es@1.4.0
 orionjs:relationships@1.4.3
-pascoual:pdfkit@1.0.5
 peerlibrary:blocking@0.5.2
 peerlibrary:xml2js@0.4.8_1
 random@1.0.3

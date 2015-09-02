@@ -5,7 +5,8 @@ Package.describe({
 
 Npm.depends({
   'excel-export': '0.4.1',
-  'officegen': '0.2.9'
+  'officegen': '0.2.9',
+  'pdfkit': '0.7.1'
 });
 
 Package.onUse(function(api) {
@@ -16,5 +17,10 @@ Package.onUse(function(api) {
 
   api.export('Excel', 'server');
   api.export('Officegen', 'server');
+
+  api.use(['underscore'], 'server');
+  api.export('PDFDocument');
+  api.add_files(['pdfkitWrapper.js'], 'server');
   //api.export();
+
 });

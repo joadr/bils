@@ -10,7 +10,7 @@ Router.route('/admin/export/news/:exportable', function () {
   var news = News.find({groupId: {$in: exportable.groupsIds }, brandId: {$in: exportable.brandsIds} }).fetch();
 
   if(exportable.fileType == 'pdf'){
-    var doc = new PDFDocument({size: 'A4', margin: 50});
+    var doc = new PDFDocument({size: [961, 539], layout: 'portrait'/*, margin: 50*/});
     doc.fontSize(12);
 
     news.forEach(function(element, index, array){
@@ -25,7 +25,7 @@ Router.route('/admin/export/news/:exportable', function () {
       });
       var buffer = result.body;
 
-      doc.image(buffer, 400, 10, { width: 100 });
+      doc.image(buffer, 10, 10, { width: 200 });
 
       // we put the news photo
       var result = request.getSync(element.media[0].url, {
@@ -33,16 +33,46 @@ Router.route('/admin/export/news/:exportable', function () {
       });
       var buffer = result.body;
 
-      doc.image(buffer, 10, 60, { width: 580, height: 580 });
+      doc.image(buffer, 350, 40, { width: 580, height: 580 });
 
 
       // the news data
-      doc.text("TITULO: " + element.title, 10, 650);
-      doc.text("SUPLEMENTO: " + getName('Suplements', element.suplementId));
-      //doc.text("SUPLEMENTO: " + element.suplementId);
-      doc.text("FECHA: " + moment(element.date).format('LL'));
-      doc.text("CENTIMETRAJE: " + element.size);
-      doc.text("VALOR APROX: " + element.title);
+      data = [
+        { title: 'TITULO', data: element.title },
+        { title: 'MEDIO', data: getName('Mediums', element.mediumId) },
+        // { title: 'SUPLEMENTO', data: element.title },
+        { title: 'FECHA', data: moment(element.date).format('LL') },
+        { title: 'CENTIMETRAJE', data: element.size },
+        { title: 'Ad Value', data: 'Test' },
+      ];
+      options = {
+        columns: [
+          { id: 'title', width: 35, name: '' },
+          { id: 'data', width: 65, name: '' }
+        ],
+        margins: {
+          left: 20,
+          top: 40,
+          right: 20,
+          bottom: 0
+        },
+        padding: {
+          left: 10,
+          top: 10,
+          right: 10,
+          bottom: 10
+        }
+      };
+
+      doc.table(data, options)
+
+
+      // doc.text("TITULO: " + element.title, 10, 350);
+      // doc.text("SUPLEMENTO: " + getName('Suplements', element.suplementId));
+      // //doc.text("SUPLEMENTO: " + element.suplementId);
+      // doc.text("FECHA: " + moment(element.date).format('LL'));
+      // doc.text("CENTIMETRAJE: " + element.size);
+      // doc.text("VALOR APROX: " + element.title);
     });
 
     this.response.writeHead(200, {

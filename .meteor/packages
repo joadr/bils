@@ -23,7 +23,6 @@ momentjs:moment
 file-watch
 npm-dependencies
 peerlibrary:xml2js
-pascoual:pdfkit
 froatsnook:request
 nicolaslopezj:orion-users-with-roles-attribute
 useraccounts:iron-routing

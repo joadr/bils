@@ -73,6 +73,22 @@
           "version": "0.3.2"
         }
       }
+    },
+    "pdfkit": {
+      "version": "0.7.1",
+      "dependencies": {
+        "png-js": {
+          "version": "0.1.1"
+        },
+        "linebreak": {
+          "version": "0.1.2",
+          "dependencies": {
+            "unicode-trie": {
+              "version": "0.1.2"
+            }
+          }
+        }
+      }
     }
   }
 }
