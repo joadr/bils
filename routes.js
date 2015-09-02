@@ -64,15 +64,15 @@ Router.route('/admin/export/news/:exportable', function () {
         }
       };
 
-      doc.table(data, options)
+      //doc.table(data, options)
 
 
-      // doc.text("TITULO: " + element.title, 10, 350);
-      // doc.text("SUPLEMENTO: " + getName('Suplements', element.suplementId));
-      // //doc.text("SUPLEMENTO: " + element.suplementId);
-      // doc.text("FECHA: " + moment(element.date).format('LL'));
-      // doc.text("CENTIMETRAJE: " + element.size);
-      // doc.text("VALOR APROX: " + element.title);
+      doc.text("TITULO: " + element.title, 10, 350);
+      doc.text("SUPLEMENTO: " + getName('Suplements', element.suplementId));
+      //doc.text("SUPLEMENTO: " + element.suplementId);
+      doc.text("FECHA: " + moment(element.date).format('LL'));
+      doc.text("CENTIMETRAJE: " + element.size);
+      doc.text("VALOR APROX: " + element.title);
     });
 
     this.response.writeHead(200, {
@@ -164,6 +164,34 @@ Router.route('/admin/export/news/:exportable', function () {
 
     this.response.writeHead(200, headers);
     this.response.end(file, 'binary');
+
+  } else if(exportable.fileType == 'pptx'){
+    var pptx = officegen ( 'pptx' );
+
+    var title = "exportablePPTX";
+    var headers = {
+      'Content-type': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'Content-Disposition': 'attachment; filename=' + title + '.pptx'
+    };
+    news.forEach(function(element, index, array){
+      // we create a slide per each news
+      slide = pptx.makeNewSlide();
+
+      // we add the company's logo on each slide
+      var result = request.getSync('http://whizzy.azurewebsites.net/files/whizzy-logo-text.png', {
+          encoding: null
+      });
+      var buffer = result.body;
+      slide.addImage ( buffer, {x: 25, y: 25} );
+
+      // we add the new image
+
+
+
+    });
+
+    this.response.writeHead(200, headers);
+    pptx.generate(this.response);
 
   }
 }, {name: 'news.export.file', where: 'server'});
