@@ -1,12 +1,11 @@
-ExportNews = new Mongo.Collection("exportNews");
-
-ExportNewsSchema = new SimpleSchema({
+SearchNewsSchema = new SimpleSchema({
   groupsIds: orion.attribute('hasMany', {
-    label: 'Grupos'
+    label: 'Grupos',
+    optional: true
   }, {
     collection: Groups,
     titleField: 'name',
-    publicationName: 'export_news_groupsIds_schema',
+    publicationName: 'search_news_groupsIds_schema',
     additionalFields: ['agencyId'],
     filter: function(userId) {
       var selectors = Roles.helper(userId, 'clients.myGroups') || null;
@@ -14,12 +13,13 @@ ExportNewsSchema = new SimpleSchema({
     }
   }),
   brandsIds: orion.attribute('hasMany', {
-    label: 'Marcas'
+    label: 'Marcas',
+    optional: true
   }, {
     collection: Brands,
     titleField: 'name',
     additionalFields: ['groupId'],
-    publicationName: 'export_news_brandsIds_schema',
+    publicationName: 'search_news_brandsIds_schema',
     filter: function(userId) {
       var selectors = Roles.helper(userId, 'clients.myBrands') || null;
       var myBrandsFilter = { $or: selectors };
@@ -45,30 +45,8 @@ ExportNewsSchema = new SimpleSchema({
       type: 'bootstrap-datetimepicker'
     }
   },
-  fileType: {
+  filter: {
     type: String,
-    label: 'Formato de exportable',
-    allowedValues: ['excel', 'pdf', 'pptx'],
-    autoform: {
-      options: {
-        excel: 'Excel',
-        pdf: 'Pdf',
-        pptx: 'Power Point'
-      }
-    }
-  }
-});
-
-ExportNews.attachSchema(ExportNewsSchema);
-
-ExportNews.allow({
-  insert: function (userId, doc) {
-    return true;
-  },
-  update: function (userId, doc, fields, modifier) {
-    return true;
-  },
-  remove: function (userId, doc) {
-    return true;
+    label: 'Filtro'
   }
 });

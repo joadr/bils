@@ -3,15 +3,30 @@ Template.collectionsNewsData.onCreated(function() {
   self.autorun(function() {
     var articleId = Router.current().params._id;
     self.subscribe('newsData.forUser', articleId);
-  })
+  });
+
+  self.autorun(function() {
+    var articleId = Router.current().params._id;
+    var userId = Meteor.userId();
+    var agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
+    var newsData = agency && NewsData.findOne({ articleId: articleId, agencyId: agency._id });
+    if (newsData && !Session.get('currentNewsDataType')) {
+      Session.set('currentNewsDataType', newsData.typeId);
+    }
+  });
 });
 
 Template.collectionsNewsData.helpers({
+  agency: function() {
+    var userId = Meteor.userId();
+    return Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
+  },
   newsData: function() {
     var articleId = Router.current().params._id;
     var userId = Meteor.userId();
     var agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
-    return agency && NewsData.findOne({ articleId: articleId, agencyId: agency._id });
+    var newsData = agency && NewsData.findOne({ articleId: articleId, agencyId: agency._id });
+    return newsData;
   },
   getSchema: function() {
     var typeId = Session.get('currentNewsDataType');
@@ -20,9 +35,7 @@ Template.collectionsNewsData.helpers({
 
     var attributes = {};
     _.each(type.attributes, function(attribute) {
-      attributes[attribute.key] = {
-        label: attribute.title
-      };
+      attributes[attribute.key] = {};
 
       if (attribute.type == 'number') {
         attributes[attribute.key].type = Number;
@@ -32,9 +45,7 @@ Template.collectionsNewsData.helpers({
           type: 'bootstrap-datetimepicker'
         };
       } else if (attribute.type == 'file') {
-        attributes[attribute.key] = orion.attribute('file', {
-          label: attribute.title
-        });
+        attributes[attribute.key] = orion.attribute('file');
       } else if (attribute.type == 'boolean') {
         attributes[attribute.key].type = Boolean;
         attributes[attribute.key].autoform = {
@@ -43,13 +54,15 @@ Template.collectionsNewsData.helpers({
       } else {
         attributes[attribute.key].type = String;
       }
+
+      attributes[attribute.key].label = attribute.title;
+      attributes[attribute.key].optional = attribute.optional;
     });
 
     var schema = new SimpleSchema(attributes);
     var parentAttributes = _.clone(NewsDataSchemaAttributes);
     parentAttributes.data = {
-      type: schema,
-      optional: true
+      type: schema
     }
 
     return new SimpleSchema(parentAttributes);

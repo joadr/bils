@@ -37,6 +37,10 @@ SchemaDeclarationSchema = new SimpleSchema({
         boolean: 'Verdadero/Falso'
       }
     }
+  },
+  optional: {
+    type: Boolean,
+    label: 'Opcional'
   }
 });
 

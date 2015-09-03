@@ -1,0 +1,35 @@
+<template name="collectionsNewsIndex">
+  {{# Layout template="orionBootstrapMediumContentOffset" }}
+    {{# Layout template="orionBootstrapTitle" }}
+      {{ collection.title }}
+      {{# if collection.canShowCreate }}
+        <a href="{{ collection.createPath }}" class="btn btn-default btn-xs"><i class="fa fa-plus"></i></a>
+      {{/ if }}
+    {{/ Layout }}
+    <div class="controls ">
+      {{# autoForm schema="SearchNewsSchema" id="collectionsNewsIndexSearchForm" }}
+        <div class="row">
+          <div class="col-sm-2">
+            {{> afQuickField name='groupsIds' }}
+          </div>
+          <div class="col-sm-2">
+            {{> afQuickField name='brandsIds' }}
+          </div>
+          <div class="col-sm-2">
+            {{> afQuickField name='fromDate' }}
+          </div>
+          <div class="col-sm-2">
+            {{> afQuickField name='toDate' }}
+          </div>
+          <div class="col-sm-2">
+            {{> afQuickField name='filter' }}
+          </div>
+          <div class="col-sm-2">
+            <label for="">Buscar</label>
+            <button class="btn btn-block btn-primary">Buscar</button>
+          </div>
+        </div>
+      {{/ autoForm }}
+    </div>
+  {{/ Layout }}
+</template>
