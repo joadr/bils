@@ -6,17 +6,6 @@
     {{# Layout template="orionBootstrapContentContainer" }}
       {{#if Template.subscriptionsReady}}
         {{# with article }}
-          {{# with medium }}
-            <p>
-              <i>Por:</i>
-              <b>
-                {{ name }}
-                {{# with sumplement }}
-                  {{ name }}
-                {{/ with }}
-              </b>
-            </p>
-          {{/ with }}
           <p>
             <small>
               {{ dateFormat date 'LL' }}
@@ -49,53 +38,7 @@
             </p>
           {{/ with }}
 
-          {{# with space }}
-            <p>
-              Espacio: <b>{{ this }}</b>
-            </p>
-          {{/ with }}
-
-          {{# with size }}
-            <p>
-              Centrimetage: <b>{{ this }}</b>
-            </p>
-          {{/ with }}
-
-          {{# with journalist }}
-            <p>
-              Periodista: <b>{{ this }}</b>
-            </p>
-          {{/ with }}
-
-          {{# with sentiment }}
-            <p>
-              Sentimiento: <b>{{ this }}</b>
-            </p>
-          {{/ with }}
-
-          {{# with typeOfNote }}
-            <p>
-              Tipo de nota: <b>{{ this }}</b>
-            </p>
-          {{/ with }}
-
-          {{# with opinion }}
-            <p>
-              Opinión: <b>{{ this }}</b>
-            </p>
-          {{/ with }}
-
-          {{# with topic }}
-            <p>
-              Tema: <b>{{ this }}</b>
-            </p>
-          {{/ with }}
-
-          {{# with relevance }}
-            <p>
-              Relevancia: <b>{{ this }}</b>
-            </p>
-          {{/ with }}
+          <h1>Joaquin terminar esto plss</h1>
         {{ else }}
           <p>
             No se encontró el artículo
