@@ -30,14 +30,38 @@
     <div class="data">
       {{# if totalCount }}
         <p>
+          {{# if checkedCount }}
+            <span class="pull-right">
+              <b style="margin-right: 8px;">
+                Exportar {{ checkedCount }}
+              </b>
+              <big>
+                <a href="#" class="export-btn" data-type="pdf" style="margin-right: 5px;">
+                   <i class="fa fa-file-pdf-o"></i>
+                </a>
+                <a href="#" class="export-btn" data-type="powerpoint" style="margin-right: 5px;">
+                   <i class="fa fa-file-powerpoint-o"></i>
+                </a>
+                <a href="#" class="export-btn" data-type="excel">
+                   <i class="fa fa-file-excel-o"></i>
+                </a>
+              </big>
+            </span>
+          {{/ if }}
+
           <b>{{ localCount }} de {{ totalCount }}</b>
         </p>
       {{/ if }}
-      <table class="table">
+
+      <table class="table table-striped">
         <thead>
           <tr>
             <th>
-              <input type="checkbox">
+              {{# if allChecked }}
+                <input type="checkbox" class="check-all" checked="true">
+              {{ else }}
+                <input type="checkbox" class="check-all">
+              {{/ if }}
             </th>
             <th>
               Título
@@ -57,7 +81,11 @@
           {{# each news }}
             <tr>
               <td>
-                <input type="checkbox">
+                {{# if allChecked }}
+                  <input type="checkbox" class="check-doc" checked="true" disabled="true">
+                {{ else }}
+                  <input type="checkbox" class="check-doc">
+                {{/ if }}
               </td>
               <td>
                 {{ shortenString title 60 }}

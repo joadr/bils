@@ -127,5 +127,22 @@ News.helpers({
   brands: function() {
     var ids = this.brandsIds || [];
     return Brands.find({ _id: { $in: ids } });
+  },
+  dataForUser: function(userId) {
+    check(userId, String);
+    var agency;
+
+    if (Roles.userHasRole(userId, 'cliente')) {
+      var myGroupsIds = _.pluck(Brands.find({ clientsIds: userId }).fetch(), 'groupId');
+      var myAgenciesIds = _.pluck(Groups.find({ _id: { $in: myGroupsIds } }).fetch(), 'agencyId');
+      agency = Agencies.findOne({ _id: { $in: myAgenciesIds } });
+    } else if (Roles.userHasRole(userId, 'agencia') || Roles.userHasRole(userId, 'ejecutivo')) {
+      agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
+    } else {
+      console.log('admins no tienen agencia');
+    }
+
+    if (!agency) return;
+    return NewsData.findOne({ articleId: this._id, agencyId: agency._id });
   }
 });
