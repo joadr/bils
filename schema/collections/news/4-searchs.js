@@ -1,5 +1,9 @@
-filterForSearchObject = function(searchObject) {
-  if (!searchObject) return {};
+filterForSearchObject = function(searchObject, userId) {
+  var filter = {};
+  var selectors = Roles.helper(userId, 'collections.news.indexFilter');
+  filter.$or = selectors;
+
+  if (!searchObject) return filter;
 
   check(searchObject, {
     groupsIds: Match.Optional([String]),
@@ -9,8 +13,6 @@ filterForSearchObject = function(searchObject) {
     filter: Match.Optional(String)
   });
 
-  var filter = {};
-
   if (searchObject.groupsIds) {
     filter.groupsIds = { $in: searchObject.groupsIds };
   }
@@ -19,11 +21,11 @@ filterForSearchObject = function(searchObject) {
     filter.brandsIds = { $in: searchObject.brandsIds };
   }
 
-  if (searchObject.fromDate) {
+  if (searchObject.fromDate && searchObject.toDate) {
+    filter.date = { $gte: searchObject.fromDate, $lte: searchObject.toDate };
+  } else if (searchObject.fromDate) {
     filter.date = { $gte: searchObject.fromDate };
-  }
-
-  if (searchObject.toDate) {
+  } else if (searchObject.toDate) {
     filter.date = { $lte: searchObject.toDate };
   }
 

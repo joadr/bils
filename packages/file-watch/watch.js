@@ -18,7 +18,7 @@ FileWatch.listen = function(directory, encoding, callback) {
           fs.unlink(filePath);
         }
       } catch (e) {
-        console.log(e);
+        console.log('Error:', e);
         fs.unlink(filePath);
       }
     });

@@ -8,19 +8,9 @@ if (Meteor.settings.nexPath) {
       if (!item.idx) return;
 
       article.idx = item.idx[0];
-      article.journalist = item.autor && item.autor[0];
       article.title = item.titulo && item.titulo[0];
       article.subtitle = item.bajada && item.bajada[0];
       article.body = item.cuerpo && item.cuerpo[0];
-
-      if (item.medio) {
-        var suplementName = item.medio[0];
-        var suplement = Suplements.findOne({ name: suplementName });
-        if (suplement) {
-          article.suplementId = suplement._id;
-          article.mediumId = suplement.mediumId;
-        }
-      }
 
       if (item.multimedia) {
         var items = item.multimedia[0].split('|').map(function(item) {

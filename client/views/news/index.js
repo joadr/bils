@@ -52,18 +52,18 @@ Template.collectionsNewsIndex.onRendered(function() {
 Template.collectionsNewsIndex.helpers({
   news: function() {
     var values = Session.get('collectionsNewsIndexValues');
-    return News.find(filterForSearchObject(values), { sort: { date: -1 } });
+    return News.find(filterForSearchObject(values, Meteor.userId()), { sort: { date: -1 } });
   },
   localCount: function() {
     var values = Session.get('collectionsNewsIndexValues');
-    return News.find(filterForSearchObject(values)).count();
+    return News.find(filterForSearchObject(values, Meteor.userId())).count();
   },
   totalCount: function() {
     return Session.get('collectionsNewsIndexCount');
   },
   canLoadMore: function() {
     var values = Session.get('collectionsNewsIndexValues');
-    var localCount = News.find(filterForSearchObject(values)).count();
+    var localCount = News.find(filterForSearchObject(values, Meteor.userId())).count();
     return Session.get('collectionsNewsIndexCount') != localCount;
   },
   allChecked: function() {
@@ -102,7 +102,7 @@ Template.collectionsNewsIndex.events({
     var type = $(event.currentTarget).attr('data-type');
 
     var values = Session.get('collectionsNewsIndexValues');
-    var filter = filterForSearchObject(values);
+    var filter = filterForSearchObject(values, Meteor.userId());
 
     if (Session.get('selectedNews') && Session.get('selectedNews').length > 0) {
       filter._id = { $in: Session.get('selectedNews') };

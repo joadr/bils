@@ -11,16 +11,6 @@ if (Meteor.settings.agurePath) {
       article.title = item.titular_texto && item.titular_texto[0];
       article.body = item.indexacion && item.indexacion[0];
 
-      if (item.fuente_seccion) {
-        var suplementName = item.fuente_seccion[0];
-        var suplement = Suplements.findOne({ name: suplementName });
-        if (suplement) {
-          article.suplementId = suplement._id;
-          article.mediumId = suplement.mediumId;
-        }
-      }
-
-
       if (item.dia && item.mes && item['año']) {
         article.date = moment().day(item.dia[0]).month(item.mes[0]).year(item['año'][0]).toDate();
       }

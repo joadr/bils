@@ -99,4 +99,10 @@ AgencyRole.allow('collections.news.remove', false); // Allows the role to remove
 AgencyRole.allow('collections.news.showCreate', true); // Makes the "create" button visible
 AgencyRole.allow('collections.news.showUpdate', true); // Allows the user to go to the update view
 AgencyRole.allow('collections.news.showRemove', false); // Shows the delete button on the update view
-AgencyRole.helper('collections.news.indexFilter', {});
+AgencyRole.helper('collections.news.indexFilter', function() {
+  var myAgenciesIds = _.pluck(Agencies.find({ adminsIds: this.userId }).fetch(), '_id');
+  var groupsIds = _.pluck(Groups.find({ agencyId: { $in: myAgenciesIds } }).fetch(), '_id');
+  var brandsIds = _.pluck(Brands.find({ groupId: { $in: groupsIds } }).fetch(), '_id');
+  return { brandsIds: { $in: brandsIds } };
+});
+AgencyRole.helper('collections.news.hiddenFields', ['groupsIds', 'brandsIds']);

@@ -6,14 +6,14 @@ Meteor.publish('news.article', function(articleId) {
 
 Meteor.methods({
   countForSearch: function(search) {
-    var filter = filterForSearchObject(search);
+    var filter = filterForSearchObject(search, this.userId);
     return News.find(filter).count();
   }
 });
 
 Meteor.publishComposite('news.search', function(search, limit) {
   check(limit, Match.Optional(Number));
-  var filter = filterForSearchObject(search);
+  var filter = filterForSearchObject(search, this.userId);
   limit = limit || 20;
   return {
     find: function() {

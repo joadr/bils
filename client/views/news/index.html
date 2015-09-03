@@ -15,15 +15,17 @@
           <div class="col-sm-3">
             {{> afQuickField name='brandsIds' }}
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-3">
             {{> afQuickField name='fromDate' }}
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-3">
             {{> afQuickField name='toDate' }}
           </div>
+          <!--
           <div class="col-sm-2">
             {{> afQuickField name='filter' }}
           </div>
+        -->
         </div>
       {{/ autoForm }}
     </div>
@@ -91,7 +93,7 @@
                 {{ shortenString title 60 }}
               </td>
               <td>
-                {{ dateFormat date 'L' }}
+                {{ dateFormat date 'D-M-YYYY' }}
               </td>
               <td>
                 {{# each brands }}
@@ -101,8 +103,10 @@
               <td>
                 <div class="btn-group">
                   <a href="{{ pathFor 'collections.news.show' }}" class="btn btn-xs btn-default">Ver</a>
-                  <a href="{{ pathFor 'collections.news.data' }}" class="btn btn-xs btn-default">Categorizar</a>
-                  <a href="{{ pathFor 'collections.news.update' }}" class="btn btn-xs btn-default">Editar</a>
+                  {{# if canShowUpdate }}
+                    <a href="{{ pathFor 'collections.news.data' }}" class="btn btn-xs btn-default">Categorizar</a>
+                    <a href="{{ pathFor 'collections.news.update' }}" class="btn btn-xs btn-default">Editar</a>
+                  {{/ if }}
                 </div>
               </td>
             </tr>

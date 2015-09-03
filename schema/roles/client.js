@@ -36,7 +36,7 @@ ClientRole.allow('collections.news.showUpdate', false); // Allows the user to go
 ClientRole.allow('collections.news.showRemove', false); // Shows the delete button on the update view
 ClientRole.helper('collections.news.indexFilter', function() {
   var brandsIds = _.pluck(Brands.find({ clientsIds: this.userId }).fetch(), '_id');
-  return { brandId: { $in: brandsIds }, isReady: true };
+  return { brandsIds: { $in: brandsIds } };
 });
 ClientRole.helper('collections.news.hiddenFields', function() {
   return [];

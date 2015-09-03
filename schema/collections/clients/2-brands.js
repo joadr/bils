@@ -39,7 +39,7 @@ Brands.attachSchema({
     roles: ['cliente']
   }),
   keywords: orion.attribute('tags', {
-    label: 'Keywords',
+    label: 'Keywords (noticias que contengan alguna las siguentes frases)',
     optional: true
   })
 });

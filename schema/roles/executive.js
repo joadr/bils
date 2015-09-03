@@ -35,8 +35,9 @@ ExecutiveRole.allow('collections.news.showCreate', true); // Makes the "create" 
 ExecutiveRole.allow('collections.news.showUpdate', true); // Allows the user to go to the update view
 ExecutiveRole.allow('collections.news.showRemove', false); // Shows the delete button on the update view
 ExecutiveRole.helper('collections.news.indexFilter', function() {
-  return {};
+  var myAgenciesIds = _.pluck(Agencies.find({ executivesIds: this.userId }).fetch(), '_id');
+  var groupsIds = _.pluck(Groups.find({ agencyId: { $in: myAgenciesIds } }).fetch(), '_id');
+  var brandsIds = _.pluck(Brands.find({ groupId: { $in: groupsIds } }).fetch(), '_id');
+  return { brandsIds: { $in: brandsIds } };
 });
-ExecutiveRole.helper('collections.news.hiddenFields', function() {
-  return [];
-});
+AgencyRole.helper('collections.news.hiddenFields', ['groupsIds', 'brandsIds']);
