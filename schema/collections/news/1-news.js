@@ -116,6 +116,13 @@ News.attachSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Url,
     optional: true
+  },
+  categorizedBy: {
+    type: [String],
+    optional: true,
+    autoform: {
+      omit: true
+    }
   }
 });
 
@@ -144,5 +151,19 @@ News.helpers({
 
     if (!agency) return;
     return NewsData.findOne({ articleId: this._id, agencyId: agency._id });
+  },
+  isCategorized: function(userId) {
+    check(userId, String);
+    var agency;
+
+    if (Roles.userHasRole(userId, 'cliente')) {
+      var myGroupsIds = _.pluck(Brands.find({ clientsIds: userId }).fetch(), 'groupId');
+      var myAgenciesIds = _.pluck(Groups.find({ _id: { $in: myGroupsIds } }).fetch(), 'agencyId');
+      agency = Agencies.findOne({ _id: { $in: myAgenciesIds } });
+    } else if (Roles.userHasRole(userId, 'agencia') || Roles.userHasRole(userId, 'ejecutivo')) {
+      agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
+    }
+
+    return agency && _.contains(this.categorizedBy, agency._id);
   }
 });

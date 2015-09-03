@@ -75,6 +75,9 @@
               Marca
             </th>
             <th>
+              Estado
+            </th>
+            <th>
               Acciones
             </th>
           </tr>
@@ -99,6 +102,13 @@
                 {{# each brands }}
                   {{ name }}
                 {{/ each }}
+              </td>
+              <td>
+                {{# if isCategorized currentUser._id }}
+                  <i class="fa fa-check"></i>
+                {{ else }}
+                  <i class="fa fa-close"></i>
+                {{/ if }}
               </td>
               <td>
                 <div class="btn-group">
