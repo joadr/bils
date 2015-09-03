@@ -50,6 +50,38 @@ News.attachSchema({
     }
   },
   createdBy: orion.attribute('createdBy'),
+  groupsIds: orion.attribute('hasMany', {
+    label: 'Grupos',
+    optional: true
+  }, {
+    collection: Groups,
+    titleField: 'name',
+    publicationName: 'news_groupsIds_schema',
+    additionalFields: ['agencyId'],
+    filter: function(userId) {
+      var selectors = Roles.helper(userId, 'clients.myGroups') || null;
+      return { $or: selectors };
+    }
+  }),
+  brandsIds: orion.attribute('hasMany', {
+    label: 'Marcas',
+    optional: true
+  }, {
+    collection: Brands,
+    titleField: 'name',
+    additionalFields: ['groupId'],
+    publicationName: 'news_brandsIds_schema',
+    filter: function(userId) {
+      var selectors = Roles.helper(userId, 'clients.myBrands') || null;
+      var myBrandsFilter = { $or: selectors };
+      if (Meteor.isServer) {
+        return myBrandsFilter;
+      } else {
+        var groupsIds = AutoForm.getFieldValue('groupsIds');
+        return groupsIds ? { $and: [{ groupId: { $in: groupsIds } }, myBrandsFilter] } : myBrandsFilter;
+      }
+    }
+  }),
   title: {
     type: String,
     label: 'Título',
@@ -84,5 +116,16 @@ News.attachSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Url,
     optional: true
+  }
+});
+
+News.helpers({
+  groups: function() {
+    var ids = this.groupsIds || [];
+    return Groups.find({ _id: { $in: ids } });
+  },
+  brands: function() {
+    var ids = this.brandsIds || [];
+    return Brands.find({ _id: { $in: ids } });
   }
 });

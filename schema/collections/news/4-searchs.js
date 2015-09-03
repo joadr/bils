@@ -1,3 +1,35 @@
+filterForSearchObject = function(searchObject) {
+  if (!searchObject) return {};
+
+  check(searchObject, {
+    groupsIds: Match.Optional([String]),
+    brandsIds: Match.Optional([String]),
+    fromDate: Match.Optional(Date),
+    toDate: Match.Optional(Date),
+    filter: Match.Optional(String)
+  });
+
+  var filter = {};
+
+  if (searchObject.groupsIds) {
+    filter.groupsIds = { $in: searchObject.groupsIds };
+  }
+
+  if (searchObject.brandsIds) {
+    filter.brandsIds = { $in: searchObject.brandsIds };
+  }
+
+  if (searchObject.fromDate) {
+    filter.date = { $gte: searchObject.fromDate };
+  }
+
+  if (searchObject.toDate) {
+    filter.date = { $lte: searchObject.toDate };
+  }
+
+  return filter;
+};
+
 SearchNewsSchema = new SimpleSchema({
   groupsIds: orion.attribute('hasMany', {
     label: 'Grupos',

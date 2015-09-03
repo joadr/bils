@@ -9,10 +9,10 @@
     <div class="controls ">
       {{# autoForm schema="SearchNewsSchema" id="collectionsNewsIndexSearchForm" }}
         <div class="row">
-          <div class="col-sm-2">
+          <div class="col-sm-3">
             {{> afQuickField name='groupsIds' }}
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-3">
             {{> afQuickField name='brandsIds' }}
           </div>
           <div class="col-sm-2">
@@ -24,12 +24,76 @@
           <div class="col-sm-2">
             {{> afQuickField name='filter' }}
           </div>
-          <div class="col-sm-2">
-            <label for="">Buscar</label>
-            <button class="btn btn-block btn-primary">Buscar</button>
-          </div>
         </div>
       {{/ autoForm }}
     </div>
+    <div class="data">
+      {{# if totalCount }}
+        <p>
+          <b>{{ localCount }} de {{ totalCount }}</b>
+        </p>
+      {{/ if }}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox">
+            </th>
+            <th>
+              Título
+            </th>
+            <th>
+              Fecha
+            </th>
+            <th>
+              Marca
+            </th>
+            <th>
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{# each news }}
+            <tr>
+              <td>
+                <input type="checkbox">
+              </td>
+              <td>
+                {{ shortenString title 60 }}
+              </td>
+              <td>
+                {{ dateFormat date 'L' }}
+              </td>
+              <td>
+                {{# each brands }}
+                  {{ name }}
+                {{/ each }}
+              </td>
+              <td>
+                <div class="btn-group">
+                  <a href="{{ pathFor 'collections.news.show' }}" class="btn btn-xs btn-default">Ver</a>
+                  <a href="{{ pathFor 'collections.news.data' }}" class="btn btn-xs btn-default">Categorizar</a>
+                  <a href="{{ pathFor 'collections.news.update' }}" class="btn btn-xs btn-default">Editar</a>
+                </div>
+              </td>
+            </tr>
+          {{/ each }}
+        </tbody>
+      </table>
+        <p>
+          {{# if totalCount }}
+            <b>{{ localCount }} de {{ totalCount }}</b>
+          {{/ if }}
+          {{# if Template.subscriptionsReady }}
+            {{# if canLoadMore }}
+              <a href="#" class="load-more-btn">Cargar Mas</a>
+            {{/ if }}
+          {{ else }}
+            <b>Cargando...</b>
+          {{/ if }}
+        </p>
+    </div>
+    <br><br>
   {{/ Layout }}
 </template>
