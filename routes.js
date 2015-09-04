@@ -7,7 +7,8 @@ function getName(collection, id){
 Router.route('/admin/export/news/:exportable', function () {
   var row = ExportNews.findOne(this.params.exportable);
   exportable = row;
-  var news = News.find({groupId: {$in: exportable.groupsIds }, brandId: {$in: exportable.brandsIds} }).fetch();
+  //var news = News.find({groupId: {$in: exportable.groupsIds }, brandId: {$in: exportable.brandsIds} }).fetch();
+  var news = News.find(exportable.filter);
   var agency = Agencies.findOne({ $or: [{executivesIds: Meteor.userId()}, {adminsIds: Meteor.userId()}] })
 
   if(exportable.fileType == 'pdf'){
