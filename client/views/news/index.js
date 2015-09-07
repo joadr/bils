@@ -1,7 +1,7 @@
 var exportNews = function(type, filter) {
   /**
    * Mira, te lo deje listo.
-   * Tipo puede ser excel,powerpoint,pdf.
+   * Tipo puede ser excel,powerpoint,|.
    *
    * Filter es el filtro que tienes que ponerle a las noticias, por ejemplo
    * var noticiasAExportar = News.find(filter);
@@ -15,7 +15,11 @@ var exportNews = function(type, filter) {
    * var article = News.findOne();
    * var data = article.dataForUser(__userId__);
    */
-  alert('Joaquin, rellenar esta funcion por favor (client/views/news/index.js)');
+
+   //console.log( type, JSON.stringify(filter), filter);
+   var exportable = ExportNews.insert({filter: filter, type: type});
+   router.go('news.export.file', {exportable: exportable});
+  //alert('Joaquin, rellenar esta funcion por favor (client/views/news/index.js)');
 }
 
 
