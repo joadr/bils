@@ -1,2 +1,2 @@
 Excel = Npm.require('excel-export');
-Officegen = Npm.require('officegen');
+Officegen = Npm.require('shimo-officegen');

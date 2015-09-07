@@ -1,7 +1,7 @@
 var exportNews = function(type, filter) {
   /**
    * Mira, te lo deje listo.
-   * Tipo puede ser excel,powerpoint,|.
+   * Tipo puede ser excel,powerpoint,pdf.
    *
    * Filter es el filtro que tienes que ponerle a las noticias, por ejemplo
    * var noticiasAExportar = News.find(filter);
@@ -17,8 +17,10 @@ var exportNews = function(type, filter) {
    */
 
    //console.log( type, JSON.stringify(filter), filter);
-   var exportable = ExportNews.insert({filter: filter, type: type});
-   router.go('news.export.file', {exportable: exportable});
+   ExportNews.insert({filter: JSON.stringify(filter), type: type, userId: Meteor.userId()}, function(error, exportable){
+      console.log(exportable);
+      Router.go('news.export.file', {exportable: exportable});
+   });
   //alert('Joaquin, rellenar esta funcion por favor (client/views/news/index.js)');
 }
 

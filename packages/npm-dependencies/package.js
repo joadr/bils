@@ -5,7 +5,7 @@ Package.describe({
 
 Npm.depends({
   'excel-export': '0.4.1',
-  'officegen': '0.2.9',
+  'shimo-officegen': '0.3.2',
   'pdfkit': '0.7.1'
 });
 

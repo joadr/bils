@@ -7,11 +7,11 @@ function getName(collection, id){
 Router.route('/admin/export/news/:exportable', function () {
   var row = ExportNews.findOne(this.params.exportable);
   exportable = row;
-  //var news = News.find({groupId: {$in: exportable.groupsIds }, brandId: {$in: exportable.brandsIds} }).fetch();
-  var news = News.find(exportable.filter);
-  var agency = Agencies.findOne({ $or: [{executivesIds: Meteor.userId()}, {adminsIds: Meteor.userId()}] })
 
-  if(exportable.fileType == 'pdf'){
+  var news = News.find(JSON.parse(exportable.filter));
+  var agency = Agencies.findOne({ $or: [{executivesIds: exportable.userId}, {adminsIds: exportable.userId}] });
+
+  if(exportable.type == 'pdf'){
     var doc = new PDFDocument({size: [961, 539], layout: 'portrait'/*, margin: 50*/});
     doc.fontSize(12);
 
@@ -83,7 +83,7 @@ Router.route('/admin/export/news/:exportable', function () {
     });
     this.response.end( doc.outputSync() );
 
-  } else if (exportable.fileType == 'excel') {
+  } else if (exportable.type == 'excel') {
     var fields = [
       { key: '_id', title: 'ID' },
       {
@@ -167,8 +167,8 @@ Router.route('/admin/export/news/:exportable', function () {
     this.response.writeHead(200, headers);
     this.response.end(file, 'binary');
 
-  } else if(exportable.fileType == 'pptx'){
-    var pptx = officegen ( 'pptx' );
+  } else if(exportable.type == 'powerpoint'){
+    var pptx = officegen( 'pptx' );
 
     var title = "exportablePPTX";
     var headers = {
@@ -180,15 +180,32 @@ Router.route('/admin/export/news/:exportable', function () {
       slide = pptx.makeNewSlide();
 
       // we add the company's logo on each slide
-      var result = request.getSync('http://whizzy.azurewebsites.net/files/whizzy-logo-text.png', {
+      var result = request.getSync(agency.logo.url, {
           encoding: null
       });
       var buffer = result.body;
-      slide.addImage ( buffer, {x: 25, y: 25} );
+      slide.addImage( buffer, {x: 25, y: 25, cx: 250, cy: 100} );
 
       // we add the new image
+      if(element.media[0].url){
+        var image = request.getSync(element.media[0].url, {
+            encoding: null
+        });
+        var imageBuffer = image.body;
+        slide.addImage( imageBuffer, {x: 400, y: 25, cx: 500, cy: 550} );
+      }
 
+      // agregamos la tabla
+      var extraData = element.dataForUser(exportable.userId);
 
+      var rows = [];
+      rows.push(['Medio', getName('Mediums', extraData.mediumId)]);
+      rows.push(['Titulo', element.title]);
+      rows.push(['Fecha',  moment(element.date).format('LL')]);
+      rows.push(['Ad Value', 'NN']);
+
+      // slide.addTable(rows, {x: 25, y: 500, cx: '50%', cy: '100%'});
+      slide.addTable(rows, {x: '301000', y: '4881000', cx: '4096000' });
 
     });
 
