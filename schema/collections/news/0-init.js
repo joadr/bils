@@ -1,5 +1,5 @@
 if (Meteor.isClient) {
-  orion.links.add({
+  /*orion.links.add({
     identifier: 'news',
     title: 'Noticias',
     index: 14,
@@ -14,5 +14,5 @@ if (Meteor.isClient) {
     activeRouteRegex: 'news.export',
     routeName: 'news.export',
     permission: 'collections.news.index'
-  });
+  });*/
 }
