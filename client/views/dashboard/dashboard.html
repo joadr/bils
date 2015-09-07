@@ -1,0 +1,74 @@
+<template name="dashboard">
+  {{# Layout template="orionBootstrapMediumContentOffset" }}
+    {{# Layout template="orionBootstrapTitle" }}
+      Dashboard
+    {{/ Layout }}
+
+    {{# if Template.subscriptionsReady }}
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="well">
+            <h3>{{ brandsCount }}</h3>
+            <h4>Marcas</h4>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="well">
+            <h3>{{ newsCount }}</h3>
+            <h4>Noticias</h4>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="well">
+            <h3>{{ newsToCategorize }}</h3>
+            <h4>Noticias por categorizar</h4>
+          </div>
+        </div>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              Nombre
+            </th>
+            <th>
+              Marcas
+            </th>
+            <th>
+              Noticias Categorizadas
+            </th>
+            <th>
+              Por Categorizar
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{# each users }}
+            <tr>
+              <td>
+                {{ profile.name }}
+              </td>
+              <td>
+                {{# each userBrands }}
+                  <span class="label label-danger">{{ name }}</span>
+                {{/ each }}
+              </td>
+              <td>
+                <b>{{ userCategorized }}</b> ({{ userCategorizedPercentage }})
+              </td>
+              <td>
+                <b>{{ userToCategorize }}</b>
+              </td>
+            </tr>
+          {{/ each }}
+        </tbody>
+      </table>
+    {{ else }}
+      <p>
+        <b>Cargando...</b>
+      </p>
+    {{/ if }}
+  {{/ Layout }}
+</template>

@@ -1,5 +1,7 @@
 AgencyRole = new Roles.Role('agencia');
 
+AgencyRole.allow('dashboard.show', true);
+
 /**
  * Users
  */
