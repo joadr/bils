@@ -18,7 +18,7 @@ var exportNews = function(type, filter) {
 
    //console.log( type, JSON.stringify(filter), filter);
    var exportable = ExportNews.insert({filter: filter, type: type});
-   router.go('news.export.file', {exportable: exportable});
+   Router.go('news.export.file', { exportable: exportable });
   //alert('Joaquin, rellenar esta funcion por favor (client/views/news/index.js)');
 }
 
