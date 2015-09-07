@@ -16,13 +16,13 @@ ClientRole = new Roles.Role('cliente');
  /**
   * Brands
   */
- ClientRole.allow('collections.brands.index', true); // Allows the role to see the link in the sidebar
- ClientRole.helper('clients.myBrands', function() {
-   return { clientsIds: this.userId };
- });
- ClientRole.helper('collections.brands.indexFilter', function() {
-   return { clientsIds: this.userId };
- });
+ClientRole.allow('collections.brands.index', true); // Allows the role to see the link in the sidebar
+ClientRole.helper('clients.myBrands', function() {
+  return { clientsIds: this.userId };
+});
+ClientRole.helper('collections.brands.indexFilter', function() {
+  return { clientsIds: this.userId };
+});
 
 /**
  * News

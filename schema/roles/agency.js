@@ -105,4 +105,3 @@ AgencyRole.helper('collections.news.indexFilter', function() {
   var brandsIds = _.pluck(Brands.find({ groupId: { $in: groupsIds } }).fetch(), '_id');
   return { brandsIds: { $in: brandsIds } };
 });
-AgencyRole.helper('collections.news.hiddenFields', ['groupsIds', 'brandsIds']);

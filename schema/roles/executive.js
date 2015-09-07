@@ -17,11 +17,11 @@ ExecutiveRole.helper('clients.myGroups', function() {
  * Brands
  */
 ExecutiveRole.allow('collections.brands.index', true); // Allows the role to see the link in the sidebar
-ExecutiveRole.helper('clients.myBrands', {});
+ExecutiveRole.helper('clients.myBrands', function() {
+  return { executivesIds: this.userId };
+});
 ExecutiveRole.helper('collections.brands.indexFilter', function() {
-  var myAgenciesIds = _.pluck(Agencies.find({ executivesIds: this.userId }).fetch(), '_id');
-  var groupsIds = _.pluck(Groups.find({ agencyId: { $in: myAgenciesIds } }).fetch(), '_id');
-  return { groupId: { $in: groupsIds } };
+  return { executivesIds: this.userId };
 });
 
 /**
@@ -35,9 +35,7 @@ ExecutiveRole.allow('collections.news.showCreate', true); // Makes the "create" 
 ExecutiveRole.allow('collections.news.showUpdate', true); // Allows the user to go to the update view
 ExecutiveRole.allow('collections.news.showRemove', false); // Shows the delete button on the update view
 ExecutiveRole.helper('collections.news.indexFilter', function() {
-  var myAgenciesIds = _.pluck(Agencies.find({ executivesIds: this.userId }).fetch(), '_id');
-  var groupsIds = _.pluck(Groups.find({ agencyId: { $in: myAgenciesIds } }).fetch(), '_id');
-  var brandsIds = _.pluck(Brands.find({ groupId: { $in: groupsIds } }).fetch(), '_id');
+  var brandsIds = _.pluck(Brands.find({ executivesIds: this.userId }).fetch(), '_id');
   return { brandsIds: { $in: brandsIds } };
 });
 AgencyRole.helper('collections.news.hiddenFields', ['groupsIds', 'brandsIds']);
