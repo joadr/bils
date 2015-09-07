@@ -51,15 +51,27 @@
                 {{ profile.name }}
               </td>
               <td>
+                {{# if userBrands }}
                 {{# each userBrands }}
                   <span class="label label-danger">{{ name }}</span>
                 {{/ each }}
+                {{ else }}
+                  Sin marcas
+                {{/ if }}
               </td>
               <td>
+                {{# if userBrands }}
                 <b>{{ userCategorized }}</b> ({{ userCategorizedPercentage }})
+                {{ else }}
+                Sin noticias
+                {{/ if }}
               </td>
               <td>
+                {{# if userBrands }}
                 <b>{{ userToCategorize }}</b>
+                {{ else }}
+                Sin noticias
+                {{/ if }}
               </td>
             </tr>
           {{/ each }}

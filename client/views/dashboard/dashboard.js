@@ -18,7 +18,7 @@ Template.dashboard.helpers({
   },
   userBrands: function() {
     var user = this;
-    return Brands.find({ executivesIds: user._id });
+    return Brands.find({ executivesIds: user._id }).fetch();
   },
   userToCategorize: function() {
     var user = this;
