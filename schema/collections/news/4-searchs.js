@@ -52,7 +52,7 @@ SearchNewsSchema = new SimpleSchema({
   }, {
     collection: Brands,
     titleField: 'name',
-    additionalFields: ['groupId'],
+    additionalFields: ['groupId', 'executivesIds'],
     publicationName: 'search_news_brandsIds_schema',
     filter: function(userId) {
       var selectors = Roles.helper(userId, 'clients.myBrands') || null;

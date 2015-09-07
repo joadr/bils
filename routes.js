@@ -239,3 +239,21 @@ Router.route('/admin/news-data/:_id',  {
 });
 
 orion.accounts.addProtectedRoute('collections.news.data');
+
+Router.route('/admin/dashboard',  {
+  layoutTemplate: 'orionBootstrapLayout',
+  name: 'dashboard'
+});
+
+orion.accounts.addProtectedRoute('dashboard');
+
+if (Meteor.isClient) {
+  orion.links.add({
+    identifier: 'dashboard',
+    title: 'Dashboard',
+    routeName: 'dashboard',
+    activeRouteRegex: 'dashboard',
+    index: 1,
+    permission: 'dashboard.show'
+  });
+}

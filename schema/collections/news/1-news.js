@@ -4,8 +4,7 @@ News = new orion.collection('news', {
   title: 'Noticias',
   link: {
     title: 'Noticias',
-    parent: 'news',
-    index: 10
+    index: 14
   },
   tabular: {
     columns: [

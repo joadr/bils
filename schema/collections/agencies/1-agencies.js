@@ -4,7 +4,7 @@ Agencies = new orion.collection('agencies', {
   title: 'Agencia',
   link: {
     title: 'Agencias',
-    index: 1
+    index: 2
   },
   tabular: {
     columns: [

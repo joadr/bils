@@ -31,6 +31,17 @@ Brands.attachSchema({
       return { $or: selectors };
     }
   }),
+  executivesIds: orion.attribute('users-roles', {
+    label: 'Ejecutivos',
+    optional: true
+  }, {
+    publicationName: 'brands_executivesIds_schema',
+    roles: ['ejecutivo'],
+    filter: function(userId) {
+      var agency = Agencies.findOne({ adminsIds: userId });
+      return agency ? { _id: { $in: (agency.executivesIds || []) } } : {};
+    }
+  }),
   clientsIds: orion.attribute('users-roles', {
     label: 'Clientes',
     optional: true

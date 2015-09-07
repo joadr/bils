@@ -16,12 +16,10 @@ var exportNews = function(type, filter) {
    * var data = article.dataForUser(__userId__);
    */
 
-   //console.log( type, JSON.stringify(filter), filter);
    ExportNews.insert({filter: JSON.stringify(filter), type: type, userId: Meteor.userId()}, function(error, exportable){
       console.log(exportable);
       Router.go('news.export.file', {exportable: exportable});
    });
-  //alert('Joaquin, rellenar esta funcion por favor (client/views/news/index.js)');
 }
 
 
