@@ -1,19 +1,31 @@
 .title {
   .btn.btn-default {
-    margin-top: 20px;
+    margin-top: 0px;
     float: right;
-    background-color: #d9534f;
+    background-color: #11ABB0;
     border: 0;
-    padding: 6px 6px 4px 6px;
+    padding: 15px 20px 15px 20px;
     .fa-plus {
       font-size: 16px;
       color: #ffffff;
 
       &:before {
-        content: 'Crear';
+        content: 'Añadir +';
+        align: center;
         font-family: 'Source Sans Pro', sans-serif;
         font-weight: 600;
       }
     }
   }
+}
+
+.dashboard{
+
+    margin-top: 0px;
+    border-radius: 5px;
+    background-color: #00c0ef;
+    border: 0;
+    padding: 25px 20px 20px 20px;
+    
+
 }
