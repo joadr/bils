@@ -97,10 +97,10 @@ AgencyRole.helper('collections.brands.hiddenFields', function() {
 AgencyRole.allow('collections.news.index', true); // Allows the role to see the link in the sidebar
 AgencyRole.allow('collections.news.insert', true); // Allows the role to insert documents
 AgencyRole.allow('collections.news.update', true); // Allows the role to update documents
-AgencyRole.allow('collections.news.remove', false); // Allows the role to remove documents
+AgencyRole.allow('collections.news.remove', true); // Allows the role to remove documents
 AgencyRole.allow('collections.news.showCreate', true); // Makes the "create" button visible
 AgencyRole.allow('collections.news.showUpdate', true); // Allows the user to go to the update view
-AgencyRole.allow('collections.news.showRemove', false); // Shows the delete button on the update view
+AgencyRole.allow('collections.news.showRemove', true); // Shows the delete button on the update view
 AgencyRole.helper('collections.news.indexFilter', function() {
   var myAgenciesIds = _.pluck(Agencies.find({ adminsIds: this.userId }).fetch(), '_id');
   var groupsIds = _.pluck(Groups.find({ agencyId: { $in: myAgenciesIds } }).fetch(), '_id');
