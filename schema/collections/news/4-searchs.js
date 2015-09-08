@@ -10,7 +10,8 @@ filterForSearchObject = function(searchObject, userId) {
     brandsIds: Match.Optional([String]),
     fromDate: Match.Optional(Date),
     toDate: Match.Optional(Date),
-    filter: Match.Optional(String)
+    filter: Match.Optional(String),
+    showToCategorize: Match.Optional(Boolean)
   });
 
   if (searchObject.groupsIds) {
@@ -27,6 +28,13 @@ filterForSearchObject = function(searchObject, userId) {
     filter.date = { $gte: searchObject.fromDate };
   } else if (searchObject.toDate) {
     filter.date = { $lte: searchObject.toDate };
+  }
+
+  if (searchObject.showToCategorize) {
+    var agency = Agencies.findOne({ $or: [{ adminsIds: userId }, { executivesIds: userId }] });
+    if (agency) {
+      filter.categorizedBy = { $ne: agency._id };
+    }
   }
 
   return filter;
@@ -78,6 +86,10 @@ SearchNewsSchema = new SimpleSchema({
     autoform: {
       type: 'bootstrap-datetimepicker'
     }
+  },
+  showToCategorize: {
+    type: Boolean,
+    label: 'Mostrar solo sin categorizar'
   },
   filter: {
     type: String,

@@ -87,6 +87,9 @@ Template.collectionsNewsIndex.events({
   'blur input': function(event, template) {
     formDep.changed();
   },
+  'click input[name=showToCategorize]': function(event, template) {
+    formDep.changed();
+  },
   'click .load-more-btn': function(event, template) {
     Session.set('collectionsNewsIndexLimit', Session.get('collectionsNewsIndexLimit') + 20);
   },
