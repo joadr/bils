@@ -187,7 +187,7 @@ Router.route('/admin/export/news/:exportable', function () {
       slide.addImage( buffer, {x: 25, y: 25, cx: 250, cy: 100} );
 
       // we add the new image
-      if(element.media[0].url){
+      if(element.media[0]){
         var image = request.getSync(element.media[0].url, {
             encoding: null
         });
