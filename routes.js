@@ -152,7 +152,7 @@ Router.route('/admin/export/news/:exportable', function () {
       // { key: 'agency', title: 'Agencia' },
       // { key: 'mentionsTheBrandInTheTitle', title: 'Mención Título' },
       // { key: 'mentionsTheBrandInTheBody', title: 'Mención Cuerpo' },
-      { key: 'media[0].url', title: 'Foto' },
+      // { key: 'media[0].url', title: 'Foto' },
       // { key: 'secretMessage0Exists', title: 'Clave' },
       // { key: 'secretMessage1Exists', title: 'Clave 1' },
       // { key: 'secretMessage2Exists', title: 'Clave 2' },
@@ -234,7 +234,11 @@ Router.route('/admin/export/news/:exportable', function () {
       var extraData = element.dataForUser(exportable.userId);
 
       var rows = [];
-      rows.push(['Medio', getName('Mediums', extraData.mediumId)]);
+      if(extraData.mediumId){
+        rows.push(['Medio', getName('Mediums', extraData.mediumId)]);
+      } else {
+        rows.push(['Medio', "Sin medio"]);
+      }
       rows.push(['Titulo', element.title]);
       rows.push(['Fecha',  moment(element.date).format('LL')]);
       rows.push(['Ad Value', 'NN']);
