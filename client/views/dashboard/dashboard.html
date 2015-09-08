@@ -7,25 +7,61 @@
     {{# if Template.subscriptionsReady }}
 
       <div class="row">
-        <div class="col-sm-4">
-          <div class="well">
-            <h3>{{ brandsCount }}</h3>
-            <h4>Marcas</h4>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <h3>{{ newsCount }}</h3>
-            <h4>Noticias</h4>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="dashboard">
-            <h3>{{ newsToCategorize }}</h3>
-            <h4>Noticias por categorizar</h4>
-          </div>
-        </div>
-      </div>
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h3>{{ newsCount }}</h3>
+                  <p>Notas Nuevas</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-star"></i>
+                </div>
+                <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner">
+                  <h3>{{ newspercentcategorize }}<sup style="font-size: 20px">%</sup></h3>
+                  <p>Notas Categorizadas</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-yellow">
+                <div class="inner">
+                  <h3>{{ newsToCategorize }}</h3>
+                  <p>Notas por Categorizar</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-edit"></i>
+                </div>
+                <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-red">
+                <div class="inner">
+                  <h3 style="height:42px;overflow:hidden;"></h3>
+                  <p></p>
+
+                  <p>Banco de Noticias</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-newspaper-o"></i>
+                </div>
+                <a href="{{ pathFor 'news.index' }}" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+          </div><!-- /.row -->
       <table class="table">
         <thead>
           <tr>
