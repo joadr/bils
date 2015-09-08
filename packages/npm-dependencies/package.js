@@ -5,8 +5,8 @@ Package.describe({
 
 Npm.depends({
   'excel-export': '0.4.1',
-  'shimo-officegen': '0.3.2',
-  'pdfkit': '0.7.1'
+  'joadr-officegen': '0.3.0',
+  'pdfkit': '0.4.3'
 });
 
 Package.onUse(function(api) {

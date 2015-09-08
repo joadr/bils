@@ -33,7 +33,7 @@ Router.route('/admin/export/news/:exportable', function () {
       }
 
       // Logo is inserted on every page
-      var result = request.getSync('http://whizzy.azurewebsites.net/files/whizzy-logo-text.png', {
+      var result = request.getSync(agency.logo.url, {
           encoding: null
       });
       var buffer = result.body;
@@ -41,51 +41,52 @@ Router.route('/admin/export/news/:exportable', function () {
       doc.image(buffer, 10, 10, { width: 200 });
 
       // we put the news photo
-      var result = request.getSync(element.media[0].url, {
-        encoding: null
-      });
-      var buffer = result.body;
-
-      doc.image(buffer, 350, 40, { width: 580, height: 580 });
-
+      if(element.media){
+        var image = request.getSync(element.media[0].url, {
+            encoding: null
+        });
+        var imageBuffer = image.body;
+        doc.image(imageBuffer, 450, 10, { width: 500, height: 500 });
+      }
 
       // the news data
-      data = [
-        { title: 'TITULO', data: element.title },
-        { title: 'MEDIO', data: getName('Mediums', element.mediumId) },
-        // { title: 'SUPLEMENTO', data: element.title },
-        { title: 'FECHA', data: moment(element.date).format('LL') },
-        { title: 'CENTIMETRAJE', data: element.size },
-        { title: 'Ad Value', data: 'Test' },
-      ];
-      options = {
-        columns: [
-          { id: 'title', width: 35, name: '' },
-          { id: 'data', width: 65, name: '' }
-        ],
-        margins: {
-          left: 20,
-          top: 40,
-          right: 20,
-          bottom: 0
-        },
-        padding: {
-          left: 10,
-          top: 10,
-          right: 10,
-          bottom: 10
-        }
-      };
+      // data = [
+      //   { title: 'TITULO', data: element.title },
+      //   { title: 'MEDIO', data: getName('Mediums', element.mediumId) },
+      //   // { title: 'SUPLEMENTO', data: element.title },
+      //   { title: 'FECHA', data: moment(element.date).format('LL') },
+      //   { title: 'CENTIMETRAJE', data: element.size },
+      //   { title: 'Ad Value', data: 'Test' },
+      // ];
+      // options = {
+      //   columns: [
+      //     { id: 'title', width: 35, name: '' },
+      //     { id: 'data', width: 65, name: '' }
+      //   ],
+      //   margins: {
+      //     left: 20,
+      //     top: 40,
+      //     right: 20,
+      //     bottom: 0
+      //   },
+      //   padding: {
+      //     left: 10,
+      //     top: 10,
+      //     right: 10,
+      //     bottom: 10
+      //   }
+      // };
 
       //doc.table(data, options)
+      var extraData = element.dataForUser(exportable.userId);
 
 
-      doc.text("TITULO: " + element.title, 10, 350);
-      doc.text("SUPLEMENTO: " + getName('Suplements', element.suplementId));
+      doc.text("Medio: " + getName('Mediums', extraData.mediumId), 30, 370);
+      doc.text("TITULO: " + element.title);
       //doc.text("SUPLEMENTO: " + element.suplementId);
       doc.text("FECHA: " + moment(element.date).format('LL'));
-      doc.text("CENTIMETRAJE: " + element.size);
-      doc.text("VALOR APROX: " + element.title);
+      // doc.text("CENTIMETRAJE: " + element.size);
+      doc.text("VALOR APROX: " + 'NN');
     });
 
     this.response.writeHead(200, {
@@ -125,15 +126,15 @@ Router.route('/admin/export/news/:exportable', function () {
       },
       // { key: 'section', title: 'Sección' },
       // { key: 'size', title: 'Tamaño' },
-      { key: 'colorType', title: 'Color' },
-      {
-        key: 'groupId',
-        title: 'Grupo',
-        transform: function(id) {
-          var group = Groups.findOne(id);
-          return group && group.name;
-        }
-      },
+      // { key: 'colorType', title: 'Color' },
+      // {
+      //   key: 'groupId',
+      //   title: 'Grupo',
+      //   transform: function(id) {
+      //     var group = Groups.findOne(id);
+      //     return group && group.name;
+      //   }
+      // },
       //{ key: 'size', title: 'Producto' },
       // { key: 'size', title: 'Campaña' },
       // { key: 'sentiment', title: 'Sentimiento' },
@@ -159,14 +160,14 @@ Router.route('/admin/export/news/:exportable', function () {
       // { key: 'secretMessage4Exists', title: 'Clave 4' },
       // { key: 'secretMessage5Exists', title: 'Clave 5' },
       // { key: 'spokesmans[0]', title: 'Vocero' },
-      {
-        key: 'suplementId',
-        title: 'Suplemento',
-        transform: function(id) {
-          var suplement = Suplements.findOne(id);
-          return suplement && suplement.name;
-        }
-      },
+      // {
+      //   key: 'suplementId',
+      //   title: 'Suplemento',
+      //   transform: function(id) {
+      //     var suplement = Suplements.findOne(id);
+      //     return suplement && suplement.name;
+      //   }
+      // },
       { key: 'url', title: 'Link' }
     ];
 
@@ -181,23 +182,12 @@ Router.route('/admin/export/news/:exportable', function () {
             isData: true
           };
 
-          // if (_.contains(fields, newField)) {
-          //   console.log('ya esta');
-          // } else {
-          //   fields.push(newField);
-          // }
-
           if(containsObject(newField, fields)){
             console.log('ya esta');
           } else {
             fields.push(newField);
           }
 
-          // if(!isInArray(newField, fields)){
-          //   fields.push(newField);
-          // }
-
-          // fields.push();
         });
     });
 
@@ -213,6 +203,7 @@ Router.route('/admin/export/news/:exportable', function () {
 
   } else if(exportable.type == 'powerpoint'){
     var pptx = officegen( 'pptx' );
+    pptx.setWidescreen(true);
 
     var title = "exportablePPTX";
     var headers = {
@@ -231,12 +222,12 @@ Router.route('/admin/export/news/:exportable', function () {
       slide.addImage( buffer, {x: 25, y: 25, cx: 250, cy: 100} );
 
       // we add the new image
-      if(element.media[0]){
+      if(element.media){
         var image = request.getSync(element.media[0].url, {
             encoding: null
         });
         var imageBuffer = image.body;
-        slide.addImage( imageBuffer, {x: 400, y: 25, cx: 500, cy: 550} );
+        slide.addImage( imageBuffer, {x: 700, y: 25, cx: 500, cy: 560} );
       }
 
       // agregamos la tabla
@@ -249,7 +240,7 @@ Router.route('/admin/export/news/:exportable', function () {
       rows.push(['Ad Value', 'NN']);
 
       // slide.addTable(rows, {x: 25, y: 500, cx: '50%', cy: '100%'});
-      slide.addTable(rows, {x: '301000', y: '4881000', cx: '4096000' });
+      slide.addTable(rows, {x: '301000', y: '4881000', cx: '3596000', columnWidth: 3257600 });
 
     });
 
