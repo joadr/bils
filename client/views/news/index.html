@@ -10,9 +10,6 @@
       {{# autoForm schema="SearchNewsSchema" id="collectionsNewsIndexSearchForm" }}
         <div class="row">
           <div class="col-sm-3">
-            {{> afQuickField name='groupsIds' }}
-          </div>
-          <div class="col-sm-3">
             {{> afQuickField name='brandsIds' }}
           </div>
           <div class="col-sm-3">
@@ -20,6 +17,10 @@
           </div>
           <div class="col-sm-3">
             {{> afQuickField name='toDate' }}
+          </div>
+          <div class="col-sm-3">
+            <label for="">Filtro</label>
+            {{> afQuickField name='showToCategorize' }}
           </div>
           <!--
           <div class="col-sm-2">

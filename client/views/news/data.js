@@ -49,7 +49,9 @@ Template.collectionsNewsData.helpers({
       } else if (attribute.type == 'boolean') {
         attributes[attribute.key].type = Boolean;
         attributes[attribute.key].autoform = {
-          type: 'boolean-select'
+          type: 'boolean-select',
+          trueLabel: 'Si',
+          falseLabel: 'No'
         }
       } else {
         attributes[attribute.key].type = String;
@@ -62,7 +64,8 @@ Template.collectionsNewsData.helpers({
     var schema = new SimpleSchema(attributes);
     var parentAttributes = _.clone(NewsDataSchemaAttributes);
     parentAttributes.data = {
-      type: schema
+      type: schema,
+      label: 'Categorización'
     }
 
     return new SimpleSchema(parentAttributes);

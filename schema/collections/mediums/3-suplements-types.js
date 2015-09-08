@@ -17,7 +17,7 @@ SchemaDeclarationSchema = new SimpleSchema({
   key: {
     type: String,
     label: 'Identificador',
-    regEx: /^[a-zA-Z]+$/
+    regEx: /^[a-zA-Z0-9_]+$/
   },
   title: {
     type: String,
