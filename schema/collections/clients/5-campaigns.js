@@ -54,6 +54,11 @@ Campaigns.attachSchema({
     collection: Groups,
     titleField: 'name',
     publicationName: 'campaigns_groupId_schema',
+    additionalFields: ['agencyId'],
+    filter: function(userId) {
+      var selectors = Roles.helper(userId, 'clients.myGroups') || [];
+      return { $or: selectors };
+    }
   }),
   brandId: orion.attribute('hasOne', {
     label: 'Marca'

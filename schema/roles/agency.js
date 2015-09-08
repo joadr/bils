@@ -107,3 +107,20 @@ AgencyRole.helper('collections.news.indexFilter', function() {
   var brandsIds = _.pluck(Brands.find({ groupId: { $in: groupsIds } }).fetch(), '_id');
   return { brandsIds: { $in: brandsIds } };
 });
+
+/**
+ * Campaigns
+ */
+AgencyRole.allow('collections.campaigns.index', true); // Allows the role to see the link in the sidebar
+AgencyRole.allow('collections.campaigns.insert', true); // Allows the role to insert documents
+AgencyRole.allow('collections.campaigns.update', true); // Allows the role to update documents
+AgencyRole.allow('collections.campaigns.remove', true); // Allows the role to remove documents
+AgencyRole.allow('collections.campaigns.showCreate', true); // Makes the "create" button visible
+AgencyRole.allow('collections.campaigns.showUpdate', true); // Allows the user to go to the update view
+AgencyRole.allow('collections.campaigns.showRemove', true); // Shows the delete button on the update view
+AgencyRole.helper('collections.campaigns.indexFilter', function() {
+   var myAgenciesIds = _.pluck(Agencies.find({ adminsIds: this.userId }).fetch(), '_id');
+   var groupsIds = _.pluck(Groups.find({ agencyId: { $in: myAgenciesIds } }).fetch(), '_id');
+   var brandsIds = _.pluck(Brands.find({ groupId: { $in: groupsIds } }).fetch(), '_id');
+   return { brandId: { $in: brandsIds } };
+});
