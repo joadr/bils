@@ -234,7 +234,7 @@ Router.route('/admin/export/news/:exportable', function () {
       var extraData = element.dataForUser(exportable.userId);
 
       var rows = [];
-      if(extraData.mediumId){
+      if(extraData){
         rows.push(['Medio', getName('Mediums', extraData.mediumId)]);
       } else {
         rows.push(['Medio', "Sin medio"]);
