@@ -42,6 +42,6 @@ Template.dashboard.helpers({
     var brandsIds = _.pluck(Brands.find({ executivesIds: user._id }).fetch(), '_id');
     var newsIds = brandsIds && _.pluck(News.find({ brandsIds: { $in: brandsIds } }).fetch(), '_id');
     var categorizedCount = (newsIds && NewsData.find({ articleId: { $in: newsIds } }).count()) || 0;
-    return newsIds ? ((categorizedCount / newsIds.length) * 100) + '%' : '0%';
+    return newsIds ? (Math.round(categorizedCount / newsIds.length) * 100) + '%' : '0%';
   }
 })
