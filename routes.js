@@ -3,12 +3,23 @@ function getName(collection, id){
   return doc && doc.name;
 }
 
+function containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (JSON.stringify(list[i]) === JSON.stringify(obj)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 
 Router.route('/admin/export/news/:exportable', function () {
   var row = ExportNews.findOne(this.params.exportable);
   exportable = row;
 
-  var news = News.find(JSON.parse(exportable.filter));
+  var news = News.find(JSON.parse(exportable.filter)).fetch();
   var agency = Agencies.findOne({ $or: [{executivesIds: exportable.userId}, {adminsIds: exportable.userId}] });
 
   if(exportable.type == 'pdf'){
@@ -97,6 +108,7 @@ Router.route('/admin/export/news/:exportable', function () {
       {
         key: 'mediumId',
         title: 'Medio',
+        newsData: true,
         transform: function(id) {
           var medium = Mediums.findOne(id);
           return medium && medium.name;
@@ -105,12 +117,13 @@ Router.route('/admin/export/news/:exportable', function () {
       {
         key: 'suplementId',
         title: 'Suplemento',
+        newsData: true,
         transform: function(id) {
           var suplement = Suplements.findOne(id);
           return suplement && suplement.name;
         }
       },
-      { key: 'section', title: 'Sección' },
+      // { key: 'section', title: 'Sección' },
       // { key: 'size', title: 'Tamaño' },
       { key: 'colorType', title: 'Color' },
       {
@@ -123,28 +136,28 @@ Router.route('/admin/export/news/:exportable', function () {
       },
       //{ key: 'size', title: 'Producto' },
       // { key: 'size', title: 'Campaña' },
-      { key: 'sentiment', title: 'Sentimiento' },
-      { key: 'relevance', title: 'Relevancia' },
-      { key: 'typeOfNote', title: 'Tipo de nota' },
-      { key: 'opinion', title: 'Opinion' },
-      { key: 'topic', title: 'Tema' },
-      { key: 'size', title: 'Centimetraje' },
-      { key: 'page', title: 'Páginas' },
-      { key: 'title', title: 'Título' },
-      { key: 'body', title: 'Cuerpo' },
-      { key: 'date', title: 'Fecha' },
-      { key: 'duration', title: 'Duración' },
-      { key: 'journalist', title: 'Periodista' },
+      // { key: 'sentiment', title: 'Sentimiento' },
+      // { key: 'relevance', title: 'Relevancia' },
+      // { key: 'typeOfNote', title: 'Tipo de nota' },
+      // { key: 'opinion', title: 'Opinion' },
+      // { key: 'topic', title: 'Tema' },
+      // { key: 'size', title: 'Centimetraje' },
+      // { key: 'page', title: 'Páginas' },
+      // { key: 'title', title: 'Título' },
+      // { key: 'body', title: 'Cuerpo' },
+      // { key: 'date', title: 'Fecha' },
+      // { key: 'duration', title: 'Duración' },
+      // { key: 'journalist', title: 'Periodista' },
       // { key: 'agency', title: 'Agencia' },
-      { key: 'mentionsTheBrandInTheTitle', title: 'Mención Título' },
-      { key: 'mentionsTheBrandInTheBody', title: 'Mención Cuerpo' },
-      // { key: 'size', title: 'Foto' },
-      { key: 'secretMessage0Exists', title: 'Clave' },
-      { key: 'secretMessage1Exists', title: 'Clave 1' },
-      { key: 'secretMessage2Exists', title: 'Clave 2' },
-      { key: 'secretMessage3Exists', title: 'Clave 3' },
-      { key: 'secretMessage4Exists', title: 'Clave 4' },
-      { key: 'secretMessage5Exists', title: 'Clave 5' },
+      // { key: 'mentionsTheBrandInTheTitle', title: 'Mención Título' },
+      // { key: 'mentionsTheBrandInTheBody', title: 'Mención Cuerpo' },
+      { key: 'media[0].url', title: 'Foto' },
+      // { key: 'secretMessage0Exists', title: 'Clave' },
+      // { key: 'secretMessage1Exists', title: 'Clave 1' },
+      // { key: 'secretMessage2Exists', title: 'Clave 2' },
+      // { key: 'secretMessage3Exists', title: 'Clave 3' },
+      // { key: 'secretMessage4Exists', title: 'Clave 4' },
+      // { key: 'secretMessage5Exists', title: 'Clave 5' },
       // { key: 'spokesmans[0]', title: 'Vocero' },
       {
         key: 'suplementId',
@@ -157,8 +170,39 @@ Router.route('/admin/export/news/:exportable', function () {
       { key: 'url', title: 'Link' }
     ];
 
+    news.forEach(function(element, index, array){
+        var newsData = element.dataForUser(exportable.userId);
+        var type = SuplementsTypes.findOne(newsData.typeId);
+        if (!type || !type.attributes) return;
+        type.attributes.forEach(function(elem, i, arr){
+          var newField = {
+            key: elem.key,
+            title: elem.title,
+            isData: true
+          };
+
+          // if (_.contains(fields, newField)) {
+          //   console.log('ya esta');
+          // } else {
+          //   fields.push(newField);
+          // }
+
+          if(containsObject(newField, fields)){
+            console.log('ya esta');
+          } else {
+            fields.push(newField);
+          }
+
+          // if(!isInArray(newField, fields)){
+          //   fields.push(newField);
+          // }
+
+          // fields.push();
+        });
+    });
+
     var title = "exportableExcel";
-    file = exportToExcel(title, fields, news);
+    file = exportToExcel(title, fields, news, exportable.userId);
     var headers = {
       'Content-type': 'application/vnd.openxmlformats',
       'Content-Disposition': 'attachment; filename=' + title + '.xlsx'

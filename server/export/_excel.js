@@ -1,10 +1,24 @@
-var getColumns = function(fields, data) {
+var getColumns = function(fields, data, userId) {
   var rows = [];
 
   _.each(data, function(item) {
     var row = [];
     _.each(fields, function(field, index) {
-      var value = orion.helpers.searchObjectWithDots(item, field.key) || null;
+      if(field.newsData){
+        var newsData = item.dataForUser(userId);
+        var value = orion.helpers.searchObjectWithDots(newsData, field.key) || null;
+      } else if(field.isData) {
+        var newsData = item.dataForUser(userId);
+        var value = orion.helpers.searchObjectWithDots(newsData.data, field.key) || null;
+      } else {
+        var value = orion.helpers.searchObjectWithDots(item, field.key) || null;
+      }
+
+      // if(field.isData){
+      //   var newsData = item.dataForUser(userId);
+      //   var type = SuplementsTypes.findOne(newsData.typeId);
+      // }
+
       value = _.isFunction(field.transform) ? field.transform(value) : value;
       value = String(value);
       row[index] = value
@@ -15,9 +29,33 @@ var getColumns = function(fields, data) {
   return rows;
 };
 
+var getData = function(data, userId){
+  var rows = [];
 
-exportToExcel = function(title, fields, data) {
-  var rows = getColumns(fields, data);
+  _.each(data, function(item) {
+    var row = [];
+    _.each(fields, function(field, index) {
+
+      // var value = orion.helpers.searchObjectWithDots(item, field.key) || null;
+
+
+      value = _.isFunction(field.transform) ? field.transform(value) : value;
+      value = String(value);
+      row[index] = value
+    });
+    rows.push(row);
+  });
+
+  return rows;
+}
+
+
+exportToExcel = function(title, fields, data, userId) {
+  if(userId){
+    var rows = getColumns(fields, data, userId);
+  } else {
+    var rows = getColumns(fields, data);
+  }
 
   var excel = {};
   excel.cols = fields.map(function(field) {
