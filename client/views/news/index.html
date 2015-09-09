@@ -95,7 +95,7 @@
                 {{/ if }}
               </td>
               <td>
-                {{ shortenString title 60 }}
+                {{ shortenString title 50 }}
               </td>
               <td>
                 {{ dateFormat date 'D-M-YYYY' }}
@@ -116,8 +116,13 @@
                 <div class="btn-group">
                   <a href="{{ pathFor 'collections.news.show' }}" class="btn btn-xs btn-default">Ver</a>
                   {{# if canShowUpdate }}
-                    <a href="{{ pathFor 'collections.news.data' }}" class="btn btn-xs btn-default">Categorizar</a>
+                    {{# unless currentUser.hasRole 'admin' }}
+                      <a href="{{ pathFor 'collections.news.data' }}" class="btn btn-xs btn-default">Categorizar</a>
+                    {{/ unless }}
                     <a href="{{ pathFor 'collections.news.update' }}" class="btn btn-xs btn-default">Editar</a>
+                  {{/ if }}
+                  {{# if canShowRemove }}
+                    <a href="{{ pathFor 'collections.news.delete' }}" class="btn btn-xs btn-default">Borrar</a>
                   {{/ if }}
                 </div>
               </td>
