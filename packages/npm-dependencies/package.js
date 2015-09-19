@@ -6,7 +6,7 @@ Package.describe({
 Npm.depends({
   'excel-export': '0.4.1',
   'joadr-officegen': '0.3.0',
-  'pdfkit': '0.4.3'
+  'pdfkit': '0.7.1',
 });
 
 Package.onUse(function(api) {

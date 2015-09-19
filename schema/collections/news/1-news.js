@@ -83,13 +83,11 @@ News.attachSchema({
   }),
   title: {
     type: String,
-    label: 'Título',
-    optional: true
+    label: 'Título'
   },
   subtitle: {
     type: String,
-    label: 'Bajada',
-    optional: true
+    label: 'Bajada'
   },
   body: {
     type: String,
@@ -100,16 +98,14 @@ News.attachSchema({
     }
   },
   media: orion.attribute('images', {
-    label: 'Media',
-    optional: true
+    label: 'Media'
   }),
   date: {
     type: Date,
     label: 'Fecha',
     autoform: {
       type: 'bootstrap-datetimepicker'
-    },
-    optional: true
+    }
   },
   url: {
     type: String,

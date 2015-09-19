@@ -86,7 +86,7 @@
       }
     },
     "pdfkit": {
-      "version": "0.4.3",
+      "version": "0.7.1",
       "dependencies": {
         "png-js": {
           "version": "0.1.1"

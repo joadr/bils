@@ -80,8 +80,11 @@ Router.route('/admin/export/news/:exportable', function () {
       //doc.table(data, options)
       var extraData = element.dataForUser(exportable.userId);
 
-
-      doc.text("Medio: " + getName('Mediums', extraData.mediumId), 30, 370);
+      if(extraData){
+        doc.text("Medio: " + getName('Mediums', extraData.mediumId), 30, 370);
+      } else {
+        doc.text("Medio: " + getName('Mediums', "Sin categorizar"), 30, 370);
+      }
       doc.text("TITULO: " + element.title);
       //doc.text("SUPLEMENTO: " + element.suplementId);
       doc.text("FECHA: " + moment(element.date).format('LL'));
@@ -213,6 +216,7 @@ Router.route('/admin/export/news/:exportable', function () {
     news.forEach(function(element, index, array){
       // we create a slide per each news
       slide = pptx.makeNewSlide();
+      // slide.font_size(1200);
 
       // we add the company's logo on each slide
       var result = request.getSync(agency.logo.url, {
@@ -244,7 +248,7 @@ Router.route('/admin/export/news/:exportable', function () {
       rows.push(['Ad Value', 'NN']);
 
       // slide.addTable(rows, {x: 25, y: 500, cx: '50%', cy: '100%'});
-      slide.addTable(rows, {x: '301000', y: '4881000', cx: '3596000', columnWidth: 3257600 });
+      slide.addTable(rows, {x: '301000', y: '4881000', cx: '3596000', columnWidth: 3257600, font_size: 54 });
 
     });
 

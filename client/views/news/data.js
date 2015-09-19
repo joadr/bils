@@ -3,6 +3,8 @@ Template.collectionsNewsData.onCreated(function() {
   self.autorun(function() {
     var articleId = Router.current().params._id;
     self.subscribe('newsData.forUser', articleId);
+    self.subscribe('mediums', articleId);
+    self.subscribe('news.article', articleId);
   });
 
   self.autorun(function() {
@@ -84,5 +86,26 @@ Template.collectionsNewsData.events({
 AutoForm.addHooks('collectionsNewsDataForm', {
   onSuccess: function() {
     Router.go('collections.news.index');
+  }
+});
+
+Template.noticiaACategorizar.helpers({
+  article: function() {
+    return News.findOne(Router.current().params._id);
+  },
+  medium: function() {
+    var article = News.findOne(Router.current().params._id).dataForUser(Meteor.userId());
+    return Mediums.findOne({ _id: article.mediumId });
+  },
+  suplement: function() {
+    var article = News.findOne(Router.current().params._id).dataForUser(Meteor.userId());
+    return Suplements.findOne({ _id: article.suplementId });
+  },
+  type: function() {
+    var article = News.findOne(Router.current().params._id).dataForUser(Meteor.userId());
+    return SuplementsTypes.findOne(article.typeId).name;
+  },
+  data: function() {
+    return News.findOne(Router.current().params._id).dataForUser(Meteor.userId());
   }
 });
