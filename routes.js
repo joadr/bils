@@ -23,7 +23,14 @@ Router.route('/admin/export/news/:exportable', function () {
   var agency = Agencies.findOne({ $or: [{executivesIds: exportable.userId}, {adminsIds: exportable.userId}] });
 
   if(exportable.type == 'pdf'){
+    this.response.writeHead(200, {
+      'Content-type': 'application/pdf',
+      'Content-Disposition': "attachment; filename=exportable.pdf"
+    });
     var doc = new PDFDocument({size: [961, 539], layout: 'portrait'/*, margin: 50*/});
+
+    doc.pipe(this.response);
+
     doc.fontSize(12);
 
     news.forEach(function(element, index, array){
@@ -91,12 +98,8 @@ Router.route('/admin/export/news/:exportable', function () {
       // doc.text("CENTIMETRAJE: " + element.size);
       doc.text("VALOR APROX: " + 'NN');
     });
-
-    this.response.writeHead(200, {
-      'Content-type': 'application/pdf',
-      'Content-Disposition': "attachment; filename=exportable.pdf"
-    });
-    this.response.end( doc.outputSync() );
+    doc.end();
+    //this.response.end( doc.outputSync() );
 
   } else if (exportable.type == 'excel') {
     var fields = [
