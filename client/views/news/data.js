@@ -55,6 +55,30 @@ Template.collectionsNewsData.helpers({
           trueLabel: 'Si',
           falseLabel: 'No'
         }
+      } else if (attribute.type == 'list') {
+        attributes[attribute.key].type = String;
+
+        var articleId = Router.current().params._id;
+        var userId = Meteor.userId();
+        var agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
+        var newsData = agency && NewsData.findOne({ articleId: articleId, agencyId: agency._id });
+
+        var options = [];
+        attribute.list.forEach(function(element, index, array){
+          if(newsData[attribute.key] == element){
+            options.push({label: element, value: element, selected: true})
+          } else {
+            options.push({label: element, value: element})
+          }
+
+        });
+        attributes[attribute.key].autoform = {
+          type: 'select',
+          trueLabel: 'Si',
+          falseLabel: 'No',
+          options: options
+        }
+        console.log(options);
       } else {
         attributes[attribute.key].type = String;
       }

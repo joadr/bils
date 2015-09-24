@@ -26,7 +26,7 @@ SchemaDeclarationSchema = new SimpleSchema({
   type: {
     type: String,
     label: 'Tipo',
-    allowedValues: ['string', 'number', 'date', 'file', 'boolean'],
+    allowedValues: ['string', 'number', 'date', 'file', 'boolean', 'list'],
     autoform: {
       noselect: true,
       options: {
@@ -34,9 +34,15 @@ SchemaDeclarationSchema = new SimpleSchema({
         number: 'Numero',
         date: 'Fecha',
         file: 'Archivo',
-        boolean: 'Verdadero/Falso'
+        boolean: 'Verdadero/Falso',
+        list: 'Lista'
       }
     }
+  },
+  list: {
+    type: [String],
+    label: "Lista",
+    optional: true
   },
   optional: {
     type: Boolean,
