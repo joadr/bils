@@ -2,6 +2,11 @@ if (Meteor.settings.nexPath) {
   FileWatch.listen(Meteor.settings.nexPath, 'utf8', function(contents) {
     console.log('Importing nex file...');
     var data = xml2js.parseStringSync(contents);
+    if (!data) {
+      console.log('Error parsing xml');
+      return true;
+    }
+
     var news = data.NexNews.Noticia.map(function(item) {
       var article = {};
 

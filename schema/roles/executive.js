@@ -38,4 +38,4 @@ ExecutiveRole.helper('collections.news.indexFilter', function() {
   var brandsIds = _.pluck(Brands.find({ executivesIds: this.userId }).fetch(), '_id');
   return { brandsIds: { $in: brandsIds } };
 });
-AgencyRole.helper('collections.news.hiddenFields', ['groupsIds', 'brandsIds']);
+AgencyRole.helper('collections.news.forbiddenFields', ['groupsIds', 'brandsIds']);
