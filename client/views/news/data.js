@@ -78,7 +78,7 @@ Template.collectionsNewsData.helpers({
           falseLabel: 'No',
           options: options
         }
-        console.log(options);
+        //console.log(options);
       } else {
         attributes[attribute.key].type = String;
       }

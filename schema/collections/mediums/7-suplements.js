@@ -214,5 +214,91 @@ Suplements.attachSchema({
     type: String,
     label: 'Valor banner vertical',
     optional: true
+  },
+  portada: {
+    type: String,
+    label: "Portada",
+    optional: true
+  },
+  contraportada: {
+    type: String,
+    label: "Contraportada",
+    optional: true
+  },
+  politics: {
+    type: String,
+    label: "Politica",
+    optional: true
+  },
+  economy: {
+    type: String,
+    label: "Economía",
+    optional: true
+  },
+  nacionalActualidad: {
+    type: String,
+    label: "Nacional Actualidad",
+    optional: true
+  },
+  sports: {
+    type: String,
+    label: "Deportes",
+    optional: true
+  },
+  tecnology: {
+    type: String,
+    label: "Tecnología",
+    optional: true
+  },
+  international: {
+    type: String,
+    label: "Internacional",
+    optional: true
+  },
+  automotriz: {
+    type: String,
+    label: "Automotriz",
+    optional: true
+  },
+  opinion: {
+    type: String,
+    label: "Opinion/Carta",
+    optional: true
+  },
+  health: {
+    type: String,
+    label: "Salud",
+    optional: true
+  },
+  market: {
+    type: String,
+    label: "Mercado/Marketing/Lanzamiento",
+    optional: true
+  },
+  panoramas: {
+    type: String,
+    label: "Panoramas/Espectáculos/Cultura Tendencias",
+    optional: true
+  },
+  social: {
+    type: String,
+    label: "Sociales",
+    optional: true
+  },
+  latlongpos: {
+    type: String,
+    label: "Lat long Post",
+    optional: true
+  },
+  latlongneu: {
+    type: String,
+    label: "Lat Long Neu",
+    optional: true
+  },
+  latlongneg: {
+    type: String,
+    label: "Lat Long Neg",
+    optional: true
   }
+
 });
