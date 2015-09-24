@@ -87,7 +87,8 @@ News.attachSchema({
   },
   subtitle: {
     type: String,
-    label: 'Bajada'
+    label: 'Bajada',
+    optional: true
   },
   body: {
     type: String,
@@ -98,7 +99,8 @@ News.attachSchema({
     }
   },
   media: orion.attribute('images', {
-    label: 'Media'
+    label: 'Media',
+    optional: true
   }),
   date: {
     type: Date,

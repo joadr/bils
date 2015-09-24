@@ -2,7 +2,10 @@ if (Meteor.settings.agurePath) {
   FileWatch.listen(Meteor.settings.agurePath, 'iso-8859-1', function(contents) {
     console.log('Importing agure file...');
     var data = xml2js.parseStringSync(contents);
-
+    if (!data) {
+      console.log('Error parsing xml');
+      return;
+    }
     var news = data.imentenoticias.articulo.map(function(item) {
       var article = {};
 
