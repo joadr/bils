@@ -1,3 +1,3 @@
 Roles.registerAction('dashboard.show', false);
 
-Roles.defaultRole.helper('collections.news.hiddenFields', ['groupsIds', 'brandsIds']);
+Roles.defaultRole.helper('collections.news.forbiddenFields', ['groupsIds', 'brandsIds']);

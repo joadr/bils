@@ -44,7 +44,7 @@ AgencyRole.allow('collections.agencies.showRemove', false); // Shows the delete 
 AgencyRole.helper('collections.agencies.indexFilter', function() {
   return { adminsIds: this.userId };
 });
-AgencyRole.helper('collections.agencies.hiddenFields', function() {
+AgencyRole.helper('collections.agencies.forbiddenFields', function() {
   return ['adminsIds'];
 });
 
@@ -63,7 +63,7 @@ AgencyRole.helper('collections.groups.indexFilter', function() {
   var myAgenciesIds = _.pluck(Agencies.find({ adminsIds: this.userId }).fetch(), '_id');
   return { agencyId: { $in: myAgenciesIds } };
 });
-AgencyRole.helper('collections.groups.hiddenFields', function() {
+AgencyRole.helper('collections.groups.forbiddenFields', function() {
   return ['agencyId'];
 });
 AgencyRole.helper('clients.myGroups', function() {
@@ -87,7 +87,7 @@ AgencyRole.helper('collections.brands.indexFilter', function() {
   var groupsIds = _.pluck(Groups.find({ agencyId: { $in: myAgenciesIds } }).fetch(), '_id');
   return { groupId: { $in: groupsIds } };
 });
-AgencyRole.helper('collections.brands.hiddenFields', function() {
+AgencyRole.helper('collections.brands.forbiddenFields', function() {
   return ['groupId'];
 });
 

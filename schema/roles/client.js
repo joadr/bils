@@ -38,6 +38,6 @@ ClientRole.helper('collections.news.indexFilter', function() {
   var brandsIds = _.pluck(Brands.find({ clientsIds: this.userId }).fetch(), '_id');
   return { brandsIds: { $in: brandsIds } };
 });
-ClientRole.helper('collections.news.hiddenFields', function() {
+ClientRole.helper('collections.news.forbiddenFields', function() {
   return [];
 });
