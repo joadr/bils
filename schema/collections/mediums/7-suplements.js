@@ -40,9 +40,9 @@ Suplements.attachSchema({
     label: 'Subtipo',
     optional: true
   }, {
-    collection: SuplementsTypes,
+    collection: SuplementsSubTypes,
     titleField: 'name',
-    publicationName: 'suplementsType',
+    publicationName: 'suplementsSubType',
   }),
   styleId: orion.attribute('hasOne', {
     label: 'Estilo'
