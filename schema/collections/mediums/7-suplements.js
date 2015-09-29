@@ -43,6 +43,15 @@ Suplements.attachSchema({
     collection: SuplementsSubTypes,
     titleField: 'name',
     publicationName: 'suplementsSubType',
+    additionalFields: ['typeId'],
+    filter: function(userId) {
+      if (Meteor.isServer) {
+        return {};
+      } else {
+        var typeId = AutoForm.getFieldValue('typeId');
+        return typeId ? { typeId: typeId } : {};
+      }
+    }
   }),
   styleId: orion.attribute('hasOne', {
     label: 'Estilo'
