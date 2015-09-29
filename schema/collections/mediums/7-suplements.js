@@ -36,6 +36,14 @@ Suplements.attachSchema({
     titleField: 'name',
     publicationName: 'suplementsType',
   }),
+  subType: orion.attribute('hasOne', {
+    label: 'Subtipo',
+    optional: true
+  }, {
+    collection: SuplementsTypes,
+    titleField: 'name',
+    publicationName: 'suplementsType',
+  }),
   styleId: orion.attribute('hasOne', {
     label: 'Estilo'
   }, {
@@ -123,6 +131,11 @@ Suplements.attachSchema({
   monthlyViews: {
     type: Number,
     label: 'Visitas mensuales (solo web)',
+    optional: true
+  },
+  factorImpar: {
+    type: String,
+    label: "Factor Impar",
     optional: true
   },
   value: {
