@@ -17,7 +17,7 @@ Template.dashboard.helpers({
     return News.find().count() - NewsData.find().count();
   },
   newspercentcategorize: function() {
-    return (Math.round(NewsData.find().count())/News.find().count())*100;
+    return Math.ceil((Math.round(NewsData.find().count())/News.find().count())*100 * 100)/100;
   },
   userBrands: function() {
     var user = this;
