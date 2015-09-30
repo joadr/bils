@@ -3,9 +3,10 @@ if (Meteor.settings.agurePath) {
     console.log('Importing agure file...');
     var data = xml2js.parseStringSync(contents);
     if (!data) {
-      console.log('Error parsing xml');
+      console.log('Error parsing xml - Format error');
       return;
     }
+
     var news = data.imentenoticias.articulo.map(function(item) {
       var article = {};
 
