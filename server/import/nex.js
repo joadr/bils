@@ -3,8 +3,8 @@ if (Meteor.settings.nexPath) {
     console.log('Importing nex file...');
     var data = xml2js.parseStringSync(contents);
     if (!data) {
-      console.log('Error parsing xml');
-      return true;
+      console.log('Error parsing xml - Format error');
+      return;
     }
 
     var news = data.NexNews.Noticia.map(function(item) {

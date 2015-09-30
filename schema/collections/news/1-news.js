@@ -57,9 +57,10 @@ News.attachSchema({
     titleField: 'name',
     publicationName: 'news_groupsIds_schema',
     additionalFields: ['agencyId'],
+    validateOnServer: false,
     filter: function(userId) {
       var selectors = Roles.helper(userId, 'clients.myGroups') || null;
-      return { $or: selectors };
+      return selectors.length > 0 ? { $or: selectors } : null;
     }
   }),
   brandsIds: orion.attribute('hasMany', {
@@ -70,11 +71,12 @@ News.attachSchema({
     titleField: 'name',
     additionalFields: ['groupId'],
     publicationName: 'news_brandsIds_schema',
+    validateOnServer: false,
     filter: function(userId) {
-      var selectors = Roles.helper(userId, 'clients.myBrands') || null;
+      var selectors = Roles.helper(userId, 'clients.myBrands') || [];
       var myBrandsFilter = { $or: selectors };
       if (Meteor.isServer) {
-        return myBrandsFilter;
+        return selectors.length > 0 ? myBrandsFilter : null;
       } else {
         var groupsIds = AutoForm.getFieldValue('groupsIds');
         return groupsIds ? { $and: [{ groupId: { $in: groupsIds } }, myBrandsFilter] } : myBrandsFilter;

@@ -18,6 +18,7 @@ FileWatch.listen = function(directory, encoding, callback) {
           fs.unlink(filePath);
         }
       } catch (e) {
+        console.log(e.stack);
         console.trace(e);
         fs.unlink(filePath);
       }
