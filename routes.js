@@ -40,12 +40,14 @@ Router.route('/admin/export/news/:exportable', function () {
       }
 
       // Logo is inserted on every page
-      var result = request.getSync(agency.logo.url, {
-          encoding: null
-      });
-      var buffer = result.body;
+      if(agency){
+        var result = request.getSync(agency.logo.url, {
+            encoding: null
+        });
+        var buffer = result.body;
 
-      doc.image(buffer, 10, 10, { width: 200 });
+        doc.image(buffer, 10, 10, { width: 200 });
+      }
 
       // we put the news photo
       if(element.media){
@@ -89,14 +91,152 @@ Router.route('/admin/export/news/:exportable', function () {
 
       if(extraData){
         doc.text("Medio: " + getName('Mediums', extraData.mediumId), 30, 370);
+
+        var suplement = SuplementsTypes.findOne(extraData.suplementId);
+        if(suplement){
+          if(suplement.title == "Diario" || suplement.title == "Revista"){
+            // Factor tamaño
+            if(NewsData.data.tamano){
+              if(NewsData.data.tamano == "Pagina Entera"){
+                var valorpagina = suplement.valueFullPage;
+              } else if(NewsData.data.tamano == "3/4 Pagina"){
+                var valorpagina = suplement.value34Page;
+              } else if(NewsData.data.tamano == "1/2 Pagina Alto"){
+                var valorpagina = suplement.valueNarrowHalfPage;
+              } else if(NewsData.data.tamano == "1/2 Pagina Tradicional"){
+                var valorpagina = suplement.valueWideHalfPage;
+              } else if(NewsData.data.tamano == "1/4 Pagina Tradicional"){
+                var valorpagina = suplement.value14Page;
+              } else if(NewsData.data.tamano == "Caluga Mediana"){
+                var valorpagina = suplement.valueMediumSpot;
+              } else if(NewsData.data.tamano == "Caluga Pequeña"){
+                var valorpagina = suplement.valueSmallSpot;
+              } else if(NewsData.data.tamano == "Banner Horizontal"){
+                var valorpagina = suplement.valueHorizontalBanner;
+              } else if(NewsData.data.tamano == "Banner Vertical"){
+                var valorpagina = suplement.valueVerticalBanner;
+              }
+
+              // Factor dia y valor color dia
+              var factordia = 1;
+              var valorColor = 0;
+
+              var diasemana = moment(element.date).format('dddd');
+              if (diasemana == "Lunes" || diasemana == "Martes" || diasemana == "Miércoles" || diasemana == "Jueves"){
+                if(suplement.valueMondayThursday){
+                  var factordia = suplement.valueMondayThursday;
+                }
+                if(suplement.valueMondayThursdayColor){
+                  var valorColor = suplement.valueMondayThursdayColor;
+                }
+
+              } else if(diasemana == "Viernes"){
+                if(suplement.valueFriday){
+                  var factordia = suplement.valueFriday;
+                }
+                if(suplement.valueFridayColor){
+                  var valorColor = suplement.valueFridayColor;
+                }
+              } else if(diasemana == "Sábado"){
+                if(suplement.valueSaturday){
+                  var factordia = suplement.valueSaturday;
+                }
+                if(suplement.valueSaturdayColor){
+                  var valorColor = suplement.valueSaturdayColor;
+                }
+              } else if(diasemana == "Domingo"){
+                if(suplement.valueSunday){
+                  var factordia = suplement.valueSunday;
+                }
+                if(suplement.valueSundayColor){
+                  var valorColor = suplement.valueSundayColor;
+                }
+              }
+
+              // Valor Color
+              if(NewsData.data.blancoynegro == false){
+                var valorColor = 0;
+              }
+
+              // Factor seccion
+              if(NewsData.seccion){
+                var cases = {
+                  'Portada' : function(){
+                  	return suplement.portada;
+                  },
+                  'Contraportada' : function(){
+                  	return suplement.contraportada;
+                  },
+                  'Política' : function(){
+                  	return suplement.politics;
+                  },
+                  'Economía / Empresas' : function(){
+                  	return suplement.economy;
+                  },
+                  'Nacional Actualidad' : function(){
+                  	return suplement.nacionalActualidad;
+                  },
+                  'Deportes' : function(){
+                  	return suplement.sports;
+                  },
+                  'Tecnología' : function(){
+                  	return suplement.tecnology;
+                  },
+                  'Internacional' : function(){
+                  	return suplement.international;
+                  },
+                  'Automotriz' : function(){
+                  	return suplement.automotriz;
+                  },
+                  'Opinión/Cartas' : function(){
+                  	return suplement.opinion;
+                  },
+                  'Salud' : function(){
+                  	return suplement.health;
+                  },
+                  'Mercado/Marketing/Lanzamiento' : function(){
+                  	return suplement.market;
+                  },
+                  'Tendencias/ Panoramas/ Espectáculos/ Cultura' : function(){
+                  	return suplement.panoramas;
+                  },
+                  'Sociales' : function(){
+                  	return suplement.social;
+                  }
+                }
+                if (cases[NewsData.seccion]) {
+                  var factorseccion = cases[NewsData.seccion]();
+                } else {
+                  var factorseccion = 1;
+                }
+              }
+
+              var valor = (valorpagina * factordia * factorseccion) + valorcolor;
+            } else {
+              var valor = suplement.value;
+            }
+
+            // Si Valor tamaño pagina existe : Valor tamaño pagina * factor dia * factor seccion + Valor color dia (Sin color=0)
+			                 //Sino Valor general
+          } else if(suplement.title == "Online"){
+            var valor = suplement.value;
+          } else if(suplement.title == "Radio" || suplement.title == "Tv"){
+            var valor = suplement.value * (NewsData.data.duracion/30);
+          }
+        } else {
+          var valor = "NN"
+        }
+
+
       } else {
-        doc.text("Medio: " + getName('Mediums', "Sin categorizar"), 30, 370);
+        doc.text("Medio: " + "Sin categorizar", 30, 370);
+        var valor = "NN";
       }
       doc.text("TITULO: " + element.title);
       //doc.text("SUPLEMENTO: " + element.suplementId);
       doc.text("FECHA: " + moment(element.date).format('LL'));
       // doc.text("CENTIMETRAJE: " + element.size);
-      doc.text("VALOR APROX: " + 'NN');
+      doc.text("VALOR APROX: " + valor);
     });
     doc.end();
     //this.response.end( doc.outputSync() );
