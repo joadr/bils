@@ -16,7 +16,9 @@ if (Meteor.settings.agurePath) {
       article.body = item.indexacion && item.indexacion[0];
 
       if (item.dia && item.mes && item['año']) {
-        article.date = moment().day(item.dia[0]).month(item.mes[0]).year(item['año'][0]).toDate();
+        var fecha = item['año'] + '-' + item.mes + '-' + item.dia;
+        article.date = moment(fecha).toDate();
+        //article.date = moment().day(item.dia[0]).month(item.mes[0]).year(item['año'][0]).toDate();
       }
 
       return article;
