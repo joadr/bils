@@ -19,7 +19,7 @@ SuplementsSubTypes.attachSchema({
   }, {
     collection: SuplementsTypes,
     titleField: 'name',
-    publicationName: 'suplementsType',
+    publicationName: 'typeId_suplementsSubType_schema',
   }),
   name: {
     type: String,
