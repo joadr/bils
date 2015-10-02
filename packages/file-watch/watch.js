@@ -7,6 +7,10 @@ FileWatch = {};
 FileWatch.listen = function(directory, encoding, callback) {
   var findNextFiles = function() {
     var files = fs.readdirSync(directory);
+    if (files.length > 0) {
+      Meteor._sleepForMs(10000);
+    }
+    files = fs.readdirSync(directory);
     _.each(files, function(name) {
       var filePath = directory + '/' + name;
 
