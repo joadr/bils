@@ -13,7 +13,7 @@ FileWatch.listen = function(directory, encoding, callback) {
       }
       console.log('File found waiting 10 seconds to load... ', name);
       Meteor._sleepForMs(10000);
-      console.log('Parsing file... ', name);
+      console.log('Reading file... ', name);
 
       var filePath = directory + '/' + name;
 
