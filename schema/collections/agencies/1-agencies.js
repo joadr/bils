@@ -9,8 +9,8 @@ Agencies = new orion.collection('agencies', {
   tabular: {
     columns: [
       { data: 'name', title: 'Nombre' },
-      orion.attributeColumn('image', 'logo', 'Logo'),
-      orion.attributeColumn('hasMany', 'executivesIds', 'Ejecutivos')
+      orion.attributeColumn('hasMany', 'executivesIds', 'Ejecutivos'),
+      orion.attributeColumn('image', 'logo', 'Logo')
     ]
   }
 });

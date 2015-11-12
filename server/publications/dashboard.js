@@ -19,7 +19,7 @@ Meteor.publishComposite('dashboard', {
       }
     }, {
       find: function(group) {
-        return News.find({ groupsIds: group._id }, { fields: { _id: 1, brandsIds: 1 } });
+        return News.find({ groupsIds: group._id }, { fields: { _id: 1, brandsIds: 1, date: 1 , categorizedBy:1} });
       },
       children: [{
         find: function(article) {

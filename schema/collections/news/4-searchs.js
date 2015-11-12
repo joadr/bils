@@ -77,14 +77,16 @@ SearchNewsSchema = new SimpleSchema({
     type: Date,
     label: 'Desde Fecha',
     autoform: {
-      type: 'bootstrap-datetimepicker'
+      type: 'date'
+      // type: 'bootstrap-datetimepicker'
     }
   },
   toDate: {
     type: Date,
     label: 'Hasta Fecha',
     autoform: {
-      type: 'bootstrap-datetimepicker'
+      type: 'date'
+      // type: 'bootstrap-datetimepicker'
     }
   },
   showToCategorize: {
