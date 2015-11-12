@@ -61,6 +61,7 @@ Template.collectionsNewsIndex.onRendered(function() {
 });
 
 Template.collectionsNewsIndex.helpers({
+
   news: function() {
     var values = Session.get('collectionsNewsIndexValues');
     return News.find(filterForSearchObject(values, Meteor.userId()), { sort: { date: -1 } });
@@ -129,5 +130,32 @@ Template.collectionsNewsIndex.events({
     }
 
     exportNews(type, filter);
+  },
+
+  'click .btn-deletenews': function(event, template) {
+    var ids = Session.get('selectedNews');
+
+      var r = confirm('Seguro de que quieres borrar las noticias seleccionadas?');
+
+          if(r){
+            _.each(ids,function(item){
+              News.remove(item);
+            })
+          }
+  },
+
+   'click .btn-aprovenews': function(event, template) {
+    var ids = Session.get('selectedNews');
+
+    // console.log(ids);
+
+
+    _.each(ids,function(item){
+
+      News.update({_id: item}, {$set: {prevAprove: '1'}});
+
+      console.log(item)
+
+    });
   }
 });

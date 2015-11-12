@@ -1,121 +1,208 @@
 <template name="dashboard">
   {{# Layout template="orionBootstrapMediumContentOffset" }}
-    {{# Layout template="orionBootstrapTitle" }}
-      Dashboard
-    {{/ Layout }}
+  {{# Layout template="orionBootstrapTitle" }}
+  Dashboard
+  {{/ Layout }}
 
-    {{# if Template.subscriptionsReady }}
+  {{# if Template.subscriptionsReady }}
 
+  <div class="row">
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-aqua">
+        <div class="inner">
+          <h3>{{ newsCountToday }}</h3>
+          <p>Notas Nuevas</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-star"></i>
+        </div>
+        <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>{{ newspercentcategorize }}<sup style="font-size: 20px">%</sup></h3>
+          <p>Notas Categorizadas</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-bars"></i>
+        </div>
+        <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3>{{ newsToCategorize }}</h3>
+          <p>Notas por Categorizar</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-edit"></i>
+        </div>
+        <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-red">
+        <div class="inner">
+          <!-- <h3 style="height:42px;overflow:hidden;"></h3>
+          <p></p> -->
+          <h3>{{ newsCount }}</h3>
+          <p>Banco de Noticias</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-newspaper-o"></i>
+        </div>
+        <a href="{{ pathFor 'news.index' }}" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div><!-- ./col -->
+  </div><!-- /.row -->
+
+  <div class="controls hidden">
+    <!-- <label>Filtrar por ejecutivo</label>
+    <input type="text" name="executiveFilter"> -->
+    <!-- {{# autoForm schema="SearchDashboardSchema" id="collectionsNewsIndexSearchForm" }}
       <div class="row">
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-aqua">
-                <div class="inner">
-                  <h3>{{ newsCount }}</h3>
-                  <p>Notas Nuevas</p>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-star"></i>
-                </div>
-                <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-green">
-                <div class="inner">
-                  <h3>{{ newspercentcategorize }}<sup style="font-size: 20px">%</sup></h3>
-                  <p>Notas Categorizadas</p>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-yellow">
-                <div class="inner">
-                  <h3>{{ newsToCategorize }}</h3>
-                  <p>Notas por Categorizar</p>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-edit"></i>
-                </div>
-                <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-red">
-                <div class="inner">
-                  <h3 style="height:42px;overflow:hidden;"></h3>
-                  <p></p>
+        <div class="col-sm-3">
+          {{> afQuickField name='brandsIds' }}
+        </div>
+      </div>
+    {{/ autoForm }} -->
+  </div>
 
-                  <p>Banco de Noticias</p>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-newspaper-o"></i>
-                </div>
-                <a href="{{ pathFor 'news.index' }}" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-          </div><!-- /.row -->
-      <table class="table">
-        <thead>
-          <tr>
-            <th>
-              Nombre
-            </th>
-            <th>
-              Marcas
-            </th>
-            <th>
-              Noticias Categorizadas
-            </th>
-            <th>
-              Por Categorizar
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {{# each users }}
-            <tr>
-              <td>
-                {{ profile.name }}
-              </td>
-              <td>
-                {{# if userBrands }}
-                {{# each userBrands }}
-                  <span class="label label-danger">{{ name }}</span>
-                {{/ each }}
-                {{ else }}
-                  Sin marcas
-                {{/ if }}
-              </td>
-              <td>
-                {{# if userBrands }}
-                <b>{{ userCategorized }}</b> ({{ userCategorizedPercentage }})
-                {{ else }}
-                Sin noticias
-                {{/ if }}
-              </td>
-              <td>
-                {{# if userBrands }}
-                <b>{{ userToCategorize }}</b>
-                {{ else }}
-                Sin noticias
-                {{/ if }}
-              </td>
-            </tr>
+  <table class="table">
+
+    <thead>
+      <tr>
+        <th>
+          Marca
+        </th>
+        <th>
+          Notas Dia
+        </th>
+        <th>
+          Categorizadas Dia
+        </th>
+        <th>
+          Categorizadas Totales
+        </th>
+        <th>
+          Por categorizar Totales
+        </th>
+        <th>
+          Notas Totales
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- {{# each users }}
+      <tr>
+        <td>
+          {{ profile.name }}
+        </td>
+        <td>
+          {{# if userBrands }}
+          {{# each userBrands }}
+          <span class="label label-danger">{{ name }}</span>
           {{/ each }}
-        </tbody>
-      </table>
-    {{ else }}
-      <p>
-        <b>Cargando...</b>
-      </p>
-    {{/ if }}
+          {{ else }}
+          Sin marcas
+          {{/ if }}
+        </td>
+        <td>
+          {{# if userBrands }}
+          <b>{{ userCategorized }}</b> ({{ userCategorizedPercentage }})
+          {{ else }}
+          Sin noticias
+          {{/ if }}
+        </td>
+        <td>
+          {{# if userBrands }}
+          <b>{{ userToCategorize }}</b>
+          {{ else }}
+          Sin noticias
+          {{/ if }}
+        </td>
+      </tr>
+      {{/ each }} -->
+
+      {{# each brands}}
+        <tr>
+          <td>  
+            <span class="label label-danger">{{ name }}</span>
+            <!-- {{name}} -->
+          </td>
+
+          <td>  
+            {{brandTodayNews}}
+          </td>
+
+          <td>  
+            {{brandNewsCategorizedToday}}
+          </td>
+
+          <td>  
+            {{brandNewsCategorized}}
+          </td>
+
+          <td>  
+            {{brandNewsToCategorize}}
+          </td>
+
+          <td>  
+            {{brandNewsCount}}
+          </td>
+
+        </tr>
+      {{/ each}}
+
+      <tr>
+          <td>  
+          </td>
+
+          <td>
+            <b>
+              {{newsCountToday}}
+            </b>  
+          </td>
+
+          <td>  
+            <b>
+              {{newsCategorizedToday}}
+            </b>  
+          </td>
+
+          <td>  
+            <b>
+              {{newsCategorized}}
+            </b>  
+          </td>
+
+          <td>  
+            <b>
+              {{newsToCategorize}}
+            </b>  
+          </td>
+
+          <td>  
+            <b>
+              {{newsCount}}
+            </b>  
+          </td>
+        </tr>
+
+    </tbody>
+  </table>
+  {{ else }}
+  <p>
+    <b>Cargando...</b>
+  </p>
+  {{/ if }}
   {{/ Layout }}
 </template>

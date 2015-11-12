@@ -48,6 +48,14 @@ News.attachSchema({
       omit: true
     }
   },
+    prevAprove: {
+    type: String,
+    label: 'prevAprove',
+    optional: true,
+    autoform: {
+      omit: true
+    }
+  },
   createdBy: orion.attribute('createdBy'),
   groupsIds: orion.attribute('hasMany', {
     label: 'Grupos',

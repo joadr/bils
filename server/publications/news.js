@@ -17,7 +17,7 @@ Meteor.publishComposite('news.search', function(search, limit) {
   limit = limit || 20;
   return {
     find: function() {
-      return News.find(filter, { limit: limit, fields: { title: 1, groupsIds: 1, brandsIds: 1, date: 1, categorizedBy: 1 }, sort: { date: -1 } });
+      return News.find(filter, { limit: limit, fields: { title: 1, groupsIds: 1, brandsIds: 1, date: 1, categorizedBy: 1, prevAprove: 1 }, sort: { date: -1 } });
     },
     children: [{
       find: function(article) {

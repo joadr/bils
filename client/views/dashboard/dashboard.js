@@ -3,45 +3,83 @@ Template.dashboard.onCreated(function() {
 });
 
 Template.dashboard.helpers({
-  users: function() {
-    var agency = Agencies.findOne({ adminsIds: Meteor.userId() });
-    return Meteor.users.find({ _id: { $in: agency.executivesIds } });
+
+  brands: function() {
+    return Brands.find();
   },
-  brandsCount: function() {
-    return Brands.find().count();
+  brandTodayNews: function(){
+    var start = new Date();
+    var end = new Date();
+    end.setDate(end.getDate() + 1);
+    start.setHours(0,0,0,0);
+    end.setHours(0,0,0,0);
+    var brand = this;
+    return (News.find({$and:[{date:{$gt: start, $lt: end}},{brandsIds:this._id}]}).count());
+  },
+
+  brandNewsCount: function() {
+    var brand = this;
+    console.log(News.find({brandsIds:this._id}).fetch());
+    brandNewsCount = (News.find({brandsIds:this._id}).count());
+    return brandNewsCount;
+  },
+  brandNewsToCategorize: function() {
+    var brand = this;
+    brandNewsCount = (News.find({brandsIds:this._id}).count());
+    brandNewsCategorizedCount = News.find({$and:[{ categorizedBy: {$exists:true} },{brandsIds:this._id}]}).count();
+    console.log(brandNewsCount);
+    console.log(brandNewsCategorizedCount);
+    return brandNewsCount - brandNewsCategorizedCount;
+  },
+
+  brandNewsCategorized: function() {
+    var brand = this;
+    brandNewsCategorizedCount = News.find({$and:[{ categorizedBy: {$exists:true} },{brandsIds:this._id}]}).count();
+    return brandNewsCategorizedCount;
+  },
+
+  brandNewsCategorizedToday: function() {
+    var brand = this;
+    var start = new Date();
+    var end = new Date();
+    end.setDate(end.getDate() + 1);
+    start.setHours(0,0,0,0);
+    end.setHours(0,0,0,0);
+
+    brandNewsCategorizedTodayCount = News.find({$and:[{ categorizedBy: {$exists:true} },{brandsIds:this._id},{date:{$gt: start, $lt: end}}]}).count();
+    return brandNewsCategorizedTodayCount;
+  },
+
+  newsCountToday: function() {
+    var start = new Date();
+    var end = new Date();
+    end.setDate(end.getDate() + 1);
+    start.setHours(0,0,0,0);
+    end.setHours(0,0,0,0);
+
+    return News.find({date:{$gt: start, $lt: end}}).count();
   },
   newsCount: function() {
     return News.find().count();
   },
+  newsCategorized: function() {
+    return News.find({ categorizedBy: {$exists:true} }).count();
+  }, 
+  newsCategorizedToday: function() {
+
+    var start = new Date();
+    var end = new Date();
+    end.setDate(end.getDate() + 1);
+    start.setHours(0,0,0,0);
+    end.setHours(0,0,0,0);
+
+    return News.find({$and:[{ categorizedBy: {$exists:true} },{date:{$gt: start, $lt: end}}]}).count();
+  }, 
   newsToCategorize: function() {
     return News.find().count() - NewsData.find().count();
-  },
+  }, 
   newspercentcategorize: function() {
     return Math.ceil((Math.round(NewsData.find().count())/News.find().count())*100 * 100)/100;
   },
-  userBrands: function() {
-    var user = this;
-    return Brands.find({ executivesIds: user._id }).fetch();
-  },
-  userToCategorize: function() {
-    var user = this;
-    var brandsIds = _.pluck(Brands.find({ executivesIds: user._id }).fetch(), '_id');
-    var newsIds = brandsIds && _.pluck(News.find({ brandsIds: { $in: brandsIds } }).fetch(), '_id');
-    var categorizedCount = (newsIds && NewsData.find({ articleId: { $in: newsIds } }).count()) || 0;
-    return newsIds.length - categorizedCount;
-  },
-  userCategorized: function() {
-    var user = this;
-    var brandsIds = _.pluck(Brands.find({ executivesIds: user._id }).fetch(), '_id');
-    var newsIds = brandsIds && _.pluck(News.find({ brandsIds: { $in: brandsIds } }).fetch(), '_id');
-    var categorizedCount = (newsIds && NewsData.find({ articleId: { $in: newsIds } }).count()) || 0;
-    return categorizedCount;
-  },
-  userCategorizedPercentage: function() {
-    var user = this;
-    var brandsIds = _.pluck(Brands.find({ executivesIds: user._id }).fetch(), '_id');
-    var newsIds = brandsIds && _.pluck(News.find({ brandsIds: { $in: brandsIds } }).fetch(), '_id');
-    var categorizedCount = (newsIds && NewsData.find({ articleId: { $in: newsIds } }).count()) || 0;
-    return newsIds ? (Math.round(categorizedCount / newsIds.length) * 100) + '%' : '0%';
-  }
+
 })
