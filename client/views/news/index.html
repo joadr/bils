@@ -1,148 +1,258 @@
 <template name="collectionsNewsIndex">
   {{# Layout template="orionBootstrapMediumContentOffset" }}
-    {{# Layout template="orionBootstrapTitle" }}
-      {{ collection.title }}
-      {{# if collection.canShowCreate }}
-        <a href="{{ collection.createPath }}" class="btn btn-default btn-xs"><i class="fa fa-plus"></i></a>
-      {{/ if }}
-    {{/ Layout }}
-    <div class="controls ">
-      {{# autoForm schema="SearchNewsSchema" id="collectionsNewsIndexSearchForm" doc=theDoc }}
-        <div class="row">
-          <div class="col-sm-3">
-            {{> afQuickField name='brandsIds' }}
-          </div>
-          <div class="col-sm-3">
-            {{> afQuickField name='fromDate'}}
-          </div>
-          <div class="col-sm-3">
-            {{> afQuickField name='toDate' }}
-          </div>
-          <div class="col-sm-3">
-            <label for="">Filtro</label>
-            {{> afQuickField name='showToCategorize' }}
-          </div>
+  {{# Layout template="orionBootstrapTitle" }}
+  {{ collection.title }}
+  {{# if collection.canShowCreate }}
+  <a href="{{ collection.createPath }}" class="btn btn-default btn-xs"><i class="fa fa-plus"></i></a>
+  {{/ if }}
+  {{/ Layout }}
+  <div class="controls ">
+    {{# autoForm schema="SearchNewsSchema" id="collectionsNewsIndexSearchForm" doc=theDoc }}
+    <div class="row">
+      <div class="col-sm-3">
+        {{> afQuickField name='brandsIds' }}
+      </div>
+      <div class="col-sm-3">
+        {{> afQuickField name='fromDate' }}
+      </div>
+      <div class="col-sm-3">
+        {{> afQuickField name='toDate' }}
+      </div>
+      <div class="col-sm-3">
+        <label for="">Filtro</label>
+        {{> afQuickField name='showToCategorize' }}
+      </div>
           <!--
           <div class="col-sm-2">
             {{> afQuickField name='filter' }}
           </div>
         -->
-        </div>
+      </div>
       {{/ autoForm }}
     </div>
     <div class="data">
       {{# if totalCount }}
-        <p>
-          {{# if checkedCount }}
-            <span class="pull-right">
-              <b style="margin-right: 8px;">
-                Exportar {{ checkedCount }}
-              </b>
-              <big>
-                <a href="#" class="export-btn iconss" data-type="pdf" style="margin-right: 5px;">
-                   <i class="fa fa-file-pdf-o"></i>
-                </a>
-                <a href="#" class="export-btn iconss" data-type="powerpoint" style="margin-right: 5px;">
-                   <i class="fa fa-file-powerpoint-o"></i>
-                </a>
-                <a href="#" class="export-btn iconss" data-type="excel">
-                   <i class="fa fa-file-excel-o"></i>
-                </a>
-              </big>
-            </span>
-          {{/ if }}
+      <p>
+        {{# if checkedCount }}
 
-          <b>{{ localCount }} de {{ totalCount }}</b>
-        </p>
-      {{/ if }}
+        <span class="pull-right">
+          <b style="margin-right: 8px;">
+            Exportar {{ checkedCount }}
+          </b>
+          <big>
+            <a href="#" class="export-btn iconss" data-type="pdf" style="margin-right: 5px;">
+             <i class="fa fa-file-pdf-o"></i>
+           </a>
+           <a href="#" class="export-btn iconss" data-type="powerpoint" style="margin-right: 5px;">
+             <i class="fa fa-file-powerpoint-o"></i>
+           </a>
+           <a href="#" class="export-btn iconss" data-type="excel">
+             <i class="fa fa-file-excel-o"></i>
+           </a>
+         </big>
+       </span>
+       {{/ if }}
 
+      <!--  <b>{{ localCount }} de {{ totalCount }}</b> -->
+     </p>
+     {{/ if }}
 
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>
-              {{# if allChecked }}
-                <input type="checkbox" class="check-all" checked="true">
-              {{ else }}
-                <input type="checkbox" class="check-all">
-              {{/ if }}
-            </th>
-            <th>
-              Título
-            </th>
-            <th>
-              Fecha
-            </th>
-            <th>
-              Marca
-            </th>
-            <th>
-              Estado
-            </th>
-            <th>
-              Acciones
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {{# each news }}
-            <tr>
-              <td>
-                {{# if allChecked }}
-                  <input type="checkbox" class="check-doc" checked="true" disabled="true">
-                {{ else }}
-                  <input type="checkbox" class="check-doc">
-                {{/ if }}
-              </td>
-              <td>
-                {{ shortenString title 50 }}
-              </td>
-              <td>
-                {{ dateFormat date 'D-M-YYYY' }}
-              </td>
-              <td>
-                {{# each brands }}
-                  {{ name }}
-                {{/ each }}
-              </td>
-              <td>
-                {{# if isCategorized currentUser._id }}
-                  <a class="label label-success">Ok</a>
-                {{ else }}
-                  <a class="label label-warning">Pendiente</a>
-                {{/ if }}
-              </td>
-              <td>
-                <div class="btn-group">
-                  <a href="{{ pathFor 'collections.news.show' }}" class="btn btn-xs btn-default">Ver</a>
-                  {{# if canShowUpdate }}
-                    {{# unless currentUser.hasRole 'admin' }}
-                      <a href="{{ pathFor 'collections.news.data' }}" class="btn btn-xs btn-default">Categorizar</a>
-                    {{/ unless }}
-                    <a href="{{ pathFor 'collections.news.update' }}" class="btn btn-xs btn-default">Editar</a>
-                  {{/ if }}
-                  {{# if canShowRemove }}
-                    <a href="{{ pathFor 'collections.news.delete' }}" class="btn btn-xs btn-danger">Borrar</a>
-                  {{/ if }}
-                </div>
-              </td>
-            </tr>
-          {{/ each }}
-        </tbody>
-      </table>
-        <p>
-          {{# if totalCount }}
-            <b>{{ localCount }} de {{ totalCount }}</b>
-          {{/ if }}
-          {{# if Template.subscriptionsReady }}
-            {{# if canLoadMore }}
-              <a href="#" class="load-more-btn">Cargar Mas</a>
+     <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>
+           <!--  {{# if allChecked }}
+            <input type="checkbox" class="check-all" checked="true">
+            {{ else }}
+            <input type="checkbox" class="check-all">
+            {{/ if }} -->
+          </th>
+          <th>
+            Título
+          </th>
+          <th>
+            Fecha
+          </th>
+          <th>
+            Marca
+          </th>
+          <th>
+            Estado
+          </th>
+          <th>
+            Acciones
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {{# each news }}
+        {{# unless currentUser.hasRole 'admin' }}
+        {{# if prevAprove }}
+        <tr>
+          <td>
+            {{# if allChecked }}
+            <input type="checkbox" class="check-doc" checked="true" disabled="true">
+            {{ else }}
+            <input type="checkbox" class="check-doc">
             {{/ if }}
-          {{ else }}
-            <b>Cargando...</b>
-          {{/ if }}
-        </p>
-    </div>
-    <br><br>
-  {{/ Layout }}
+          </td>
+          <td>
+            {{ shortenString title 50 }}
+          </td>
+          <td>
+            {{ dateFormat date 'D-M-YYYY' }}
+          </td>
+          <td>
+            {{# each brands }}
+            {{ name }}
+            {{/ each }}
+          </td>
+          <td>
+            {{# unless currentUser.hasRole 'admin' }}
+            {{# if isCategorized currentUser._id }}
+            <a class="label label-success">Ok</a>
+            {{ else }}
+            <a class="label label-warning">Pendiente</a>
+            {{/ if }}
+            {{/ unless}}
+
+            {{# unless currentUser.hasRole 'ejecutivo' }}
+            {{# unless currentUser.hasRole 'agencia' }}
+            {{# unless currentUser.hasRole 'cliente' }}
+
+            {{# if prevAprove }}
+            <a class="label label-success">Enviada</a>
+            {{else}}
+            <a class="label label-warning">No Enviada</a>
+            {{/if}}
+
+            {{/ unless }}
+            {{/ unless }}
+            {{/ unless }}
+
+          </td>
+          <td>
+            <div class="btn-group">
+              <a href="{{ pathFor 'collections.news.show' }}" class="btn btn-xs btn-default">Ver</a>
+              {{# if canShowUpdate }}
+              {{# unless currentUser.hasRole 'admin' }}
+              <a href="{{ pathFor 'collections.news.data' }}" class="btn btn-xs btn-default">Categorizar</a>
+              {{/ unless }}
+              <a href="{{ pathFor 'collections.news.update' }}" class="btn btn-xs btn-default">Editar</a>
+              {{/ if }}
+              {{# if canShowRemove }}
+              <a href="{{ pathFor 'collections.news.delete' }}" class="btn btn-xs btn-danger">Borrar</a>
+              {{/ if }}
+            </div>
+          </td>
+        </tr>
+        {{/ if }}
+        {{/ unless }}
+        {{/ each }}
+         {{# each news }}
+          {{# unless currentUser.hasRole 'ejecutivo' }}
+          {{# unless currentUser.hasRole 'agencia' }}
+          {{# unless currentUser.hasRole 'cliente' }}
+
+        <tr>
+          <td>
+            {{# if allChecked }}
+            <input type="checkbox" class="check-doc" checked="true" disabled="true">
+            {{ else }}
+            <input type="checkbox" class="check-doc">
+            {{/ if }}
+          </td>
+          <td>
+            {{ shortenString title 50 }}
+          </td>
+          <td>
+            {{ dateFormat date 'D-M-YYYY' }}
+          </td>
+          <td>
+            {{# each brands }}
+            {{ name }}
+            {{/ each }}
+          </td>
+          <td>
+            {{# unless currentUser.hasRole 'admin' }}
+            {{# if isCategorized currentUser._id }}
+            <a class="label label-success">Ok</a>
+            {{ else }}
+            <a class="label label-warning">Pendiente</a>
+            {{/ if }}
+            {{/ unless}}
+
+            {{# unless currentUser.hasRole 'ejecutivo' }}
+            {{# unless currentUser.hasRole 'agencia' }}
+            {{# unless currentUser.hasRole 'cliente' }}
+
+            {{# if prevAprove }}
+            <a class="label label-success">Enviada</a>
+            {{else}}
+            <a class="label label-warning">No Enviada</a>
+            {{/if}}
+
+            {{/ unless }}
+            {{/ unless }}
+            {{/ unless }}
+
+          </td>
+          <td>
+            <div class="btn-group">
+              <a href="{{ pathFor 'collections.news.show' }}" class="btn btn-xs btn-default">Ver</a>
+              {{# if canShowUpdate }}
+              {{# unless currentUser.hasRole 'admin' }}
+              <a href="{{ pathFor 'collections.news.data' }}" class="btn btn-xs btn-default">Categorizar</a>
+              {{/ unless }}
+              <a href="{{ pathFor 'collections.news.update' }}" class="btn btn-xs btn-default">Editar</a>
+              {{/ if }}
+              {{# if canShowRemove }}
+              <a href="{{ pathFor 'collections.news.delete' }}" class="btn btn-xs btn-danger">Borrar</a>
+              {{/ if }}
+            </div>
+          </td>
+        </tr>
+        {{/ unless }}
+        {{/ unless }}
+        {{/ unless }}
+        {{/ each }}
+      </tbody>
+    </table>
+
+    <p>
+      {{# if totalCount }}
+      <!-- <b>{{ localCount }} de {{ totalCount }}</b> -->
+      {{/ if }}
+      {{# if Template.subscriptionsReady }}
+      {{# if canLoadMore }}
+      <a href="#" class="load-more-btn">Cargar Mas</a>
+      {{/ if }}
+      {{ else }}
+      <b>Cargando...</b>
+      {{/ if }}
+    </p>
+  </div>
+  {{# if checkedCount }}
+
+  {{# unless currentUser.hasRole 'ejecutivo' }}
+  {{# unless currentUser.hasRole 'agencia' }}
+  {{# unless currentUser.hasRole 'cliente' }}
+  <span class="pull-right">
+    <b style="margin-left: 8px;">
+     <a href="#" class="btn btn-danger btn-deletenews load-more-btn">Borrar {{ checkedCount }}</a>
+   </b>
+ </span>
+ <span class="pull-left">
+  <b style="margin-left: 8px;">
+   <a href="#" class="btn btn-success btn-aprovenews load-more-btn">Enviar {{ checkedCount }}</a>
+ </b>
+</span>
+{{/ unless }}
+{{/ unless }}
+{{/ unless }}
+
+{{/ if }}
+<br><br>
+{{/ Layout }}
 </template>
