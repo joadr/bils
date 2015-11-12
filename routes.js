@@ -270,6 +270,15 @@ Router.route('/admin/export/news/:exportable', function () {
           return suplement && suplement.name;
         }
       },
+      {
+        key: 'date',
+        title: 'Fecha',
+        newsData: false,
+        transform: function(date){
+          var fecha = moment(date).format('LL');
+          return fecha;
+        }
+      },
       // { key: 'section', title: 'Sección' },
       // { key: 'size', title: 'Tamaño' },
       // { key: 'colorType', title: 'Color' },

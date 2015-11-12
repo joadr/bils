@@ -34,6 +34,13 @@ Template.collectionsNewsIndex.onCreated(function() {
     formDep.depend();
     var data = AutoForm.getFormValues('collectionsNewsIndexSearchForm');
     Session.set('collectionsNewsIndexValues', data && data.insertDoc);
+    if(Session.get('collectionsNewsIndexValues') != null){
+      Session.set('collectionsNewsIndexValuesBackup', Session.get('collectionsNewsIndexValues'));
+    } else {
+      if(Session.get('collectionsNewsIndexValuesBackup') != undefined){
+        Session.set('collectionsNewsIndexValues', Session.get('collectionsNewsIndexValuesBackup'));
+      }
+    }
   })
 
   self.autorun(function() {
@@ -77,6 +84,12 @@ Template.collectionsNewsIndex.helpers({
     var count = Session.get('allChecked') ? Session.get('collectionsNewsIndexCount') : Session.get('selectedNews').length;
     if (count == 1) return '1 noticia';
     if (count > 1) return count + ' noticias';
+  },
+  theDoc: function(){
+    if(Session.get('collectionsNewsIndexValuesBackup') != null){
+      return Session.get('collectionsNewsIndexValuesBackup');
+    }
+    return;
   }
 })
 

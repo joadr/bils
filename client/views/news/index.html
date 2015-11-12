@@ -7,13 +7,13 @@
       {{/ if }}
     {{/ Layout }}
     <div class="controls ">
-      {{# autoForm schema="SearchNewsSchema" id="collectionsNewsIndexSearchForm" }}
+      {{# autoForm schema="SearchNewsSchema" id="collectionsNewsIndexSearchForm" doc=theDoc }}
         <div class="row">
           <div class="col-sm-3">
             {{> afQuickField name='brandsIds' }}
           </div>
           <div class="col-sm-3">
-            {{> afQuickField name='fromDate' }}
+            {{> afQuickField name='fromDate'}}
           </div>
           <div class="col-sm-3">
             {{> afQuickField name='toDate' }}
