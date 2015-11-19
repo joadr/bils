@@ -41,6 +41,7 @@ Router.route('/admin/export/news/:exportable', function () {
 
       // Logo is inserted on every page
       if(agency){
+        console.log(Meteor.absoluteUrl() + agency.logo.url);
         var result = request.getSync(Meteor.absoluteUrl() + agency.logo.url, {
             encoding: null
         });
