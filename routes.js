@@ -41,7 +41,7 @@ Router.route('/admin/export/news/:exportable', function () {
 
       // Logo is inserted on every page
       if(agency){
-        var result = request.getSync(agency.logo.url, {
+        var result = request.getSync(Meteor.absoluteUrl() + agency.logo.url, {
             encoding: null
         });
         var buffer = result.body;
@@ -51,7 +51,7 @@ Router.route('/admin/export/news/:exportable', function () {
 
       // we put the news photo
       if(element.media){
-        var image = request.getSync(element.media[0].url, {
+        var image = request.getSync(Meteor.absoluteUrl() + element.media[0].url, {
             encoding: null
         });
         var imageBuffer = image.body;
@@ -371,15 +371,17 @@ Router.route('/admin/export/news/:exportable', function () {
       // slide.font_size(1200);
 
       // we add the company's logo on each slide
-      var result = request.getSync(agency.logo.url, {
-          encoding: null
-      });
-      var buffer = result.body;
-      slide.addImage( buffer, {x: 25, y: 25, cx: 250, cy: 100} );
+      if(agency){
+        var result = request.getSync(Meteor.absoluteUrl() + agency.logo.url, {
+            encoding: null
+        });
+        var buffer = result.body;
+        slide.addImage( buffer, {x: 25, y: 25, cx: 250, cy: 100} );
+      }
 
       // we add the new image
       if(element.media){
-        var image = request.getSync(element.media[0].url, {
+        var image = request.getSync(Meteor.absoluteUrl() + element.media[0].url, {
             encoding: null
         });
         var imageBuffer = image.body;
