@@ -52,6 +52,7 @@ Router.route('/admin/export/news/:exportable', function () {
 
       // we put the news photo
       if(element.media){
+        console.log(Meteor.absoluteUrl() + element.media[0].url);
         var image = request.getSync(Meteor.absoluteUrl() + element.media[0].url, {
             encoding: null
         });
