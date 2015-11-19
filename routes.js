@@ -22,6 +22,9 @@ Router.route('/admin/export/news/:exportable', function () {
   var news = News.find(JSON.parse(exportable.filter)).fetch();
   var agency = Agencies.findOne({ $or: [{executivesIds: exportable.userId}, {adminsIds: exportable.userId}] });
 
+  var meteorUrl = Meteor.absoluteUrl();
+  meteorUrl = meteorUrl.slice(0, -1);
+
   if(exportable.type == 'pdf'){
     this.response.writeHead(200, {
       'Content-type': 'application/pdf',
@@ -41,8 +44,8 @@ Router.route('/admin/export/news/:exportable', function () {
 
       // Logo is inserted on every page
       if(agency){
-        console.log(Meteor.absoluteUrl() + agency.logo.url);
-        var result = request.getSync(Meteor.absoluteUrl() + agency.logo.url, {
+        console.log(meteorUrl + agency.logo.url);
+        var result = request.getSync(meteorUrl + agency.logo.url, {
             encoding: null
         });
         var buffer = result.body;
@@ -52,8 +55,8 @@ Router.route('/admin/export/news/:exportable', function () {
 
       // we put the news photo
       if(element.media){
-        console.log(Meteor.absoluteUrl() + element.media[0].url);
-        var image = request.getSync(Meteor.absoluteUrl() + element.media[0].url, {
+        console.log(meteorUrl + element.media[0].url);
+        var image = request.getSync(meteorUrl + element.media[0].url, {
             encoding: null
         });
         var imageBuffer = image.body;
@@ -374,7 +377,7 @@ Router.route('/admin/export/news/:exportable', function () {
 
       // we add the company's logo on each slide
       if(agency){
-        var result = request.getSync(Meteor.absoluteUrl() + agency.logo.url, {
+        var result = request.getSync(meteorUrl + agency.logo.url, {
             encoding: null
         });
         var buffer = result.body;
@@ -383,7 +386,7 @@ Router.route('/admin/export/news/:exportable', function () {
 
       // we add the new image
       if(element.media){
-        var image = request.getSync(Meteor.absoluteUrl() + element.media[0].url, {
+        var image = request.getSync(meteorUrl + element.media[0].url, {
             encoding: null
         });
         var imageBuffer = image.body;
