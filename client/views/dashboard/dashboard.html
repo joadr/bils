@@ -7,7 +7,7 @@
   {{# if Template.subscriptionsReady }}
 
   <div class="row">
-    <div class="col-lg-3 col-xs-6">
+    <div class="col-lg-3 col-xs-6 hidden">
       <!-- small box -->
       <div class="small-box bg-aqua">
         <div class="inner">
@@ -17,49 +17,70 @@
         <div class="icon">
           <i class="fa fa-star"></i>
         </div>
-        <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="#" class="small-box-footer hidden">Ir <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
+    <div class="col-lg-4 col-xs-12">
       <!-- small box -->
       <div class="small-box bg-green">
         <div class="inner">
-          <h3>{{ newspercentcategorize }}<sup style="font-size: 20px">%</sup></h3>
-          <p>Notas Categorizadas</p>
+          <h4>Notas Categorizadas</h4>
+          <div class="pull-left">
+            <h3>{{ newsPercentCategorizeToday }} <sup>%</sup></h3>
+            <p><b>HOY</b></p>
+          </div>
+          <div class="pull-right">
+            <h3>{{ newsPercentCategorize }} <sup>%</sup></h3>
+            <p><b>TOTAL</b></p>
+          </div>
         </div>
         <div class="icon">
           <i class="fa fa-bars"></i>
         </div>
-        <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="#" class="small-box-footer hidden">Ir <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
+    <div class="col-lg-4 col-xs-12">
       <!-- small box -->
       <div class="small-box bg-yellow">
         <div class="inner">
-          <h3>{{ newsToCategorize }}</h3>
-          <p>Notas por Categorizar</p>
+          <h4>Notas por Categorizar</h4>
+          <div class="pull-left">
+            <h3>{{ newsToCategorizeToday }}</h3>
+            <p><b>HOY</b></p>
+          </div>
+          <div class="pull-right">
+            <h3>{{ newsToCategorize }}</h3>
+            <p><b>TOTAL</b></p>
+          </div>
         </div>
         <div class="icon">
           <i class="fa fa-edit"></i>
         </div>
-        <a href="#" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="#" class="small-box-footer hidden">Ir <i class="fa fa-arrow-circle-right"></i></a>
       </div>
+
     </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
+    <div class="col-lg-4 col-xs-12">
       <!-- small box -->
       <div class="small-box bg-red">
         <div class="inner">
-          <!-- <h3 style="height:42px;overflow:hidden;"></h3>
-          <p></p> -->
-          <h3>{{ newsCount }}</h3>
-          <p>Banco de Noticias</p>
+          <h4>Banco de Noticias</h4>
+          <div class="pull-left">
+            <h3>{{ newsCountToday }}</h3>
+            <p><b>HOY</b></p>
+          </div>
+          <div class="pull-right">
+            <h3>{{ newsCount }}</h3>
+            <p><b>TOTAL</b></p>
+          </div>
         </div>
         <div class="icon">
           <i class="fa fa-newspaper-o"></i>
         </div>
-        <a href="{{ pathFor 'news.index' }}" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="#" class="small-box-footer hidden">Ir <i class="fa fa-arrow-circle-right"></i></a>
       </div>
+
     </div><!-- ./col -->
   </div><!-- /.row -->
 

@@ -124,6 +124,42 @@ News.attachSchema({
     regEx: SimpleSchema.RegEx.Url,
     optional: true
   },
+  page: {
+    type: String,
+    label: 'Pagina',
+    optional: true
+  },
+  size: {
+    type: String,
+    label: 'Tamaño',
+    optional: true
+  },
+  typeId: {
+    label: 'Tipo de Suplemento',
+    type: String,
+    optional: true,
+    allowedValues: function() {
+      return _.pluck(SuplementsTypes.find().fetch(), '_id');
+    },
+    autoform: {
+      options: function() {
+        return SuplementsTypes.find().map(function(type) {
+          return {
+            value: type._id,
+            label: type.name
+          }
+        });
+      }
+    }
+  },
+  mediumId: orion.attribute('hasOne', {
+    label: 'Medio',
+    optional: true
+  }, {
+    collection: Mediums,
+    titleField: 'name',
+    publicationName: 'news_mediumId_schema',
+  }),
   categorizedBy: {
     type: [String],
     optional: true,

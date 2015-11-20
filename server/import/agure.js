@@ -1,3 +1,5 @@
+// console.log(Meteor.settings.agurePath);
+
 if (Meteor.settings.agurePath) {
   FileWatch.listen(Meteor.settings.agurePath, 'iso-8859-1', function(contents) {
     console.log('Importing agure file...');

@@ -1,0 +1,18 @@
+.small-box{
+	overflow:hidden;
+}
+
+.small-box h4{
+	color:white;
+}
+.small-box div.inner div {
+	width:48%;padding-left:10px;border:2px solid white;border-radius:8px;margin-bottom:15px;
+}
+
+.small-box div.inner div h3 {
+	margin:0;
+}
+
+.small-box div.inner div h3 sup {
+	font-size: 20px
+}

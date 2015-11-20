@@ -75,11 +75,49 @@ Template.dashboard.helpers({
 
     return News.find({$and:[{ categorizedBy: {$exists:true} },{date:{$gt: start, $lt: end}}]}).count();
   }, 
-  newsToCategorize: function() {
-    return News.find().count() - NewsData.find().count();
+  newsToCategorizeToday: function() {
+
+    var start = new Date();
+    var end = new Date();
+    end.setDate(end.getDate() + 1);
+    start.setHours(0,0,0,0);
+    end.setHours(0,0,0,0);
+
+    newsCount = (News.find({date:{$gt: start, $lt: end}}).count());
+    newsCategorizedCount = News.find({$and:[{ categorizedBy: {$exists:true} },{date:{$gt: start, $lt: end}}]}).count();
+
+    return newsCount - newsCategorizedCount;
   }, 
-  newspercentcategorize: function() {
+  newsToCategorize: function() {
+
+    newsCount = (News.find().count());
+    newsCategorizedCount = News.find({ categorizedBy: {$exists:true} }).count();
+
+    return newsCount - newsCategorizedCount;
+  }, 
+  newsPercentCategorize: function() {
     return Math.ceil((Math.round(NewsData.find().count())/News.find().count())*100 * 100)/100;
+  },
+  newsPercentCategorizeToday: function() {
+
+    var start = new Date();
+    var end = new Date();
+    end.setDate(end.getDate() + 1);
+    start.setHours(0,0,0,0);
+    end.setHours(0,0,0,0);
+
+    newsCount = (News.find({date:{$gt: start, $lt: end}}).count());
+    newsCategorizedCount = News.find({$and:[{ categorizedBy: {$exists:true} },{date:{$gt: start, $lt: end}}]}).count();
+
+    console.log(newsCount);
+    console.log(newsCategorizedCount);
+
+    if(newsCategorizedCount){
+      return Math.ceil((Math.round(newsCategorizedCount)/newsCount)*100 * 100)/100;
+    }else{
+      return 0;
+    }
+
   },
 
 })

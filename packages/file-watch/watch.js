@@ -4,6 +4,8 @@ var iconv = Npm.require('iconv-lite');
 
 FileWatch = {};
 
+console.log('filepath');
+
 FileWatch.listen = function(directory, encoding, callback) {
   var findNextFiles = function() {
     var files = fs.readdirSync(directory);
