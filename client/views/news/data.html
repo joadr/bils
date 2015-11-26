@@ -4,6 +4,28 @@
       Categorizar Noticia
     {{/ Layout }}
     {{# Layout template="orionBootstrapContentContainer" }}
+
+        {{#autoForm schema=getSchemaTest id="collectionsNewsForm" buttonContent=false type="update" collection="News" doc=newsDoc}}
+          {{> afQuickField name="title"}}
+          {{> afQuickField name="subtitle"}}
+          {{> afQuickField name="body"}}
+          {{> afQuickField name="date"}}
+          {{> afQuickField name="url"}}
+          {{> afQuickField name="mediumId"}}
+          <div class="row">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-8">
+              <div class="buttons text-right">
+                <a class="btn btn-primary save-news-btn" >Guardar</a>
+              </div>
+            </div>
+          </div>
+        {{/autoForm}}
+
+    {{/ Layout }}
+
+    {{# Layout template="orionBootstrapContentContainer" }}
         {{# if newsData }}
           {{> quickForm schema=getSchema id="collectionsNewsDataForm" buttonContent=false type="update" doc=newsData collection="NewsData" }}
           <br>
@@ -24,7 +46,7 @@
           </div>
         {{ else }}
           <p>
-            Ocurrió un error
+           <!--  Ocurrió un error -->
           </p>
         {{/ if }}
     {{/ Layout }}

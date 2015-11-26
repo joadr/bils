@@ -9,7 +9,7 @@ Groups = new orion.collection('groups', {
   tabular: {
     columns: [
       { data: 'name', title: 'Nombre' },
-      { data: 'agencyId', title: 'Agencia' }
+      orion.attributeColumn('hasOne', 'agencyId', 'Agencia')
     ]
   }
 });

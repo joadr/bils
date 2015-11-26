@@ -23,12 +23,64 @@ Template.collectionsNewsData.helpers({
     var userId = Meteor.userId();
     return Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
   },
+  newsDoc: function(){
+    var articleId = Router.current().params._id;
+    return News.findOne({_id:articleId});
+  },
   newsData: function() {
     var articleId = Router.current().params._id;
     var userId = Meteor.userId();
     var agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
     var newsData = agency && NewsData.findOne({ articleId: articleId, agencyId: agency._id });
     return newsData;
+  },
+  getNewsSchema:function(){
+
+    NewsEditSchema = new SimpleSchema({
+      title: {
+        type: String,
+        label: "Titulo",
+      },
+      subtitle: {
+        type: String,
+        label: "Bajada",
+      },
+      body: {
+        type: String,
+        label: "Cuerpo",
+        autoform: {
+          type: 'textarea'
+        }
+      },
+
+      date: {
+        type: Date,
+        label: 'Fecha',
+        autoform: {
+          type: 'bootstrap-datetimepicker'
+        }
+      },
+      url: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Url,
+        optional: true
+      },
+
+      mediumId: orion.attribute('hasOne', {
+        label: 'Medio',
+        optional: true
+      }, {
+        collection: Mediums,
+        titleField: 'name',
+        publicationName: 'news_mediumId_schema',
+      }),
+
+
+
+    });
+
+    return NewsEditSchema;
+
   },
   getSchema: function() {
     var typeId = Session.get('currentNewsDataType');
@@ -104,6 +156,9 @@ Template.collectionsNewsData.events({
   },
   'click .save-btn': function(event, template) {
     $('#collectionsNewsDataForm').submit();
+  },
+  'click .save-news-btn': function(event, template) {
+    $('#collectionsNewsForm').submit();
   }
 });
 

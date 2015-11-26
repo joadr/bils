@@ -16,3 +16,18 @@
 .small-box div.inner div h3 sup {
 	font-size: 20px
 }
+
+.orion-bootstrap-admin .sidebar {
+
+background: #031037;
+
+}
+
+.navbar-inverse {
+    background-color: #031037;
+    border-color: #080808;
+}
+
+.orion-bootstrap-admin .navbar .navbar-collapse, .orion-bootstrap-admin .navbar .navbar-form {
+    border-color: #031037;
+}

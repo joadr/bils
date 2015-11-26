@@ -57,15 +57,17 @@
      </p>
      {{/ if }}
 
-     <table class="table table-striped">
+     <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th>
-           <!--  {{# if allChecked }}
+
+            {{# if allChecked }}
             <input type="checkbox" class="check-all" checked="true">
             {{ else }}
             <input type="checkbox" class="check-all">
-            {{/ if }} -->
+            {{/ if }}
+            
           </th>
           <th>
             Título
@@ -74,10 +76,16 @@
             Fecha
           </th>
           <th>
+            Medio
+          </th>
+          <th>
             Marca
           </th>
           <th>
             Estado
+          </th>
+          <th>
+            Foto
           </th>
           <th>
             Acciones
@@ -102,6 +110,11 @@
           </td>
           <td>
             {{ dateFormat date 'D-M-YYYY' }}
+          </td>
+          <td>
+            {{# each mediums }}
+            {{ name }}
+            {{/ each }}
           </td>
           <td>
             {{# each brands }}
@@ -131,6 +144,13 @@
             {{/ unless }}
             {{/ unless }}
 
+          </td>
+            <td>
+           {{# if media }}
+            <a class="fa fa-camera"></a>
+            {{else}}
+            <a class="label label-warning">Sin Foto</a>
+            {{/if}}
           </td>
           <td>
             <div class="btn-group">
@@ -169,6 +189,11 @@
             {{ dateFormat date 'D-M-YYYY' }}
           </td>
           <td>
+           {{# each mediums }}
+            {{ name }}
+            {{/ each }}
+          </td>
+          <td>
             {{# each brands }}
             {{ name }}
             {{/ each }}
@@ -196,6 +221,13 @@
             {{/ unless }}
             {{/ unless }}
 
+          </td>
+          <td>
+           {{# if media }}
+            <a class="fa fa-camera"></a>
+            {{else}}
+            <a class="label label-warning">Sin Foto</a>
+            {{/if}}
           </td>
           <td>
             <div class="btn-group">
@@ -239,12 +271,12 @@
   {{# unless currentUser.hasRole 'cliente' }}
   <span class="pull-right">
     <b style="margin-left: 8px;">
-     <a href="#" class="btn btn-danger btn-deletenews load-more-btn">Borrar {{ checkedCount }}</a>
+     <a href="#" class="btn btn-danger btn-deletenews load-more-btn" onclick="document.location.reload();">Borrar {{ checkedCount }}</a>
    </b>
  </span>
  <span class="pull-left">
   <b style="margin-left: 8px;">
-   <a href="#" class="btn btn-success btn-aprovenews load-more-btn">Enviar {{ checkedCount }}</a>
+   <a href="#" class="btn btn-success btn-aprovenews load-more-btn" onclick="document.location.reload();">Enviar {{ checkedCount }}</a>
  </b>
 </span>
 {{/ unless }}

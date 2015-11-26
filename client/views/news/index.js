@@ -152,9 +152,9 @@ Template.collectionsNewsIndex.events({
 
     _.each(ids,function(item){
 
-      News.update({_id: item}, {$set: {prevAprove: '1'}});
+      News.update({_id: item}, {$set: {prevAprove: true}});
 
-      console.log(item)
+      //console.log(item)
 
     });
   }

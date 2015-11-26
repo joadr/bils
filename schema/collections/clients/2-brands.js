@@ -52,5 +52,9 @@ Brands.attachSchema({
   keywords: orion.attribute('tags', {
     label: 'Keywords (noticias que contengan alguna las siguentes frases)',
     optional: true
+  }),
+  keywords1: orion.attribute('tags', {
+    label: 'Además Contengan',
+    optional: true
   })
 });

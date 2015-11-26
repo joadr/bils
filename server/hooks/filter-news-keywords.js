@@ -3,6 +3,8 @@ var filterArticle = function(article) {
   var groups = [];
   Brands.find({}).forEach(function(brand) {
     var matches = false;
+    var matches1 = false;
+
     _.each(brand.keywords, function(keyword) {
       if (!keyword) return;
       if ((new RegExp('\\b' + keyword + '\\b', 'gi')).test(article.title)) matches = true;
@@ -10,7 +12,14 @@ var filterArticle = function(article) {
       if ((new RegExp('\\b' + keyword + '\\b', 'gi')).test(article.body)) matches = true;
     });
 
-    if (matches) {
+    _.each(brand.keywords1, function(keyword) {
+      if (!keyword) return;
+      if ((new RegExp('\\b' + keyword + '\\b', 'gi')).test(article.title)) matches1 = true;
+      if ((new RegExp('\\b' + keyword + '\\b', 'gi')).test(article.subtitle)) matches1 = true;
+      if ((new RegExp('\\b' + keyword + '\\b', 'gi')).test(article.body)) matches1 = true;
+    });
+
+    if (matches && matches1) {
       brands.push(brand._id);
       groups.push(brand.groupId);
     }
@@ -22,10 +31,12 @@ var filterArticle = function(article) {
 var filterNewsForBrand = function(brand) {
   News.update({ brandsIds: brand._id }, { $pull: { brandsIds: brand._id, groupsIds: brand.groupId } }, { multi: true });
 
-  var newsIds = [];
+  var newsIdsKeywords = [];
+  var newsIdsKeywords1 = [];
+
   _.each(brand.keywords, function(keyword) {
     if (!keyword) return;
-    newsIds = _.union(newsIds, _.pluck(News.find({
+    newsIdsKeywords = _.union(newsIdsKeywords, _.pluck(News.find({
       $or: [
         { title: { $regex: '\\b' + keyword + '\\b', $options: 'gi' } },
         { subtitle: { $regex: '\\b' + keyword + '\\b', $options: 'gi' } },
@@ -33,6 +44,19 @@ var filterNewsForBrand = function(brand) {
       ]
     }).fetch(), '_id'));
   });
+
+  _.each(brand.keywords1, function(keyword) {
+    if (!keyword) return;
+    newsIdsKeywords1 = _.union(newsIdsKeywords1, _.pluck(News.find({
+      $or: [
+        { title: { $regex: '\\b' + keyword + '\\b', $options: 'gi' } },
+        { subtitle: { $regex: '\\b' + keyword + '\\b', $options: 'gi' } },
+        { body: { $regex: '\\b' + keyword + '\\b', $options: 'gi' } }
+      ]
+    }).fetch(), '_id'));
+  });
+
+  var newsIds = _.intersection(newsIdsKeywords,newsIdsKeywords1);
 
   News.update({ _id: { $in: newsIds } }, { $addToSet: { brandsIds: brand._id, groupsIds: brand.groupId } }, { multi: true });
 }

@@ -49,11 +49,11 @@ News.attachSchema({
     }
   },
     prevAprove: {
-    type: String,
-    label: 'prevAprove',
+    type: Boolean,
+    label: 'Visualizar en Noticias',
     optional: true,
     autoform: {
-      omit: true
+      omit: false
     }
   },
   createdBy: orion.attribute('createdBy'),
@@ -177,6 +177,10 @@ News.helpers({
   brands: function() {
     var ids = this.brandsIds || [];
     return Brands.find({ _id: { $in: ids } });
+  },
+  mediums: function() {
+    var ids = this.mediumId;
+    return Mediums.find({ _id: ids });
   },
   dataForUser: function(userId) {
     check(userId, String);
