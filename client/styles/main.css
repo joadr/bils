@@ -31,3 +31,19 @@ background: #031037;
 .orion-bootstrap-admin .navbar .navbar-collapse, .orion-bootstrap-admin .navbar .navbar-form {
     border-color: #031037;
 }
+.green{
+
+	color:#337ab7;
+}
+.red{
+
+	color:gray;
+}
+.gray{
+
+	color:gray;
+}
+.color{
+
+	background-color:#337ab7;
+}

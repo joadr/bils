@@ -17,7 +17,8 @@ NewsDataSchemaAttributes = {
     type: String,
     autoform: {
       omit: true
-    }
+    },
+    optional: true,
   },
   typeId: {
     label: 'Tipo',

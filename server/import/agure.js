@@ -1,4 +1,5 @@
 // console.log(Meteor.settings.agurePath);
+Meteor.settings.agurePath = "/Users/cristianojeda/Desktop/xmls/agure"
 
 if (Meteor.settings.agurePath) {
   FileWatch.listen(Meteor.settings.agurePath, 'iso-8859-1', function(contents) {

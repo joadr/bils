@@ -43,21 +43,13 @@ Agencies.attachSchema({
   }),
   executivesIds: orion.attribute('users-roles', {
     label: 'Ejecutivos',
-    optional: true,
-    custom: function() {
-      if (!_.isArray(this.value)) return;
-      var count = Agencies.find({
-        _id: { $ne: this.docId },
-        $or: [
-          { adminsIds: { $in: this.value } },
-          { executivesIds: { $in: this.value } }
-        ]
-      }).count();
-      return count == 0 ? true : 'userInOtherAgency';
-    }
+    optional: true
   }, {
-    publicationName: 'agencies_executivesIds_schema',
-    roles: ['ejecutivo']
-  }),
-  createdAt: orion.attribute('createdAt')
+    publicationName: 'brands_executivesIds_schema',
+    roles: ['ejecutivo'],
+    filter: function(userId) {
+      var agency = Agencies.findOne({ adminsIds: userId });
+      return agency ? { _id: { $in: (agency.executivesIds || []) } } : {};
+    }
+  })
 });

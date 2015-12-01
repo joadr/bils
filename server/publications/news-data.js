@@ -11,5 +11,5 @@ Meteor.publish('newsData.forUser', function(articleId) {
     NewsData.insert({ articleId: articleId, agencyId: agency._id });
   }
 
-  return [NewsData.find({ articleId: articleId, agencyId: agency._id }), SuplementsTypes.find()];
+  return [NewsData.find({ articleId: articleId }), SuplementsTypes.find()];
 });

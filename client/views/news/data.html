@@ -4,7 +4,12 @@
       Categorizar Noticia
     {{/ Layout }}
     {{# Layout template="orionBootstrapContentContainer" }}
-
+      <div class="row">
+      <div class="col-sm-8">
+        
+      {{>noticiaACategorizar}}
+      </div>
+      <div class="col-sm-4">
         {{#autoForm schema=getSchemaTest id="collectionsNewsForm" buttonContent=false type="update" collection="News" doc=newsDoc}}
           {{> afQuickField name="title"}}
           {{> afQuickField name="subtitle"}}
@@ -17,13 +22,17 @@
             </div>
             <div class="col-sm-8">
               <div class="buttons text-right">
-                <a class="btn btn-primary save-news-btn" >Guardar</a>
+                <a class="btn btn-primary save-news-btn" >Actualizar</a>
               </div>
             </div>
           </div>
         {{/autoForm}}
 
+        </div>
+        </div>
+
     {{/ Layout }}
+
 
     {{# Layout template="orionBootstrapContentContainer" }}
         {{# if newsData }}
@@ -51,14 +60,13 @@
         {{/ if }}
     {{/ Layout }}
     <hr>
-    {{>noticiaACategorizar}}
   {{/ Layout }}
 </template>
 
 <template name="noticiaACategorizar">
   {{#if Template.subscriptionsReady}}
     {{# with article }}
-      <p>
+  <!--     <p>
         <small>
           {{ dateFormat date 'LL' }}
         </small>
@@ -68,7 +76,7 @@
       </h3>
       <p>
         {{ subtitle }}
-      </p>
+      </p> -->
 
       {{# each media }}
         <p>
@@ -78,7 +86,7 @@
         </p>
       {{/ each }}
 
-      <br>
+      <!-- <br>
       <div class="body">
         {{ nl2br body }}
       </div>
@@ -100,7 +108,7 @@
 
       <p>
         {{ type }}
-      </p>
+      </p> -->
 
 
 

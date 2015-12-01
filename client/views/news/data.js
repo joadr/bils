@@ -31,7 +31,7 @@ Template.collectionsNewsData.helpers({
     var articleId = Router.current().params._id;
     var userId = Meteor.userId();
     var agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
-    var newsData = agency && NewsData.findOne({ articleId: articleId, agencyId: agency._id });
+    var newsData = NewsData.findOne({ articleId: articleId });
     return newsData;
   },
   getNewsSchema:function(){

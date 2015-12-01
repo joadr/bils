@@ -22,12 +22,11 @@
         <label for="">Filtro</label>
         {{> afQuickField name='showToCategorize' }}
       </div>
-          <!--
-          <div class="col-sm-2">
-            {{> afQuickField name='filter' }}
-          </div>
-        -->
+        
       </div>
+      <!--  <div class="col-sm-14">
+            {{> afQuickField name='filter' }}
+          </div> -->
       {{/ autoForm }}
     </div>
     <div class="data">
@@ -53,7 +52,7 @@
        </span>
        {{/ if }}
 
-      <!--  <b>{{ localCount }} de {{ totalCount }}</b> -->
+       <b>{{ localCount }} de {{ totalCount }}</b>
      </p>
      {{/ if }}
 
@@ -69,7 +68,7 @@
             {{/ if }}
             
           </th>
-          <th>
+          <th width="350px">
             Título
           </th>
           <th>
@@ -78,7 +77,7 @@
           <th>
             Medio
           </th>
-          <th>
+          <th width="70px">
             Marca
           </th>
           <th>
@@ -106,7 +105,7 @@
             {{/ if }}
           </td>
           <td>
-            {{ shortenString title 50 }}
+            {{ title }}
           </td>
           <td>
             {{ dateFormat date 'D-M-YYYY' }}
@@ -117,16 +116,16 @@
             {{/ each }}
           </td>
           <td>
-            {{# each brands }}
-            {{ name }}
-            {{/ each }}
+            {{# each brands2 }}
+            <a class="label color">{{ name }}</a>
+             {{/ each }}
           </td>
-          <td>
+          <td align="center">
             {{# unless currentUser.hasRole 'admin' }}
             {{# if isCategorized currentUser._id }}
-            <a class="label label-success">Ok</a>
-            {{ else }}
-            <a class="label label-warning">Pendiente</a>
+            <i class="fa fa-check-circle green"></i>
+            {{else}}
+            <i class="fa fa-check-circle red"></i>
             {{/ if }}
             {{/ unless}}
 
@@ -145,16 +144,16 @@
             {{/ unless }}
 
           </td>
-            <td>
-           {{# if media }}
-            <a class="fa fa-camera"></a>
+            <td align="center">
+            {{# if media }}
+            <i class="fa fa-camera green"></i>
             {{else}}
-            <a class="label label-warning">Sin Foto</a>
+            <i class="fa fa-camera red"></i>
             {{/if}}
           </td>
           <td>
             <div class="btn-group">
-              <a href="{{ pathFor 'collections.news.show' }}" class="btn btn-xs btn-default">Ver</a>
+              <a href="{{ pathFor 'collections.news.show' }}" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
               {{# if canShowUpdate }}
               {{# unless currentUser.hasRole 'admin' }}
               <a href="{{ pathFor 'collections.news.data' }}" class="btn btn-xs btn-default">Categorizar</a>
@@ -183,7 +182,7 @@
             {{/ if }}
           </td>
           <td>
-            {{ shortenString title 50 }}
+            {{ title }}
           </td>
           <td>
             {{ dateFormat date 'D-M-YYYY' }}
@@ -195,15 +194,15 @@
           </td>
           <td>
             {{# each brands }}
-            {{ name }}
+            <a class="label color">{{ name }}</a>
             {{/ each }}
           </td>
-          <td>
+          <td align="center">
             {{# unless currentUser.hasRole 'admin' }}
             {{# if isCategorized currentUser._id }}
-            <a class="label label-success">Ok</a>
-            {{ else }}
-            <a class="label label-warning">Pendiente</a>
+            <i class="fa fa-send green"></i>
+            {{else}}
+            <i class="fa fa-send red"></i>
             {{/ if }}
             {{/ unless}}
 
@@ -212,9 +211,9 @@
             {{# unless currentUser.hasRole 'cliente' }}
 
             {{# if prevAprove }}
-            <a class="label label-success">Enviada</a>
+            <i class="fa fa-send green"></i>
             {{else}}
-            <a class="label label-warning">No Enviada</a>
+            <i class="fa fa-send red"></i>
             {{/if}}
             
             {{/ unless }}
@@ -222,16 +221,16 @@
             {{/ unless }}
 
           </td>
-          <td>
+          <td align="center">
            {{# if media }}
-            <a class="fa fa-camera"></a>
+            <i class="fa fa-camera green"></i>
             {{else}}
-            <a class="label label-warning">Sin Foto</a>
+            <i class="fa fa-camera red"></i>
             {{/if}}
           </td>
           <td>
             <div class="btn-group">
-              <a href="{{ pathFor 'collections.news.show' }}" class="btn btn-xs btn-default">Ver</a>
+              <a href="{{ pathFor 'collections.news.show' }}" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
               {{# if canShowUpdate }}
               {{# unless currentUser.hasRole 'admin' }}
               <a href="{{ pathFor 'collections.news.data' }}" class="btn btn-xs btn-default">Categorizar</a>
@@ -253,11 +252,13 @@
 
     <p>
       {{# if totalCount }}
-      <!-- <b>{{ localCount }} de {{ totalCount }}</b> -->
+      <b>{{ localCount }} de {{ totalCount }}</b>
       {{/ if }}
       {{# if Template.subscriptionsReady }}
       {{# if canLoadMore }}
-      <a href="#" class="load-more-btn">Cargar Mas</a>
+      <div>
+      <a href="#" class="btn btn-warning load-more-btn" style="margin-left: 0px;">Mostrar Mas</a>
+      </div>
       {{/ if }}
       {{ else }}
       <b>Cargando...</b>
@@ -270,13 +271,13 @@
   {{# unless currentUser.hasRole 'agencia' }}
   {{# unless currentUser.hasRole 'cliente' }}
   <span class="pull-right">
-    <b style="margin-left: 8px;">
-     <a href="#" class="btn btn-danger btn-deletenews load-more-btn" onclick="document.location.reload();">Borrar {{ checkedCount }}</a>
+    <b style="margin-right: 300px;">
+     <a href="#" class="btn btn-danger btn-deletenews load-more-btn">Borrar {{ checkedCount }}</a>
    </b>
  </span>
  <span class="pull-left">
-  <b style="margin-left: 8px;">
-   <a href="#" class="btn btn-success btn-aprovenews load-more-btn" onclick="document.location.reload();">Enviar {{ checkedCount }}</a>
+  <b style="margin-left: 300px;">
+   <a href="#" class="btn btn-success btn-aprovenews load-more-btn">Enviar {{ checkedCount }}</a>
  </b>
 </span>
 {{/ unless }}

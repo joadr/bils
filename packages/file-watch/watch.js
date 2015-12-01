@@ -14,7 +14,7 @@ FileWatch.listen = function(directory, encoding, callback) {
         return;
       }
       console.log('File found waiting 10 seconds to load... ', name);
-      Meteor._sleepForMs(10000);
+      Meteor._sleepForMs(100000);
       console.log('Reading file... ', name);
 
       var filePath = directory + '/' + name;

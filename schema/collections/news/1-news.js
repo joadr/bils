@@ -124,34 +124,34 @@ News.attachSchema({
     regEx: SimpleSchema.RegEx.Url,
     optional: true
   },
-  page: {
-    type: String,
-    label: 'Pagina',
-    optional: true
-  },
-  size: {
-    type: String,
-    label: 'Tamaño',
-    optional: true
-  },
-  typeId: {
-    label: 'Tipo de Suplemento',
-    type: String,
-    optional: true,
-    allowedValues: function() {
-      return _.pluck(SuplementsTypes.find().fetch(), '_id');
-    },
-    autoform: {
-      options: function() {
-        return SuplementsTypes.find().map(function(type) {
-          return {
-            value: type._id,
-            label: type.name
-          }
-        });
-      }
-    }
-  },
+  // page: {
+  //   type: String,
+  //   label: 'Pagina',
+  //   optional: true
+  // },
+  // size: {
+  //   type: String,
+  //   label: 'Tamaño',
+  //   optional: true
+  // },
+  // typeId: {
+  //   label: 'Tipo de Suplemento',
+  //   type: String,
+  //   optional: true,
+  //   allowedValues: function() {
+  //     return _.pluck(SuplementsTypes.find().fetch(), '_id');
+  //   },
+  //   autoform: {
+  //     options: function() {
+  //       return SuplementsTypes.find().map(function(type) {
+  //         return {
+  //           value: type._id,
+  //           label: type.name
+  //         }
+  //       });
+  //     }
+  //   }
+  // },
   mediumId: orion.attribute('hasOne', {
     label: 'Medio',
     optional: true
@@ -159,6 +159,23 @@ News.attachSchema({
     collection: Mediums,
     titleField: 'name',
     publicationName: 'news_mediumId_schema',
+  }),
+    suplementId: orion.attribute('hasOne', {
+    label: 'Suplemento',
+    optional: true
+  }, {
+    collection: Suplements,
+    titleField: 'name',
+    additionalFields: ['mediumId'],
+    publicationName: 'news_suplementId_schema',
+    filter: function(userId) {
+      if (Meteor.isServer) {
+        return {};
+      } else {
+        var mediumId = AutoForm.getFieldValue('mediumId');
+        return mediumId ? { mediumId: mediumId } : {};
+      }
+    }
   }),
   categorizedBy: {
     type: [String],
@@ -176,7 +193,16 @@ News.helpers({
   },
   brands: function() {
     var ids = this.brandsIds || [];
-    return Brands.find({ _id: { $in: ids } });
+    return Brands.find({ _id: { $in: ids }});
+  },
+   brands2: function() {
+
+    var ids = this.brandsIds || [];
+    var agency = _.pluck(Agencies.find().fetch(), '_id');
+    var group = _.pluck(Groups.find({agencyId: { $in: agency }}).fetch(), '_id');
+
+    return Brands.find({ _id: { $in: ids }, groupId:{ $in: group }});
+    
   },
   mediums: function() {
     var ids = this.mediumId;
