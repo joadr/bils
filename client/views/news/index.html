@@ -9,6 +9,12 @@
   <div class="controls ">
     {{# autoForm schema="SearchNewsSchema" id="collectionsNewsIndexSearchForm" doc=theDoc }}
     <div class="row">
+    {{# if currentUser.hasRole 'admin' }}
+       <div class="col-sm-3">
+        {{> afQuickField name='groupsIds' }}
+      </div>
+
+      {{/ if }}
       <div class="col-sm-3">
         {{> afQuickField name='brandsIds' }}
       </div>
@@ -18,15 +24,15 @@
       <div class="col-sm-3">
         {{> afQuickField name='toDate' }}
       </div>
+      {{# unless currentUser.hasRole 'admin' }}
       <div class="col-sm-3">
         <label for="">Filtro</label>
         {{> afQuickField name='showToCategorize' }}
       </div>
+      {{/ unless }}
         
       </div>
-      <!--  <div class="col-sm-14">
-            {{> afQuickField name='filter' }}
-          </div> -->
+
       {{/ autoForm }}
     </div>
     <div class="data">
@@ -51,8 +57,9 @@
          </big>
        </span>
        {{/ if }}
-
+       {{# if currentUser.hasRole 'admin' }}
        <b>{{ localCount }} de {{ totalCount }}</b>
+       {{/ if}}
      </p>
      {{/ if }}
 
@@ -61,11 +68,11 @@
         <tr>
           <th>
 
-            {{# if allChecked }}
+           <!--  {{# if allChecked }}
             <input type="checkbox" class="check-all" checked="true">
             {{ else }}
             <input type="checkbox" class="check-all">
-            {{/ if }}
+            {{/ if }} -->
             
           </th>
           <th width="350px">
@@ -93,7 +100,7 @@
       </thead>
       <tbody>
 
-        {{# each news }}
+        {{# each newsToShow }}
         {{# unless currentUser.hasRole 'admin' }}
         {{# if prevAprove }}
         <tr>
@@ -125,7 +132,7 @@
             {{# if isCategorized currentUser._id }}
             <i class="fa fa-check-circle green"></i>
             {{else}}
-            <i class="fa fa-check-circle red"></i>
+            <i class="fa fa-check-circle red2"></i>
             {{/ if }}
             {{/ unless}}
 
@@ -148,7 +155,7 @@
             {{# if media }}
             <i class="fa fa-camera green"></i>
             {{else}}
-            <i class="fa fa-camera red"></i>
+            <i class="fa fa-camera red2"></i>
             {{/if}}
           </td>
           <td>
@@ -161,7 +168,7 @@
               <a href="{{ pathFor 'collections.news.update' }}" class="btn btn-xs btn-default">Editar</a>
               {{/ if }}
               {{# if canShowRemove }}
-              <a href="{{ pathFor 'collections.news.delete' }}" class="btn btn-xs btn-danger">Borrar</a>
+              <a href="" class="btn btn-xs btn-danger">Borrar</a>
               {{/ if }}
             </div>
           </td>
@@ -202,7 +209,7 @@
             {{# if isCategorized currentUser._id }}
             <i class="fa fa-send green"></i>
             {{else}}
-            <i class="fa fa-send red"></i>
+            <i class="fa fa-send red2"></i>
             {{/ if }}
             {{/ unless}}
 
@@ -213,7 +220,7 @@
             {{# if prevAprove }}
             <i class="fa fa-send green"></i>
             {{else}}
-            <i class="fa fa-send red"></i>
+            <i class="fa fa-send red2"></i>
             {{/if}}
             
             {{/ unless }}
@@ -225,7 +232,7 @@
            {{# if media }}
             <i class="fa fa-camera green"></i>
             {{else}}
-            <i class="fa fa-camera red"></i>
+            <i class="fa fa-camera red2"></i>
             {{/if}}
           </td>
           <td>
@@ -251,8 +258,10 @@
     </table>
 
     <p>
+    {{# if currentUser.hasRole 'admin' }}
       {{# if totalCount }}
       <b>{{ localCount }} de {{ totalCount }}</b>
+      {{/ if }}
       {{/ if }}
       {{# if Template.subscriptionsReady }}
       {{# if canLoadMore }}

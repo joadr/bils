@@ -6,9 +6,9 @@ Meteor.publish('newsData.forUser', function(articleId) {
     return [];
   }
 
-  if (NewsData.find({ articleId: articleId, agencyId: agency._id }).count() == 0) {
+  if (NewsData.find({ articleId: articleId }).count() == 0) {
     console.log('creating news data');
-    NewsData.insert({ articleId: articleId, agencyId: agency._id });
+    NewsData.insert({ articleId: articleId });
   }
 
   return [NewsData.find({ articleId: articleId }), SuplementsTypes.find()];

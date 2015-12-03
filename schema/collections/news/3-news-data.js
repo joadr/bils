@@ -38,31 +38,31 @@ NewsDataSchemaAttributes = {
       }
     }
   },
-  mediumId: orion.attribute('hasOne', {
-    label: 'Medio',
-    optional: true
-  }, {
-    collection: Mediums,
-    titleField: 'name',
-    publicationName: 'news_mediumId_schema',
-  }),
-  suplementId: orion.attribute('hasOne', {
-    label: 'Suplemento',
-    optional: true
-  }, {
-    collection: Suplements,
-    titleField: 'name',
-    additionalFields: ['mediumId'],
-    publicationName: 'news_suplementId_schema',
-    filter: function(userId) {
-      if (Meteor.isServer) {
-        return {};
-      } else {
-        var mediumId = AutoForm.getFieldValue('mediumId');
-        return mediumId ? { mediumId: mediumId } : {};
-      }
-    }
-  }),
+  // mediumId: orion.attribute('hasOne', {
+  //   label: 'Medio',
+  //   optional: true
+  // }, {
+  //   collection: Mediums,
+  //   titleField: 'name',
+  //   publicationName: 'news_mediumId_schema',
+  // }),
+  // suplementId: orion.attribute('hasOne', {
+  //   label: 'Suplemento',
+  //   optional: true
+  // }, {
+  //   collection: Suplements,
+  //   titleField: 'name',
+  //   additionalFields: ['mediumId'],
+  //   publicationName: 'news_suplementId_schema',
+  //   filter: function(userId) {
+  //     if (Meteor.isServer) {
+  //       return {};
+  //     } else {
+  //       var mediumId = AutoForm.getFieldValue('mediumId');
+  //       return mediumId ? { mediumId: mediumId } : {};
+  //     }
+  //   }
+  // }),
   data: {
     type: Object,
     autoform: {

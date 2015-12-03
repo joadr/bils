@@ -66,6 +66,21 @@ Template.collectionsNewsIndex.helpers({
     var values = Session.get('collectionsNewsIndexValues');
     return News.find(filterForSearchObject(values, Meteor.userId()), { sort: { date: -1 } });
   },
+  newsToShow: function() {
+    var userId = Meteor.userId();
+    var agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
+
+    var values = Session.get('collectionsNewsIndexValues');
+    var news = News.find(filterForSearchObject(values, Meteor.userId()), { sort: { date: -1 } });
+    var newsIds = _.pluck(news.fetch(),'_id');
+
+    var newsFilteredIds = _.pluck(News.find({ _id:  { $in: newsIds } }).fetch(),'_id');
+    var newsHiddenIds = _.pluck(News.find({ hidden: agency._id }).fetch(),'_id');
+
+    var newsToShow = News.find({ _id:  { $in: _.difference(newsFilteredIds,newsHiddenIds) } })
+    
+    return newsToShow;
+  },
   localCount: function() {
     var values = Session.get('collectionsNewsIndexValues');
     return News.find(filterForSearchObject(values, Meteor.userId())).count();
@@ -143,12 +158,42 @@ Template.collectionsNewsIndex.events({
             })
           }
   },
+  
+  'click td .btn-danger': function(event, template) {
+
+    // var id = $(event.currentTarget).attr('data-newsId');
+    var userId = Meteor.userId();
+    var agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
+    // console.log(agency)
+    // console.log(this)
+    var newsId = this._id;
+    var hiddenArray = News.findOne({_id: newsId}).hidden;
+
+    // console.log(hiddenArray)
+
+    // console.log(newsId)
+     var r = confirm('Seguro de que quieres borrar esta noticia?');
+
+          if(r){
+
+    if( (typeof hiddenArray !== 'undefined' && hiddenArray.length > 0) ){
+      // console.log('this')
+      hiddenArray.push(agency._id);
+      News.update({_id: newsId}, {$set: {hidden: hiddenArray}});
+    }else{
+      // console.log('that')
+      News.update({_id: newsId}, {$set: { hidden: [agency._id] } } );
+    }
+    // console.log(this)
+  }
+
+  },
 
    'click .btn-aprovenews': function(event, template) {
+
     var ids = Session.get('selectedNews');
 
     // console.log(ids);
-
 
     _.each(ids,function(item){
 

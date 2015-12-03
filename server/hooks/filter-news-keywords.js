@@ -25,7 +25,7 @@ var filterArticle = function(article) {
       });
     }
 
-    console.log(brand.keywords1)
+    // console.log(brand.keywords1)
 
     if (matches && matches1) {
       brands.push(brand._id);

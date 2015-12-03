@@ -31,6 +31,39 @@ if (Meteor.settings.agurePath) {
       News.upsert({ agureId: article.agureId }, { $set: article });
     });
 
+     var newsData = data.imentenoticias.articulo.map(function(item) {
+      var article = {};
+
+      // if (!item['$'].id) return;
+      // console.log(News.findOne({'idx':item.idx[0]}));
+
+      article.articleId = News.findOne({'agureId':item['$'].id})._id;
+
+      // article.articleId = News.findOne({'idx':item.idx[0]})._id;
+      console.log(article.articleId);
+      article.data = {};
+
+      if(item.fuente){
+        article.data.medio =  item.fuente && item.fuente[0];
+      } 
+       if(item.hora){
+        article.data.hora =  item.hora && item.hora[0];
+      } 
+
+        article.data.tiponot =  "p_online";
+      
+      return article;
+      
+      //console.log(article);
+    });
+
+    _.each(newsData, function(article) {
+      console.log(article)
+      //NewsData.upsert({ articleId: article.articleId }, { $set: article });
+      NewsData.insert({ articleId: article.articleId });
+
+    });
+
     console.log('agure file imported');
     return true;
   });

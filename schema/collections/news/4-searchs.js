@@ -12,6 +12,7 @@ filterForSearchObject = function(searchObject, userId) {
     toDate: Match.Optional(Date),
     filter: Match.Optional(String),
     showToCategorize: Match.Optional(Boolean)
+    // showToSend: Match.Optional(Boolean)
   });
 
   if (searchObject.groupsIds) {
@@ -36,6 +37,13 @@ filterForSearchObject = function(searchObject, userId) {
       filter.categorizedBy = { $ne: agency._id };
     }
   }
+  //   if (searchObject.showToSend) {
+  //     console.log('here')
+  //      var agency = Agencies.findOne({ $or: [{ adminsIds: userId }, { executivesIds: userId }] });
+  //   if (agency) {
+  //     filter.categorizedBy = { $ne: agency._id };
+  //   }
+  // }
 
   return filter;
 };
@@ -93,6 +101,10 @@ SearchNewsSchema = new SimpleSchema({
     type: Boolean,
     label: 'Mostrar solo sin categorizar'
   },
+  // showToSend: {
+  //   type: Boolean,
+  //   label: 'Mostrar solo sin enviar'
+  // },
   filter: {
     type: String,
     label: 'Filtro'

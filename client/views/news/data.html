@@ -16,7 +16,11 @@
           {{> afQuickField name="body"}}
           {{> afQuickField name="date"}}
           {{> afQuickField name="url"}}
+          {{# if newsDataMedium}}
+          <p>Medio Sugerido: <a>{{ newsDataMedium }}</a></p>
+          {{/ if }}
           {{> afQuickField name="mediumId"}}
+          {{> afQuickField name="suplementId"}}
           <div class="row">
             <div class="col-sm-4">
             </div>
@@ -36,6 +40,9 @@
 
     {{# Layout template="orionBootstrapContentContainer" }}
         {{# if newsData }}
+        {{# if newsDataType}}
+          <p>Tipo de Noticia sugerida: <a>{{ newsDataType }}</a></p>
+          {{/ if }}
           {{> quickForm schema=getSchema id="collectionsNewsDataForm" buttonContent=false type="update" doc=newsData collection="NewsData" }}
           <br>
           <div class="row">
@@ -60,6 +67,22 @@
         {{/ if }}
     {{/ Layout }}
     <hr>
+    
+    {{# Layout template="orionBootstrapContentContainer" }}
+ 
+        {{> quickForm schema=getNewsBrandsSchema id="collectionsNewsBrandsForm" buttonContent=false type="update" collection="NewsBrands" doc=newsBrands }}
+
+
+        <div class="row">
+          <div class="col-sm-offset-4 col-sm-8">
+            <div class="buttons text-right">
+              <a class="btn btn-primary save-brands-btn">Guardar</a>
+            </div>
+          </div>
+        </div>
+
+
+    {{/ Layout }}
   {{/ Layout }}
 </template>
 

@@ -9,7 +9,7 @@ News = new orion.collection('news', {
   tabular: {
     columns: [
       { data: 'title', title: 'Título' },
-      { data: 'date', title: 'Fecha', render: function(val) { return moment(val).format('LL'); } },
+      { data: 'date', title: 'Fecha Sugerida', render: function(val) { return moment(val).format('LL'); } },
       {
         data: 'isReady',
         title: 'Categorizado',
@@ -48,6 +48,13 @@ News.attachSchema({
       omit: true
     }
   },
+  // hide: {
+  //   type: [String],
+  //   optional: true,
+  //   autoform: {
+  //     omit: true
+  //   }
+  // },
     prevAprove: {
     type: Boolean,
     label: 'Visualizar en Noticias',
@@ -114,7 +121,7 @@ News.attachSchema({
   }),
   date: {
     type: Date,
-    label: 'Fecha',
+    label: 'Fecha Sugerida',
     autoform: {
       type: 'bootstrap-datetimepicker'
     }
@@ -178,6 +185,13 @@ News.attachSchema({
     }
   }),
   categorizedBy: {
+    type: [String],
+    optional: true,
+    autoform: {
+      omit: true
+    }
+  },
+  hidden: {
     type: [String],
     optional: true,
     autoform: {

@@ -42,9 +42,12 @@ Router.route('/admin/export/news/:exportable', function () {
         doc.addPage();
       }
 
+      // console.log('ELEM')
+      // console.log(element)
+
       // Logo is inserted on every page
       if(agency){
-        console.log(meteorUrl + agency.logo.url);
+        // console.log(meteorUrl + agency.logo.url);
         var result = request.getSync(meteorUrl + agency.logo.url, {
             encoding: null
         });
@@ -55,13 +58,17 @@ Router.route('/admin/export/news/:exportable', function () {
 
       // we put the news photo
       if(element.media){
-        console.log(meteorUrl + element.media[0].url);
+        // console.log(meteorUrl + element.media[0].url);
         var image = request.getSync(meteorUrl + element.media[0].url, {
             encoding: null
         });
         var imageBuffer = image.body;
         doc.image(imageBuffer, 450, 10, { width: 500, height: 500 });
       }
+
+      // if(element.mediumId){
+      //   doc.text("Medio: " + getName('Mediums', element.mediumId), 30, 370);
+      // }
 
       // the news data
       // data = [
@@ -95,9 +102,11 @@ Router.route('/admin/export/news/:exportable', function () {
       var extraData = element.dataForUser(exportable.userId);
 
       if(extraData){
-        doc.text("Medio: " + getName('Mediums', extraData.mediumId), 30, 370);
+        // console.log('extraData')
+        // console.log(extraData)
+        doc.text("Medio: " + getName('Mediums', element.mediumId), 30, 370);
 
-        var suplement = SuplementsTypes.findOne(extraData.suplementId);
+        var suplement = SuplementsTypes.findOne(element.suplementId);
         if(suplement){
           if(suplement.title == "Diario" || suplement.title == "Revista"){
             // Factor tamaño
@@ -167,46 +176,46 @@ Router.route('/admin/export/news/:exportable', function () {
               if(NewsData.seccion){
                 var cases = {
                   'Portada' : function(){
-                  	return suplement.portada;
+                    return suplement.portada;
                   },
                   'Contraportada' : function(){
-                  	return suplement.contraportada;
+                    return suplement.contraportada;
                   },
                   'Política' : function(){
-                  	return suplement.politics;
+                    return suplement.politics;
                   },
                   'Economía / Empresas' : function(){
-                  	return suplement.economy;
+                    return suplement.economy;
                   },
                   'Nacional Actualidad' : function(){
-                  	return suplement.nacionalActualidad;
+                    return suplement.nacionalActualidad;
                   },
                   'Deportes' : function(){
-                  	return suplement.sports;
+                    return suplement.sports;
                   },
                   'Tecnología' : function(){
-                  	return suplement.tecnology;
+                    return suplement.tecnology;
                   },
                   'Internacional' : function(){
-                  	return suplement.international;
+                    return suplement.international;
                   },
                   'Automotriz' : function(){
-                  	return suplement.automotriz;
+                    return suplement.automotriz;
                   },
                   'Opinión/Cartas' : function(){
-                  	return suplement.opinion;
+                    return suplement.opinion;
                   },
                   'Salud' : function(){
-                  	return suplement.health;
+                    return suplement.health;
                   },
                   'Mercado/Marketing/Lanzamiento' : function(){
-                  	return suplement.market;
+                    return suplement.market;
                   },
                   'Tendencias/ Panoramas/ Espectáculos/ Cultura' : function(){
-                  	return suplement.panoramas;
+                    return suplement.panoramas;
                   },
                   'Sociales' : function(){
-                  	return suplement.social;
+                    return suplement.social;
                   }
                 }
                 if (cases[NewsData.seccion]) {
@@ -222,7 +231,7 @@ Router.route('/admin/export/news/:exportable', function () {
             }
 
             // Si Valor tamaño pagina existe : Valor tamaño pagina * factor dia * factor seccion + Valor color dia (Sin color=0)
-			                 //Sino Valor general
+                       //Sino Valor general
           } else if(suplement.title == "Online"){
             var valor = suplement.value;
           } else if(suplement.title == "Radio" || suplement.title == "Tv"){
@@ -247,6 +256,7 @@ Router.route('/admin/export/news/:exportable', function () {
     //this.response.end( doc.outputSync() );
 
   } else if (exportable.type == 'excel') {
+    // console.log('excel')
     var fields = [
       { key: '_id', title: 'ID' },
       {
@@ -257,24 +267,26 @@ Router.route('/admin/export/news/:exportable', function () {
           return user && user.profile.name;
         }
       },
-      {
-        key: 'mediumId',
-        title: 'Medio',
-        newsData: true,
-        transform: function(id) {
-          var medium = Mediums.findOne(id);
-          return medium && medium.name;
-        }
-      },
-      {
-        key: 'suplementId',
-        title: 'Suplemento',
-        newsData: true,
-        transform: function(id) {
-          var suplement = Suplements.findOne(id);
-          return suplement && suplement.name;
-        }
-      },
+      // {
+      //   key: 'mediumId',
+      //   title: 'Medio',
+      //   newsData: true,
+      //   transform: function(id) {
+      //     console.log(id)
+      //     var medium = Mediums.findOne(id);
+      //     return medium && medium.name;
+      //   }
+      // },
+      // {
+      //   key: 'suplementId',
+      //   title: 'Suplemento',
+      //   newsData: true,
+      //   transform: function(id) {
+      //     console.log(id)
+      //     var suplement = Suplements.findOne(id);
+      //     return suplement && suplement.name;
+      //   }
+      // },
       {
         key: 'date',
         title: 'Fecha',
@@ -304,8 +316,8 @@ Router.route('/admin/export/news/:exportable', function () {
       // { key: 'topic', title: 'Tema' },
       // { key: 'size', title: 'Centimetraje' },
       // { key: 'page', title: 'Páginas' },
-      // { key: 'title', title: 'Título' },
-      // { key: 'body', title: 'Cuerpo' },
+      { key: 'title', title: 'Título' },
+      { key: 'body', title: 'Cuerpo' },
       // { key: 'date', title: 'Fecha' },
       // { key: 'duration', title: 'Duración' },
       // { key: 'journalist', title: 'Periodista' },
@@ -332,10 +344,40 @@ Router.route('/admin/export/news/:exportable', function () {
     ];
 
     news.forEach(function(element, index, array){
-        var newsData = element.dataForUser(exportable.userId);
+
+        // console.log(element)
+
+        if(element.mediumId){
+          fields.push(
+            {
+              key: 'mediumId',
+              title: 'Medio',
+              transform: function() {
+                var medium = Mediums.findOne(element.mediumId);
+                return medium && medium.name;
+              }
+            }  
+          ); 
+        }
+
+        if(element.suplementId){
+          fields.push(
+            {
+              key: 'suplementId',
+              title: 'Suplemento',
+              transform: function() {
+                var suplement = Suplements.findOne(element.suplementId);
+                return suplement && suplement.name;
+              }
+            }  
+          ); 
+        }
+
+        var newsData = NewsData.findOne({articleId:element._id});  
         var type = SuplementsTypes.findOne(newsData.typeId);
         if (!type || !type.attributes) return;
         type.attributes.forEach(function(elem, i, arr){
+          // console.log(elem)
           var newField = {
             key: elem.key,
             title: elem.title,
@@ -343,7 +385,7 @@ Router.route('/admin/export/news/:exportable', function () {
           };
 
           if(containsObject(newField, fields)){
-            console.log('ya esta');
+            // console.log('ya esta');
           } else {
             fields.push(newField);
           }
@@ -398,8 +440,8 @@ Router.route('/admin/export/news/:exportable', function () {
 
       var rows = [];
       if(extraData){
-        rows.push(['Medio', getName('Mediums', extraData.mediumId)]);
-        var suplement = SuplementsTypes.findOne(extraData.suplementId);
+        rows.push(['Medio', getName('Mediums', element.mediumId)]);
+        var suplement = SuplementsTypes.findOne(element.suplementId);
         if(suplement){
           if(suplement.title == "Diario" || suplement.title == "Revista"){
             // Factor tamaño
@@ -469,46 +511,46 @@ Router.route('/admin/export/news/:exportable', function () {
               if(NewsData.seccion){
                 var cases = {
                   'Portada' : function(){
-                  	return suplement.portada;
+                    return suplement.portada;
                   },
                   'Contraportada' : function(){
-                  	return suplement.contraportada;
+                    return suplement.contraportada;
                   },
                   'Política' : function(){
-                  	return suplement.politics;
+                    return suplement.politics;
                   },
                   'Economía / Empresas' : function(){
-                  	return suplement.economy;
+                    return suplement.economy;
                   },
                   'Nacional Actualidad' : function(){
-                  	return suplement.nacionalActualidad;
+                    return suplement.nacionalActualidad;
                   },
                   'Deportes' : function(){
-                  	return suplement.sports;
+                    return suplement.sports;
                   },
                   'Tecnología' : function(){
-                  	return suplement.tecnology;
+                    return suplement.tecnology;
                   },
                   'Internacional' : function(){
-                  	return suplement.international;
+                    return suplement.international;
                   },
                   'Automotriz' : function(){
-                  	return suplement.automotriz;
+                    return suplement.automotriz;
                   },
                   'Opinión/Cartas' : function(){
-                  	return suplement.opinion;
+                    return suplement.opinion;
                   },
                   'Salud' : function(){
-                  	return suplement.health;
+                    return suplement.health;
                   },
                   'Mercado/Marketing/Lanzamiento' : function(){
-                  	return suplement.market;
+                    return suplement.market;
                   },
                   'Tendencias/ Panoramas/ Espectáculos/ Cultura' : function(){
-                  	return suplement.panoramas;
+                    return suplement.panoramas;
                   },
                   'Sociales' : function(){
-                  	return suplement.social;
+                    return suplement.social;
                   }
                 }
                 if (cases[NewsData.seccion]) {
@@ -524,7 +566,7 @@ Router.route('/admin/export/news/:exportable', function () {
             }
 
             // Si Valor tamaño pagina existe : Valor tamaño pagina * factor dia * factor seccion + Valor color dia (Sin color=0)
-			                 //Sino Valor general
+                       //Sino Valor general
           } else if(suplement.title == "Online"){
             var valor = suplement.value;
           } else if(suplement.title == "Radio" || suplement.title == "Tv"){

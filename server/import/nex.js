@@ -54,9 +54,30 @@ if (Meteor.settings.nexPath) {
       article.data = {};
 
       if(item.pag){
-        article.data.page =  item.pag && item.pag[0];
+        article.data.pagina =  item.pag && item.pag[0];
+      } 
+
+      if(item.autor){
+        article.data.periodista =  item.autor && item.autor[0];
       } 
       
+      if(item.anot){
+        article.data.centimetraje =  item.anot && item.anot[0];
+      } 
+
+        if(item.medio){
+        article.data.medio =  item.medio && item.medio[0];
+      } 
+
+         if(item.pais){
+        article.data.pais =  item.pais && item.pais[0];
+      } 
+         if(item.region){
+        article.data.region =  item.region && item.region[0];
+      } 
+         if(item.tiponot){
+        article.data.tiponot =  item.tiponot && item.tiponot[0];
+      } 
       return article;
     });
 

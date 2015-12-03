@@ -5,10 +5,10 @@ var getColumns = function(fields, data, userId) {
     var row = [];
     _.each(fields, function(field, index) {
       if(field.newsData){
-        var newsData = item.dataForUser(userId);
+        var newsData = NewsData.findOne({articleId:item._id}); 
         var value = orion.helpers.searchObjectWithDots(newsData, field.key) || null;
       } else if(field.isData) {
-        var newsData = item.dataForUser(userId);
+        var newsData = NewsData.findOne({articleId:item._id});
         var value = orion.helpers.searchObjectWithDots(newsData.data, field.key) || null;
       } else {
         var value = orion.helpers.searchObjectWithDots(item, field.key) || null;
