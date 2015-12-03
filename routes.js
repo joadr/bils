@@ -59,9 +59,20 @@ Router.route('/admin/export/news/:exportable', function () {
       // we put the news photo
       if(element.media){
         // console.log(meteorUrl + element.media[0].url);
-        var image = request.getSync(meteorUrl + element.media[0].url, {
-            encoding: null
-        });
+
+        if( (element.media[0].url).includes('http') ){
+          // console.log('this')
+          var image = request.getSync(element.media[0].url, {
+              encoding: null
+          });
+        }else{
+          // console.log('that')
+          var image = request.getSync(meteorUrl + element.media[0].url, {
+              encoding: null
+          });
+        }
+
+        
         var imageBuffer = image.body;
         doc.image(imageBuffer, 450, 10, { width: 500, height: 500 });
       }
@@ -97,14 +108,17 @@ Router.route('/admin/export/news/:exportable', function () {
       //     bottom: 10
       //   }
       // };
-
+      if(element.mediumId){
+        doc.text("Medio: " + getName('Mediums', element.mediumId), 30, 370);
+      }else{
+        doc.text("Medio: " + "Sin categorizar", 30, 370);  
+      }
       //doc.table(data, options)
       var extraData = element.dataForUser(exportable.userId);
 
       if(extraData){
         // console.log('extraData')
         // console.log(extraData)
-        doc.text("Medio: " + getName('Mediums', element.mediumId), 30, 370);
 
         var suplement = SuplementsTypes.findOne(element.suplementId);
         if(suplement){
@@ -243,7 +257,7 @@ Router.route('/admin/export/news/:exportable', function () {
 
 
       } else {
-        doc.text("Medio: " + "Sin categorizar", 30, 370);
+        
         var valor = "NN";
       }
       doc.text("TITULO: " + element.title);
@@ -256,7 +270,9 @@ Router.route('/admin/export/news/:exportable', function () {
     //this.response.end( doc.outputSync() );
 
   } else if (exportable.type == 'excel') {
-    // console.log('excel')
+    console.log('excel')
+    console.log(this)
+
     var fields = [
       { key: '_id', title: 'ID' },
       {
@@ -267,26 +283,22 @@ Router.route('/admin/export/news/:exportable', function () {
           return user && user.profile.name;
         }
       },
-      // {
-      //   key: 'mediumId',
-      //   title: 'Medio',
-      //   newsData: true,
-      //   transform: function(id) {
-      //     console.log(id)
-      //     var medium = Mediums.findOne(id);
-      //     return medium && medium.name;
-      //   }
-      // },
-      // {
-      //   key: 'suplementId',
-      //   title: 'Suplemento',
-      //   newsData: true,
-      //   transform: function(id) {
-      //     console.log(id)
-      //     var suplement = Suplements.findOne(id);
-      //     return suplement && suplement.name;
-      //   }
-      // },
+      {
+        key: 'mediumId',
+        title: 'Medio',
+        transform: function(id) {
+          var medium = Mediums.findOne(id);
+          return medium && medium.name;
+        }
+      },
+      {
+        key: 'suplementId',
+        title: 'Suplemento',
+        transform: function(id) {
+          var suplement = Suplements.findOne(id);
+          return suplement && suplement.name;
+        }
+      },
       {
         key: 'date',
         title: 'Fecha',
@@ -340,38 +352,42 @@ Router.route('/admin/export/news/:exportable', function () {
       //     return suplement && suplement.name;
       //   }
       // },
-      { key: 'url', title: 'Link' }
+      { key: 'url', title: 'Link' },
+      // { key: 'mediumId', title: 'Medio' }
+      
+      // { key: 'url', title: 'Link' }
+
     ];
 
     news.forEach(function(element, index, array){
 
         // console.log(element)
 
-        if(element.mediumId){
-          fields.push(
-            {
-              key: 'mediumId',
-              title: 'Medio',
-              transform: function() {
-                var medium = Mediums.findOne(element.mediumId);
-                return medium && medium.name;
-              }
-            }  
-          ); 
-        }
+        // if(element.mediumId){
+        //   fields.push(
+        //     {
+        //       key: 'mediumId',
+        //       title: 'Medio',
+        //       transform: function() {
+        //         var medium = Mediums.findOne(element.mediumId);
+        //         return medium && medium.name;
+        //       }
+        //     }  
+        //   ); 
+        // }
 
-        if(element.suplementId){
-          fields.push(
-            {
-              key: 'suplementId',
-              title: 'Suplemento',
-              transform: function() {
-                var suplement = Suplements.findOne(element.suplementId);
-                return suplement && suplement.name;
-              }
-            }  
-          ); 
-        }
+        // if(element.suplementId){
+        //   fields.push(
+        //     {
+        //       key: 'suplementId',
+        //       title: 'Suplemento',
+        //       transform: function() {
+        //         var suplement = Suplements.findOne(element.suplementId);
+        //         return suplement && suplement.name;
+        //       }
+        //     }  
+        //   ); 
+        // }
 
         var newsData = NewsData.findOne({articleId:element._id});  
         var type = SuplementsTypes.findOne(newsData.typeId);
@@ -426,11 +442,20 @@ Router.route('/admin/export/news/:exportable', function () {
         slide.addImage( buffer, {x: 25, y: 25, cx: 250, cy: 100} );
       }
 
-      // we add the new image
-      if(element.media){
-        var image = request.getSync(meteorUrl + element.media[0].url, {
-            encoding: null
-        });
+     if(element.media){
+        // console.log(meteorUrl + element.media[0].url);
+
+        if( (element.media[0].url).includes('http') ){
+          // console.log('this')
+          var image = request.getSync(element.media[0].url, {
+              encoding: null
+          });
+        }else{
+          // console.log('that')
+          var image = request.getSync(meteorUrl + element.media[0].url, {
+              encoding: null
+          });
+        }
         var imageBuffer = image.body;
         slide.addImage( imageBuffer, {x: 700, y: 25, cx: 500, cy: 560} );
       }
@@ -439,8 +464,14 @@ Router.route('/admin/export/news/:exportable', function () {
       var extraData = element.dataForUser(exportable.userId);
 
       var rows = [];
-      if(extraData){
+
+      if(element.mediumId){
         rows.push(['Medio', getName('Mediums', element.mediumId)]);
+      }else{
+        rows.push(['Medio', "Sin medio"]);
+      }
+      
+      if(extraData){
         var suplement = SuplementsTypes.findOne(element.suplementId);
         if(suplement){
           if(suplement.title == "Diario" || suplement.title == "Revista"){
@@ -577,7 +608,7 @@ Router.route('/admin/export/news/:exportable', function () {
         }
 
       } else {
-        rows.push(['Medio', "Sin medio"]);
+        
         var valor = "NN"
       }
       rows.push(['Titulo', element.title]);

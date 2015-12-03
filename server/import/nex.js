@@ -1,4 +1,4 @@
-Meteor.settings.nexPath = "/Users/cristianojeda/Desktop/xmls/nex"
+// Meteor.settings.nexPath = "/Users/cristianojeda/Desktop/xmls/nex"
 
 if (Meteor.settings.nexPath) {
   FileWatch.listen(Meteor.settings.nexPath, 'utf8', function(contents) {
