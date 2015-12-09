@@ -12,10 +12,11 @@ Template.collectionsNewsData.onCreated(function() {
     var articleId = Router.current().params._id;
     var userId = Meteor.userId();
     var agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
-    var newsData = agency && NewsData.findOne({ articleId: articleId, agencyId: agency._id });
-    if (newsData && !Session.get('currentNewsDataType')) {
-      Session.set('currentNewsDataType', newsData.typeId);
-    }
+    var newsData = NewsData.findOne({ articleId: articleId });
+    //  var newsData = agency && NewsData.findOne({ articleId: articleId, agencyId: agency._id });
+    // if (newsData && !Session.get('currentNewsDataType')) {
+    //   Session.set('currentNewsDataType', newsData.typeId);
+    // }
   });
 });
 
@@ -176,6 +177,7 @@ Template.collectionsNewsData.helpers({
       subtitle: {
         type: String,
         label: "Bajada",
+        optional: true
       },
       body: {
         type: String,
@@ -198,15 +200,32 @@ Template.collectionsNewsData.helpers({
         optional: true
       },
 
-      mediumId: orion.attribute('hasOne', {
-        label: 'Medio',
-        optional: true
-      }, {
-        collection: Mediums,
-        titleField: 'name',
-        publicationName: 'news_mediumId_schema',
-      }),
-
+       mediumId: orion.attribute('hasOne', {
+    label: 'Medio',
+    optional: true
+  }, {
+    collection: Mediums,
+    titleField: 'name',
+    publicationName: 'news_mediumId_schema',
+  }),
+    suplementId: orion.attribute('hasOne', {
+    label: 'Suplemento',
+    optional: true
+  }, {
+    collection: Suplements,
+    titleField: 'name',
+    additionalFields: ['mediumId'],
+    publicationName: 'news_suplementId_schema',
+    filter: function(userId) {
+      if (Meteor.isServer) {
+        return {};
+      } else {
+        var mediumId = AutoForm.getFieldValue('mediumId');
+        return mediumId ? { mediumId: mediumId } : {};
+      }
+    }
+  }),
+      
 
 
     });
@@ -245,7 +264,7 @@ Template.collectionsNewsData.helpers({
         var articleId = Router.current().params._id;
         var userId = Meteor.userId();
         var agency = Agencies.findOne({ $or: [ { adminsIds: userId }, { executivesIds: userId } ] });
-        var newsData = agency && NewsData.findOne({ articleId: articleId, agencyId: agency._id });
+        var newsData = NewsData.findOne({ articleId: articleId });
 
         var options = [];
         attribute.list.forEach(function(element, index, array){
@@ -286,12 +305,23 @@ Template.collectionsNewsData.events({
   'change select[name="typeId"]': function(event, template) {
     Session.set('currentNewsDataType', event.currentTarget.value);
   },
-  'click .save-btn': function(event, template) {
-    $('#collectionsNewsDataForm').submit();
-  },
+
+  //Info Noticia:
   'click .save-news-btn': function(event, template) {
     $('#collectionsNewsForm').submit();
   },
+
+  //Categorizacion de noticia:
+  'click .save-btn': function(event, template) {
+    if($('select[name=mediumId]').val()){
+      $('#collectionsNewsForm').submit();
+      $('#collectionsNewsDataForm').submit();
+    }else{
+      alert('Es necesario seleccionar un Medio para guardar.')
+    }
+  },
+
+  //Categorizacion del sentimiento por agencia:
    'click .save-brands-btn': function(event, template) {
     $('#collectionsNewsBrandsForm').submit();
   }

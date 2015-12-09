@@ -13,8 +13,8 @@ FileWatch.listen = function(directory, encoding, callback) {
       if (name == '.DS_Store') {
         return;
       }
-      console.log('File found waiting 10 seconds to load... ', name);
-      Meteor._sleepForMs(10000);
+      console.log('File found waiting 30 seconds to load... ', name);
+      Meteor._sleepForMs(30000);
       console.log('Reading file... ', name);
 
       var filePath = directory + '/' + name;

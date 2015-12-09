@@ -270,8 +270,8 @@ Router.route('/admin/export/news/:exportable', function () {
     //this.response.end( doc.outputSync() );
 
   } else if (exportable.type == 'excel') {
-    console.log('excel')
-    console.log(this)
+    // console.log('excel')
+    // console.log(this)
 
     var fields = [
       { key: '_id', title: 'ID' },

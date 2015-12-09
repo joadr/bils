@@ -40,7 +40,7 @@ if (Meteor.settings.agurePath) {
       article.articleId = News.findOne({'agureId':item['$'].id})._id;
 
       // article.articleId = News.findOne({'idx':item.idx[0]})._id;
-      console.log(article.articleId);
+      // console.log(article.articleId);
       article.data = {};
 
       if(item.fuente){
@@ -58,7 +58,7 @@ if (Meteor.settings.agurePath) {
     });
 
     _.each(newsData, function(article) {
-      console.log(article)
+      // console.log(article)
       //NewsData.upsert({ articleId: article.articleId }, { $set: article });
       NewsData.insert({ articleId: article.articleId });
 

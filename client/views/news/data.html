@@ -10,7 +10,7 @@
       {{>noticiaACategorizar}}
       </div>
       <div class="col-sm-4">
-        {{#autoForm schema=getSchemaTest id="collectionsNewsForm" buttonContent=false type="update" collection="News" doc=newsDoc}}
+        {{#autoForm schema=getNewsSchema id="collectionsNewsForm" buttonContent=false type="update" collection="News" doc=newsDoc}}
           {{> afQuickField name="title"}}
           {{> afQuickField name="subtitle"}}
           {{> afQuickField name="body"}}
@@ -55,8 +55,9 @@
             </div>
             <div class="col-sm-8">
               <div class="buttons text-right">
-                <a class="btn btn-default" href="{{ pathFor 'collections.news.index' }}">{{ i18n 'global.cancel' }}</a>
-                <a class="btn btn-primary save-btn">Guardar</a>
+                <!-- <a class="btn btn-default" href="{{ pathFor 'collections.news.index' }}">{{ i18n 'global.cancel' }}</a> -->
+                 <a class="btn btn-default" href="#">{{ i18n 'global.cancel' }}</a>
+                <a class="btn btn-primary save-btn save-news-btn">Guardar Noticia</a>
               </div>
             </div>
           </div>
@@ -76,7 +77,7 @@
         <div class="row">
           <div class="col-sm-offset-4 col-sm-8">
             <div class="buttons text-right">
-              <a class="btn btn-primary save-brands-btn">Guardar</a>
+              <a class="btn btn-primary save-brands-btn save-btn save-news-btn">Guardar Marcas</a>
             </div>
           </div>
         </div>
